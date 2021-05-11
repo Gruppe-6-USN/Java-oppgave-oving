@@ -44,8 +44,8 @@ private ResultSet resSet = null;
             resSet = pStmt.executeQuery();
 
             close();
-        } catch(SQLException err) {
-            err.printStackTrace();
+        } catch(SQLException deleteErr) {
+            deleteErr.printStackTrace();
         }
     }
 }

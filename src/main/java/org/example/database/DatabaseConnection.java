@@ -59,6 +59,7 @@ private ResultSet resSet = null;
             pStmt.setString(3, department);
             pStmt.setString(4, email);
             pStmt.setDouble(5, salary);
+            close();
         } catch (SQLException addErr) {
             addErr.printStackTrace();
         }

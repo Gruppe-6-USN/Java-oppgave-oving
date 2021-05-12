@@ -1,133 +1,100 @@
 package org.example.database;
 
-import java.io.FileInputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Scanner;
-import java.util.Properties;
+import javax.swing.*;
+import java.sql.*;
 
 public class DatabaseConnection {
 
-	public static void main(String[] args) throws SQLException {
+	private static final String database = "jdbc:mysql//https://itfag.usn.no/233574";
 
-		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
-		
+	private static final String brukernavn = "233574";
+	private static final String pw = "JWeiMrF0";
+
+	private Connection conn = null;
+	private Statement stmt = null;
+	private PreparedStatement pStmt = null;
+	private ResultSet resSet = null;
+
+
+	public void open() throws SQLException {
 		try {
+			
+			conn = DriverManager.getConnection(database, brukernavn, pw);
 
-			// 1. Load the properties file
-			Properties props = new Properties();
-			props.load(new FileInputStream("demo.properties"));
-			// props.load(new FileInputStream("C:\Users\krist\Documents\GitHub\Java-oppgave-oving/demo.properties"));
-
-			// 2. Read the props
-			String theUser = props.getProperty("user");
-			String thePassword = props.getProperty("password");
-			String theDburl = props.getProperty("dburl");
-			
-			System.out.println("Connecting to database...");
-			System.out.println("Database URL: " + theDburl);
-			System.out.println("User: " + theUser);
-			
-			// 3. Get a connection to database
-			myConn = DriverManager.getConnection(theDburl, theUser, thePassword);
-
-			System.out.println("\nConnection successful!\n");
-			
-			// 4. Create a statement
-			myStmt = myConn.createStatement();
-			
-			// 5. Execute SQL query
-			myRs = myStmt.executeQuery("select * from employees");
-			
-			// 6. Process the result set
-			while (myRs.next()) {
-				System.out.println(myRs.getString("last_name") + ", " + myRs.getString("first_name"));
-			}
-
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		} finally {
-			close(myConn, myStmt, myRs);
+			stmt = conn.createStatement();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 		}
 	}
 
-	/**
-	 * Prompts the user. Return true if they enter "yes", false otherwise
-	 * 
-	 * @return
-	 */
-	private static boolean askUserIfOkToSave() {
-		Scanner scanner = new Scanner(System.in);
-
-		System.out.println("Is it okay to save?  yes/no: ");
-		String input = scanner.nextLine();
-
-		scanner.close();
-
-		return input.equalsIgnoreCase("yes");
-	}
-
-	private static void showSalaries(Connection myConn, String theDepartment)
-			throws SQLException {
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
-
-		System.out.println("Show Salaries for Department: " + theDepartment);
-
+	public void close() throws SQLException {
 		try {
-			// Prepare statement
-			myStmt = myConn
-					.prepareStatement("select * from employees where department=?");
+			stmt.close();
+			conn.close();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 
-			myStmt.setString(1, theDepartment);
+	public void deleteEmployee(String id) throws SQLException {
+		try {
+			open();
+			pStmt = conn.prepareStatement("delete from employees where id=?");
+			pStmt.setInt(1, Integer.parseInt(id));
 
-			// Execute SQL query
-			myRs = myStmt.executeQuery();
+			resSet = pStmt.executeQuery();
 
-			// Process result set
-			while (myRs.next()) {
-				String lastName = myRs.getString("last_name");
-				String firstName = myRs.getString("first_name");
-				double salary = myRs.getDouble("salary");
-				String department = myRs.getString("department");
+			close();
+		} catch (SQLException deleteErr) {
+			deleteErr.printStackTrace();
+		}
+	}
 
-				System.out.printf("%s, %s, %s, %.2f\n", lastName, firstName,
-						department, salary);
+	public void addEmployee(String lastName, String firstName, String department, String email, double salary) throws SQLException {
+		try {
+			open();
+			pStmt = conn.prepareStatement("insert into employees (last_name, first_name, department, email, salary)" +
+					"values (?, ?, ?, ?, ?)");
+			pStmt.setString(1, lastName);
+			pStmt.setString(2, firstName);
+			pStmt.setString(3, department);
+			pStmt.setString(4, email);
+			pStmt.setDouble(5, salary);
+			close();
+		} catch (SQLException addErr) {
+			addErr.printStackTrace();
+		}
+	}
+
+		public void updateUser(String id, String firstName, String lastName, String
+		department, String email, double salary){
+
+			try {
+
+				open();
+
+				String OppdaterSQL = "UPDATE employees SET first_name = ?,  last_name = ?, department = ?, email = ?, salary = ? WHERE id = ?";
+
+				stmt = conn.prepareStatement(OppdaterSQL);
+
+
+				pStmt.setInt(6, Integer.parseInt(id));
+				pStmt.setString(1, firstName);
+				pStmt.setString(2, lastName);
+				pStmt.setString(3, department);
+				pStmt.setString(4, email);
+				pStmt.setDouble(5, salary);
+
+
+				pStmt.executeUpdate();
+				JOptionPane.showMessageDialog(null, "Bruker er oppdatert");
+				close();
+
+			} catch (
+					SQLException e1) {
+				e1.printStackTrace();
 			}
-
-			System.out.println();
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		} finally {
-			close(myStmt, myRs);
-		}
-
-	}
-
-	private static void close(Connection myConn, Statement myStmt,
-			ResultSet myRs) throws SQLException {
-		if (myRs != null) {
-			myRs.close();
-		}
-
-		if (myStmt != null) {
-			myStmt.close();
-		}
-
-		if (myConn != null) {
-			myConn.close();
 		}
 	}
 
-	private static void close(Statement myStmt, ResultSet myRs)
-			throws SQLException {
 
-		close(null, myStmt, myRs);
-	}
-}

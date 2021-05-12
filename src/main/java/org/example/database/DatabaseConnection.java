@@ -18,12 +18,12 @@ public class DatabaseConnection {
 
 	public void open() throws SQLException {
 		try {
-			//Establish connection
+			
 			conn = DriverManager.getConnection(database, brukernavn, pw);
-			//Create statement that will be used for executing SQL queries
+
 			stmt = conn.createStatement();
 		} catch (SQLException ex) {
-			ex.printStackTrace();// More elegant solutions for catching errors exist but they are out of the scope for this course
+			ex.printStackTrace();
 		}
 	}
 
@@ -36,11 +36,11 @@ public class DatabaseConnection {
 		}
 	}
 
-	public void deleteEmployee(int id) throws SQLException {
+	public void deleteEmployee(String id) throws SQLException {
 		try {
 			open();
 			pStmt = conn.prepareStatement("delete from employees where id=?");
-			pStmt.setInt(1, id);
+			pStmt.setInt(1, Integer.parseInt(id));
 
 			resSet = pStmt.executeQuery();
 

@@ -73,6 +73,8 @@ public class MainFrame {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
+		
+		// tabbed panel
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPanel = new GridBagConstraints();
 		gbc_tabbedPanel.gridwidth = 10;
@@ -83,9 +85,11 @@ public class MainFrame {
 		gbc_tabbedPanel.gridy = 0;
 		frame.getContentPane().add(tabbedPanel, gbc_tabbedPanel);
 		
+		//delete panel
 		JPanel deletePanel = new JPanel();
 		tabbedPanel.addTab("Delete", null, deletePanel, null);
 		
+		//add panel
 		JPanel addPanel = new JPanel();
 		tabbedPanel.addTab("Add", null, addPanel, null);
 		GridBagLayout gbl_addPanel = new GridBagLayout();
@@ -111,6 +115,7 @@ public class MainFrame {
 		gbl_addDataPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		addDataPanel.setLayout(gbl_addDataPanel);
 		
+		//first name label
 		JLabel firstNameLabel = new JLabel("First name:");
 		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
 		gbc_firstNameLabel.anchor = GridBagConstraints.EAST;
@@ -120,6 +125,7 @@ public class MainFrame {
 		gbc_firstNameLabel.gridy = 0;
 		addDataPanel.add(firstNameLabel, gbc_firstNameLabel);
 		
+		//first name text field
 		firstNameTextField = new JTextField();
 		firstNameTextField.setColumns(10);
 		GridBagConstraints gbc_firstNameTextField = new GridBagConstraints();
@@ -130,6 +136,7 @@ public class MainFrame {
 		gbc_firstNameTextField.gridy = 0;
 		addDataPanel.add(firstNameTextField, gbc_firstNameTextField);
 		
+		//last name label
 		JLabel lastNameLabel = new JLabel("Last name:");
 		GridBagConstraints gbc_lastNameLabel = new GridBagConstraints();
 		gbc_lastNameLabel.anchor = GridBagConstraints.EAST;
@@ -139,6 +146,7 @@ public class MainFrame {
 		gbc_lastNameLabel.gridy = 1;
 		addDataPanel.add(lastNameLabel, gbc_lastNameLabel);
 		
+		//last name text field
 		lastNameTextField = new JTextField();
 		lastNameTextField.setColumns(10);
 		GridBagConstraints gbc_lastNameTextField = new GridBagConstraints();
@@ -149,6 +157,7 @@ public class MainFrame {
 		gbc_lastNameTextField.gridy = 1;
 		addDataPanel.add(lastNameTextField, gbc_lastNameTextField);
 		
+		//email label
 		JLabel emailLabel = new JLabel("Email:");
 		GridBagConstraints gbc_emailLabel = new GridBagConstraints();
 		gbc_emailLabel.anchor = GridBagConstraints.EAST;
@@ -158,6 +167,7 @@ public class MainFrame {
 		gbc_emailLabel.gridy = 2;
 		addDataPanel.add(emailLabel, gbc_emailLabel);
 		
+		//email text field
 		emailTextField = new JTextField();
 		emailTextField.setColumns(10);
 		GridBagConstraints gbc_emailTextField = new GridBagConstraints();
@@ -168,6 +178,7 @@ public class MainFrame {
 		gbc_emailTextField.gridy = 2;
 		addDataPanel.add(emailTextField, gbc_emailTextField);
 		
+		//department label
 		JLabel departmentLabel = new JLabel("Department:");
 		GridBagConstraints gbc_departmentLabel = new GridBagConstraints();
 		gbc_departmentLabel.anchor = GridBagConstraints.EAST;
@@ -177,6 +188,7 @@ public class MainFrame {
 		gbc_departmentLabel.gridy = 3;
 		addDataPanel.add(departmentLabel, gbc_departmentLabel);
 		
+		//department text field
 		departmentTextField = new JTextField();
 		departmentTextField.setColumns(10);
 		GridBagConstraints gbc_departmentTextField = new GridBagConstraints();
@@ -187,6 +199,7 @@ public class MainFrame {
 		gbc_departmentTextField.gridy = 3;
 		addDataPanel.add(departmentTextField, gbc_departmentTextField);
 		
+		//salary label
 		JLabel salaryLabel = new JLabel("Salary:");
 		GridBagConstraints gbc_salaryLabel = new GridBagConstraints();
 		gbc_salaryLabel.anchor = GridBagConstraints.EAST;
@@ -196,6 +209,7 @@ public class MainFrame {
 		gbc_salaryLabel.gridy = 4;
 		addDataPanel.add(salaryLabel, gbc_salaryLabel);
 		
+		//salary text field
 		salaryTextField = new JTextField();
 		salaryTextField.setColumns(10);
 		GridBagConstraints gbc_salaryTextField = new GridBagConstraints();
@@ -206,6 +220,7 @@ public class MainFrame {
 		gbc_salaryTextField.gridy = 4;
 		addDataPanel.add(salaryTextField, gbc_salaryTextField);
 		
+		//apply buttton
 		JButton applyBtn = new JButton("Apply");
 		GridBagConstraints gbc_applyBtn = new GridBagConstraints();
 		gbc_applyBtn.gridwidth = 3;
@@ -214,6 +229,7 @@ public class MainFrame {
 		gbc_applyBtn.gridy = 5;
 		addDataPanel.add(applyBtn, gbc_applyBtn);
 		
+		//clear button
 		JButton clearBtn = new JButton("Clear");
 		GridBagConstraints gbc_clearBtn = new GridBagConstraints();
 		gbc_clearBtn.gridwidth = 3;
@@ -221,12 +237,15 @@ public class MainFrame {
 		gbc_clearBtn.gridy = 5;
 		addDataPanel.add(clearBtn, gbc_clearBtn);
 		
+		//update panel
 		JPanel updatePanel = new JPanel();
 		tabbedPanel.addTab("Update", null, updatePanel, null);
 		
+		//read panel
 		JPanel readPanel = new JPanel();
 		tabbedPanel.addTab("Read", null, readPanel, null);
 		
+		//console panel
 		JPanel consolePanel = new JPanel();
 		consolePanel.setBorder(new TitledBorder(null, "Console:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_consolePanel = new GridBagConstraints();
@@ -243,16 +262,17 @@ public class MainFrame {
 		gbl_consolePanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		consolePanel.setLayout(gbl_consolePanel);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBackground(Color.DARK_GRAY);
-		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.gridwidth = 10;
-		gbc_textArea.gridheight = 3;
-		gbc_textArea.insets = new Insets(0, 0, 0, 5);
-		gbc_textArea.fill = GridBagConstraints.BOTH;
-		gbc_textArea.gridx = 0;
-		gbc_textArea.gridy = 0;
-		consolePanel.add(textArea, gbc_textArea);
+		//console text area
+		JTextArea consoleTextArea = new JTextArea();
+		consoleTextArea.setBackground(Color.DARK_GRAY);
+		GridBagConstraints gbc_consoleTextArea = new GridBagConstraints();
+		gbc_consoleTextArea.gridwidth = 10;
+		gbc_consoleTextArea.gridheight = 3;
+		gbc_consoleTextArea.insets = new Insets(0, 0, 0, 5);
+		gbc_consoleTextArea.fill = GridBagConstraints.BOTH;
+		gbc_consoleTextArea.gridx = 0;
+		gbc_consoleTextArea.gridy = 0;
+		consolePanel.add(consoleTextArea, gbc_consoleTextArea);
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {

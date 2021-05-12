@@ -35,11 +35,11 @@ private ResultSet resSet = null;
         }
     }
 
-    public void deleteEmployee(int id) throws SQLException {
+    public void deleteEmployee(String id) throws SQLException {
         try {
             open();
             pStmt = conn.prepareStatement("delete from employees where id=?");
-            pStmt.setInt(1, id);
+            pStmt.setInt(1, Integer.parseInt(id));
 
             resSet = pStmt.executeQuery();
 
@@ -49,13 +49,13 @@ private ResultSet resSet = null;
         }
     }
 
-    public void addEmployee(String lastName, String firstName, String department, String email, double salary) throws SQLException {
+    public void addEmployee(String firstName, String lastName, String department, String email, double salary) throws SQLException {
         try{
             open();
             pStmt = conn.prepareStatement("insert into employees (last_name, first_name, department, email, salary)" +
                     "values (?, ?, ?, ?, ?)");
-            pStmt.setString(1, lastName);
-            pStmt.setString(2, firstName);
+            pStmt.setString(1, firstName);
+            pStmt.setString(2, lastName);
             pStmt.setString(3, department);
             pStmt.setString(4, email);
             pStmt.setDouble(5, salary);

@@ -16,6 +16,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPopupMenu;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
@@ -26,15 +28,17 @@ import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import javax.swing.border.EtchedBorder;
 
 public class MainFrame {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField firstNameTextField;
 	private JTextField lastNameTextField;
 	private JTextField emailTextField;
 	private JTextField departmentTextField;
 	private JTextField salaryTextField;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -64,23 +68,22 @@ public class MainFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 422, 491);
+		frame.setBounds(100, 100, 564, 565);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
+		gridBagLayout.columnWidths = new int[] {40, 0, 0, 0, 0, 40, 40, 40, 40, 40, 40, 40, 40, 40};
 		gridBagLayout.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		frame.getContentPane().setLayout(gridBagLayout);
-		
 		
 		// tabbed panel
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPanel = new GridBagConstraints();
-		gbc_tabbedPanel.gridwidth = 10;
-		gbc_tabbedPanel.gridheight = 6;
+		gbc_tabbedPanel.gridwidth = 4;
+		gbc_tabbedPanel.gridheight = 7;
 		gbc_tabbedPanel.fill = GridBagConstraints.BOTH;
-		gbc_tabbedPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_tabbedPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_tabbedPanel.gridx = 0;
 		gbc_tabbedPanel.gridy = 0;
 		frame.getContentPane().add(tabbedPanel, gbc_tabbedPanel);
@@ -88,6 +91,52 @@ public class MainFrame {
 		//delete panel
 		JPanel deletePanel = new JPanel();
 		tabbedPanel.addTab("Delete", null, deletePanel, null);
+		GridBagLayout gbl_deletePanel = new GridBagLayout();
+		gbl_deletePanel.columnWidths = new int[] {40, 40, 0, 40, 40, 40};
+		gbl_deletePanel.rowHeights = new int[] {40, 0, 40, 40, 40, 40, 40, 40};
+		gbl_deletePanel.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_deletePanel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		deletePanel.setLayout(gbl_deletePanel);
+		
+		JPanel deleteIdPanel = new JPanel();
+		deleteIdPanel.setBorder(new TitledBorder(null, "Delete ID", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_deleteIdPanel = new GridBagConstraints();
+		gbc_deleteIdPanel.gridheight = 8;
+		gbc_deleteIdPanel.gridwidth = 6;
+		gbc_deleteIdPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_deleteIdPanel.fill = GridBagConstraints.BOTH;
+		gbc_deleteIdPanel.gridx = 0;
+		gbc_deleteIdPanel.gridy = 0;
+		deletePanel.add(deleteIdPanel, gbc_deleteIdPanel);
+		GridBagLayout gbl_deleteIdPanel = new GridBagLayout();
+		gbl_deleteIdPanel.columnWidths = new int[]{88, 15, 86, 0};
+		gbl_deleteIdPanel.rowHeights = new int[]{20, 0, 0, 0};
+		gbl_deleteIdPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_deleteIdPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		deleteIdPanel.setLayout(gbl_deleteIdPanel);
+		
+		JLabel idLabel = new JLabel("ID:");
+		GridBagConstraints gbc_idLabel = new GridBagConstraints();
+		gbc_idLabel.anchor = GridBagConstraints.WEST;
+		gbc_idLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_idLabel.gridx = 1;
+		gbc_idLabel.gridy = 1;
+		deleteIdPanel.add(idLabel, gbc_idLabel);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.insets = new Insets(0, 0, 5, 0);
+		gbc_textField.anchor = GridBagConstraints.NORTHWEST;
+		gbc_textField.gridx = 2;
+		gbc_textField.gridy = 1;
+		deleteIdPanel.add(textField, gbc_textField);
+		
+		JButton deleteBtn = new JButton("Delete");
+		GridBagConstraints gbc_deleteBtn = new GridBagConstraints();
+		gbc_deleteBtn.gridx = 2;
+		gbc_deleteBtn.gridy = 2;
+		deleteIdPanel.add(deleteBtn, gbc_deleteBtn);
 		
 		//add panel
 		JPanel addPanel = new JPanel();
@@ -102,14 +151,14 @@ public class MainFrame {
 		JPanel addDataPanel = new JPanel();
 		addDataPanel.setBorder(new TitledBorder(null, "Add data", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_addDataPanel = new GridBagConstraints();
-		gbc_addDataPanel.gridwidth = 6;
+		gbc_addDataPanel.gridwidth = 9;
 		gbc_addDataPanel.gridheight = 6;
 		gbc_addDataPanel.fill = GridBagConstraints.BOTH;
 		gbc_addDataPanel.gridx = 0;
 		gbc_addDataPanel.gridy = 0;
 		addPanel.add(addDataPanel, gbc_addDataPanel);
 		GridBagLayout gbl_addDataPanel = new GridBagLayout();
-		gbl_addDataPanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40};
+		gbl_addDataPanel.columnWidths = new int[] {40, 40, 40, 30, 40, 40, 40};
 		gbl_addDataPanel.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40};
 		gbl_addDataPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
 		gbl_addDataPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -241,19 +290,58 @@ public class MainFrame {
 		JPanel updatePanel = new JPanel();
 		tabbedPanel.addTab("Update", null, updatePanel, null);
 		
-		//read panel
-		JPanel readPanel = new JPanel();
-		tabbedPanel.addTab("Read", null, readPanel, null);
+		JPanel databasePanel = new JPanel();
+		databasePanel.setBorder(new TitledBorder(null, "Database", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_databasePanel = new GridBagConstraints();
+		gbc_databasePanel.gridheight = 7;
+		gbc_databasePanel.gridwidth = 7;
+		gbc_databasePanel.insets = new Insets(0, 0, 5, 0);
+		gbc_databasePanel.fill = GridBagConstraints.BOTH;
+		gbc_databasePanel.gridx = 4;
+		gbc_databasePanel.gridy = 0;
+		frame.getContentPane().add(databasePanel, gbc_databasePanel);
+		GridBagLayout gbl_databasePanel = new GridBagLayout();
+		gbl_databasePanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40};
+		gbl_databasePanel.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40};
+		gbl_databasePanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_databasePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		databasePanel.setLayout(gbl_databasePanel);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBackground(Color.DARK_GRAY);
+		GridBagConstraints gbc_textArea = new GridBagConstraints();
+		gbc_textArea.insets = new Insets(0, 0, 5, 0);
+		gbc_textArea.gridheight = 6;
+		gbc_textArea.gridwidth = 7;
+		gbc_textArea.fill = GridBagConstraints.BOTH;
+		gbc_textArea.gridx = 0;
+		gbc_textArea.gridy = 0;
+		databasePanel.add(textArea, gbc_textArea);
+		
+		JButton refreshDbBtn = new JButton("Refresh");
+		GridBagConstraints gbc_refreshDbBtn = new GridBagConstraints();
+		gbc_refreshDbBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_refreshDbBtn.gridwidth = 2;
+		gbc_refreshDbBtn.gridx = 1;
+		gbc_refreshDbBtn.gridy = 6;
+		databasePanel.add(refreshDbBtn, gbc_refreshDbBtn);
+		
+		JButton clearDbBtn = new JButton("Clear");
+		GridBagConstraints gbc_clearDbBtn = new GridBagConstraints();
+		gbc_clearDbBtn.gridwidth = 2;
+		gbc_clearDbBtn.gridx = 3;
+		gbc_clearDbBtn.gridy = 6;
+		databasePanel.add(clearDbBtn, gbc_clearDbBtn);
 		
 		//console panel
 		JPanel consolePanel = new JPanel();
-		consolePanel.setBorder(new TitledBorder(null, "Console:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		consolePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Console", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_consolePanel = new GridBagConstraints();
-		gbc_consolePanel.gridheight = 4;
-		gbc_consolePanel.gridwidth = 10;
+		gbc_consolePanel.gridwidth = 11;
+		gbc_consolePanel.gridheight = 3;
 		gbc_consolePanel.fill = GridBagConstraints.BOTH;
 		gbc_consolePanel.gridx = 0;
-		gbc_consolePanel.gridy = 6;
+		gbc_consolePanel.gridy = 7;
 		frame.getContentPane().add(consolePanel, gbc_consolePanel);
 		GridBagLayout gbl_consolePanel = new GridBagLayout();
 		gbl_consolePanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};

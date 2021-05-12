@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 public class Menu extends JMenuBar implements ActionListener{
 
-    private JMenu menuDBConnection = null;
+    public JMenu menuDBConnection = null;
     private JMenuItem dbTestConnectionItem = null;
     private JMenu menuHelp = null;
     private JMenuItem helpItem = null;

@@ -48,4 +48,20 @@ private ResultSet resSet = null;
             deleteErr.printStackTrace();
         }
     }
+
+    public void addEmployee(String lastName, String firstName, String department, String email, double salary) throws SQLException {
+        try{
+            open();
+            pStmt = conn.prepareStatement("insert into employees (last_name, first_name, department, email, salary)" +
+                    "values (?, ?, ?, ?, ?)");
+            pStmt.setString(1, lastName);
+            pStmt.setString(2, firstName);
+            pStmt.setString(3, department);
+            pStmt.setString(4, email);
+            pStmt.setDouble(5, salary);
+            close();
+        } catch (SQLException addErr) {
+            addErr.printStackTrace();
+        }
+    }
 }

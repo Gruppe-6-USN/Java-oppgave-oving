@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.gui.MainInterface;
+
+import javax.swing.*;
+
 /**
  * Hello world!
  *

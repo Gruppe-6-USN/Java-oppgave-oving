@@ -29,5 +29,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+
+	<classpathentry kind="lib" path="C:/Users/krist/OneDrive/skole/4. semester/objectoriented programming 2/database/JDBC connector/mysql-connector-java-8.0.23/mysql-connector-java-8.0.23.jar"/>
+
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

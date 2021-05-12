@@ -1,4 +1,7 @@
 package org.example.gui;
 
-public class MainInterface {
+import javax.swing.*;
+
+public class MainInterface extends JFrame {
+
 }

@@ -1,4 +1,8 @@
 package org.example.gui;
+//import org.example.database.DatabaseConnection;
+
+import org.example.database.DatabaseConnection;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -18,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JPopupMenu;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
@@ -28,9 +33,11 @@ import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import java.sql.SQLException;
 import javax.swing.border.EtchedBorder;
 
 public class MainFrame {
+	private DatabaseConnection databaseConnection = new DatabaseConnection();
 
 	public JFrame frame;
 	private JTextField firstNameTextField;
@@ -277,6 +284,12 @@ public class MainFrame {
 		gbc_applyBtn.gridx = 1;
 		gbc_applyBtn.gridy = 5;
 		addDataPanel.add(applyBtn, gbc_applyBtn);
+		applyBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 		
 		//clear button
 		JButton clearBtn = new JButton("Clear");
@@ -285,6 +298,17 @@ public class MainFrame {
 		gbc_clearBtn.gridx = 3;
 		gbc_clearBtn.gridy = 5;
 		addDataPanel.add(clearBtn, gbc_clearBtn);
+		clearBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				firstNameTextField.setText(null);
+				lastNameTextField.setText(null);
+				emailTextField.setText(null);
+				departmentTextField.setText(null);
+				emailTextField.setText(null);
+				salaryTextField.setText(null);
+			}
+		});
 		
 		//update panel
 		JPanel updatePanel = new JPanel();

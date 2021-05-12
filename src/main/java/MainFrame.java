@@ -24,6 +24,7 @@ import javax.swing.JTabbedPane;
 import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextArea;
+import java.awt.Color;
 
 public class MainFrame {
 
@@ -68,14 +69,15 @@ public class MainFrame {
 		gridBagLayout.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
 		gridBagLayout.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
 		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPanel = new GridBagConstraints();
-		gbc_tabbedPanel.gridheight = 6;
 		gbc_tabbedPanel.gridwidth = 10;
+		gbc_tabbedPanel.gridheight = 6;
 		gbc_tabbedPanel.fill = GridBagConstraints.BOTH;
+		gbc_tabbedPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_tabbedPanel.gridx = 0;
 		gbc_tabbedPanel.gridy = 0;
 		frame.getContentPane().add(tabbedPanel, gbc_tabbedPanel);
@@ -96,7 +98,7 @@ public class MainFrame {
 		addDataPanel.setBorder(new TitledBorder(null, "Add data", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_addDataPanel = new GridBagConstraints();
 		gbc_addDataPanel.gridwidth = 6;
-		gbc_addDataPanel.gridheight = 4;
+		gbc_addDataPanel.gridheight = 6;
 		gbc_addDataPanel.fill = GridBagConstraints.BOTH;
 		gbc_addDataPanel.gridx = 0;
 		gbc_addDataPanel.gridy = 0;
@@ -223,6 +225,33 @@ public class MainFrame {
 		
 		JPanel readPanel = new JPanel();
 		tabbedPanel.addTab("Read", null, readPanel, null);
+		
+		JPanel consolePanel = new JPanel();
+		consolePanel.setBorder(new TitledBorder(null, "Console:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_consolePanel = new GridBagConstraints();
+		gbc_consolePanel.gridheight = 4;
+		gbc_consolePanel.gridwidth = 10;
+		gbc_consolePanel.fill = GridBagConstraints.BOTH;
+		gbc_consolePanel.gridx = 0;
+		gbc_consolePanel.gridy = 6;
+		frame.getContentPane().add(consolePanel, gbc_consolePanel);
+		GridBagLayout gbl_consolePanel = new GridBagLayout();
+		gbl_consolePanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
+		gbl_consolePanel.rowHeights = new int[] {40, 40, 40};
+		gbl_consolePanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_consolePanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		consolePanel.setLayout(gbl_consolePanel);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBackground(Color.DARK_GRAY);
+		GridBagConstraints gbc_textArea = new GridBagConstraints();
+		gbc_textArea.gridwidth = 10;
+		gbc_textArea.gridheight = 3;
+		gbc_textArea.insets = new Insets(0, 0, 0, 5);
+		gbc_textArea.fill = GridBagConstraints.BOTH;
+		gbc_textArea.gridx = 0;
+		gbc_textArea.gridy = 0;
+		consolePanel.add(textArea, gbc_textArea);
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {

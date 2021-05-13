@@ -6,9 +6,7 @@ import org.example.database.DatabaseConnection;
 import java.awt.EventQueue;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Component;
@@ -17,11 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.CardLayout;
-import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
-import java.sql.SQLException;
 import javax.swing.border.EtchedBorder;
 
 public class MainFrame {
@@ -258,6 +253,19 @@ public class MainFrame {
 		addDataPanel.add(applyBtn, gbc_applyBtn);
 		
 
+		applyBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary() );
+					System.out.println("You added: ");
+				} catch (Exception exception) {
+					System.out.println("Something went wrong when adding new Employee");
+				}
+			}
+		});
+
+
 		
 		//clear button
 		JButton clearBtn = new JButton("Clear");
@@ -385,26 +393,62 @@ public class MainFrame {
 			try {
 				DatabaseConnection db = new DatabaseConnection();
 				db.open();
+				db.test();
 				db.close();
 				consoleTextArea.setText("Connection tested succesfully!");
 			} catch (Exception err) {
 				consoleTextArea.setText("Error with the connection!");
 			}	
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String argument  = e.getActionCommand();
+				if (argument.equals("Test database connection")) {
+					try {
+						DatabaseConnection db = new DatabaseConnection();
+						db.open();
+						//db.test();
+						db.close();
+						System.out.println("Connection tested succesfully");
+					}catch (Exception event) {
+						System.out.println("Error with the connection");
+					}
+				}
 			}
 		});
 		
+
+
+						db.close();
+						displayMessage("Connection tested succesfully");
+					}catch (Exception event) {
+						displayMessage("Error with the connection");
+					}
+				}else if (argument.equals("Exit")) {
+					System.exit(0);
+				}
+			}
+		});
+
+
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
-		
+
 		JMenuItem aboutItem = new JMenuItem("About the application");
 		aboutItem.setHorizontalAlignment(SwingConstants.CENTER);
 		helpMenu.add(aboutItem);
-		
+
 		JMenu exitMenu = new JMenu("Exit");
 		menuBar.add(exitMenu);
-		
+
 		JMenuItem exitItem = new JMenuItem("Exit the application");
 		exitMenu.add(exitItem);
+		exitItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 	}
 	
 	/*public void displayMessage(String message) {
@@ -446,12 +490,8 @@ public class MainFrame {
 		return emailTextField.getText();
 	}
 
-
 	public double getSalary() {
 		double salary = Double.parseDouble(salaryTextField.getText());
 		return salary;
 	}
-
-
-
 }

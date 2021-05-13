@@ -36,11 +36,11 @@ public class DatabaseConnection {
 		}
 	}
 
-	public void deleteEmployee(String id) throws SQLException {
+	public void deleteEmployee(int id) throws SQLException {
 		try {
 			open();
 			pStmt = conn.prepareStatement("delete from employees where id=?");
-			pStmt.setInt(1, Integer.parseInt(id));
+			pStmt.setInt(1, id);
 
 			pStmt.executeUpdate();
 

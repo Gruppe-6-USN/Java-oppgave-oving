@@ -110,6 +110,17 @@ private JTextField idTextField;
 		gbc_deleteBtn.gridx = 2;
 		gbc_deleteBtn.gridy = 2;
 		deleteIdPanel.add(deleteBtn, gbc_deleteBtn);
+
+		deleteBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try{
+					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
+				}catch (Exception delErr) {
+					delErr.printStackTrace();
+				}
+			}
+		});
 		
 		//add panel
 		JPanel addPanel = new JPanel();

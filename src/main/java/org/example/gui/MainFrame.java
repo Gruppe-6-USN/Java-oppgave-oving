@@ -361,6 +361,28 @@ public class MainFrame {
 		gbc_consoleTextArea.gridx = 0;
 		gbc_consoleTextArea.gridy = 0;
 		consolePanel.add(consoleTextArea, gbc_consoleTextArea);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		
+		JMenu databaseMenu = new JMenu("Database");
+		menuBar.add(databaseMenu);
+		
+		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
+		databaseMenu.add(dbTestConnectionItem);
+		
+		JMenu helpMenu = new JMenu("Help");
+		menuBar.add(helpMenu);
+		
+		JMenuItem aboutItem = new JMenuItem("About the application");
+		aboutItem.setHorizontalAlignment(SwingConstants.CENTER);
+		helpMenu.add(aboutItem);
+		
+		JMenu exitMenu = new JMenu("Exit");
+		menuBar.add(exitMenu);
+		
+		JMenuItem exitItem = new JMenuItem("Exit the application");
+		exitMenu.add(exitItem);
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {

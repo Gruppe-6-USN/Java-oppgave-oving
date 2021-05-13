@@ -517,10 +517,10 @@ private JTextField idTextField;
 				}
 				catch (MissingTextFieldException exception)
 				{
-				    consoleTextArea.setText("You must fill out all the fields : " + exception.getMessage());        
+				    consoleTextArea.append("You must fill out all the fields : " + exception.getMessage());        
 				}
 				catch (Exception exception) {
-					consoleTextArea.setText("Something went wrong when adding new Employee : " + exception.getMessage());
+					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage());
 				}			
 			}
 		});

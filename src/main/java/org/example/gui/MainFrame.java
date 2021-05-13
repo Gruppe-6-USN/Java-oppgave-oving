@@ -262,17 +262,7 @@ private JTextField idTextField;
 		addDataPanel.add(applyBtn, gbc_applyBtn);
 		
 
-		applyBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary() );
-					System.out.println("You added: ");
-				} catch (Exception exception) {
-					System.out.println("Something went wrong when adding new Employee");
-				}
-			}
-		});
+
 
 
 		
@@ -369,6 +359,34 @@ private JTextField idTextField;
 		
 		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 		databaseMenu.add(dbTestConnectionItem);
+		dbTestConnectionItem.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				DatabaseConnection db = new DatabaseConnection();
+				db.open();
+				db.close();
+				consoleTextArea.setText("Connection tested succesfully!");
+			} catch (Exception err) {
+				consoleTextArea.setText("Error with the connection!" + err);
+				
+			}
+		}			
+		}
+		);
+		applyBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary());
+					consoleTextArea.setText("Employee is added" + " " +  getFirstName() + " " + getLastName() );
+
+				} catch (Exception exception) {
+					consoleTextArea.setText("Something went wrong when adding new Employee");
+				}
+			}
+		});
 
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
@@ -376,6 +394,12 @@ private JTextField idTextField;
 		JMenuItem aboutItem = new JMenuItem("About the application");
 		aboutItem.setHorizontalAlignment(SwingConstants.CENTER);
 		helpMenu.add(aboutItem);
+		aboutItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				consoleTextArea.setText("Hei på deg");
+			}
+		});
 
 		JMenu exitMenu = new JMenu("Exit");
 		menuBar.add(exitMenu);

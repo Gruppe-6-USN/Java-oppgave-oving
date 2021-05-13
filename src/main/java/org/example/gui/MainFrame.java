@@ -263,17 +263,7 @@ private JTextField idTextField;
 		addDataPanel.add(applyBtn, gbc_applyBtn);
 		
 
-		applyBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary() );
-					System.out.println("You added: ");
-				} catch (Exception exception) {
-					System.out.println("Something went wrong when adding new Employee");
-				}
-			}
-		});
+
 
 
 		
@@ -397,6 +387,19 @@ private JTextField idTextField;
 		}			
 		}
 		);
+		applyBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary());
+					consoleTextArea.setText("Employee is added" + " " +  getFirstName() + " " + getLastName() );
+
+				} catch (Exception exception) {
+					consoleTextArea.setText("Something went wrong when adding new Employee");
+				}
+			}
+		});
 
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);

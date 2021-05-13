@@ -380,7 +380,8 @@ private JTextField idTextField;
 				db.close();
 				consoleTextArea.setText("Connection tested succesfully!");
 			} catch (Exception err) {
-				consoleTextArea.setText("Error with the connection!");
+				consoleTextArea.setText("Error with the connection!" + err);
+				
 			}
 		}			
 		}

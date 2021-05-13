@@ -2,6 +2,8 @@ package org.example.gui;
 
 import org.example.database.DatabaseConnection;
 import org.example.database.Employee;
+import org.example.gui.exceptions.MissingTextFieldException;
+
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -488,12 +490,38 @@ private JTextField idTextField;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary());
-					consoleTextArea.append("Employee has been added:" + " " +  getFirstName() + " " + getLastName() );
+					String firstName = getFirstName();
+					String lastName = getLastName(); //lastNameTextField.getText(); fixe den senere
+					String email = getEmail();
+					String department = getDepartment();
+					double salary = getSalary();
 					
-				} catch (Exception exception) {
-					consoleTextArea.append("Error occured when adding new employee. Error:" + " " + exception);
+					// for debugging senere
+					/* System.out.println("<== firstName :: " + firstName + " ==>");
+					System.out.println("<== lastName :: " + lastName + " ==>");
+					System.out.println("<== email :: " + email + " ==>");
+					System.out.println("<== department :: " + department + " ==>");
+					System.out.println("<== Salary :: " + salary + " ==>"); */
+					
+					if (firstName == null || firstName.isEmpty())
+						throw new MissingTextFieldException("firstName is not present");
+					if (lastName == null || lastName.isEmpty())
+						throw new MissingTextFieldException("lastName is not present");
+					if (email == null || email.isEmpty())
+						throw new MissingTextFieldException("email is not present");
+					if (department == null || department.isEmpty())
+						throw new MissingTextFieldException("department is not present");
+					
+					databaseConnection.addEmployee(lastName, firstName, department, email, salary);
+					consoleTextArea.setText("Employee is added" + " " +  firstName + " " + lastName);	
 				}
+				catch (MissingTextFieldException exception)
+				{
+				    consoleTextArea.setText("You must fill out all the fields : " + exception.getMessage());        
+				}
+				catch (Exception exception) {
+					consoleTextArea.setText("Something went wrong when adding new Employee : " + exception.getMessage());
+				}			
 			}
 		});
 		

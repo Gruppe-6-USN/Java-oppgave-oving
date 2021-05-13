@@ -6,9 +6,7 @@ import org.example.database.DatabaseConnection;
 import java.awt.EventQueue;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Component;
@@ -17,11 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.CardLayout;
-import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
-import java.sql.SQLException;
 import javax.swing.border.EtchedBorder;
 
 public class MainFrame extends Component {
@@ -276,13 +271,15 @@ public class MainFrame extends Component {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), 35000);
-					displayMessage("You added: ");
+					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary() );
+					System.out.println("You added: ");
 				} catch (Exception exception) {
-					displayMessage("Something went wrong when adding new Employee");
+					System.out.println("Something went wrong when adding new Employee");
 				}
 			}
 		});
+
+
 		
 		//clear button
 		JButton clearBtn = new JButton("Clear");
@@ -387,17 +384,37 @@ public class MainFrame extends Component {
 		
 		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 		databaseMenu.add(dbTestConnectionItem);
-		
+		dbTestConnectionItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String argument  = e.getActionCommand();
+				if (argument.equals("Test database connection")) {
+					try {
+						DatabaseConnection db = new DatabaseConnection();
+						db.open();
+
+						db.close();
+						displayMessage("Connection tested succesfully");
+					}catch (Exception event) {
+						displayMessage("Error with the connection");
+					}
+				}else if (argument.equals("Exit")) {
+					System.exit(0);
+				}
+			}
+		});
+
+
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
-		
+
 		JMenuItem aboutItem = new JMenuItem("About the application");
 		aboutItem.setHorizontalAlignment(SwingConstants.CENTER);
 		helpMenu.add(aboutItem);
-		
+
 		JMenu exitMenu = new JMenu("Exit");
 		menuBar.add(exitMenu);
-		
+
 		JMenuItem exitItem = new JMenuItem("Exit the application");
 		exitMenu.add(exitItem);
 	}
@@ -436,6 +453,7 @@ public class MainFrame extends Component {
 	public String getEmail() {
 		return emailTextField.getText();
 	}
+	public double getSalary() {return Double.parseDouble(salaryTextField.getText()); }
 
 
 	/*public double getSalary() {

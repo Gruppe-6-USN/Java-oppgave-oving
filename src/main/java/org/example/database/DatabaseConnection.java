@@ -16,6 +16,7 @@ public class DatabaseConnection {
 	private ResultSet resSet = null;
 
 
+
 	public void open() throws SQLException {
 		try {
 			
@@ -53,13 +54,19 @@ public class DatabaseConnection {
 	public void addEmployee(String lastName, String firstName, String department, String email, double salary) throws SQLException {
 		try {
 			open();
-			pStmt = conn.prepareStatement("insert into employees (last_name, first_name, department, email, salary)" +
-					"values (?, ?, ?, ?, ?)");
+			String query = "insert into employees " +
+					"(last_name, first_name, email, department, salary)" +
+					"values " +
+					"(?, ?, ?, ?, ?)";
+			pStmt = conn.prepareStatement(query);
+
 			pStmt.setString(1, lastName);
 			pStmt.setString(2, firstName);
 			pStmt.setString(3, department);
 			pStmt.setString(4, email);
 			pStmt.setDouble(5, salary);
+
+			pStmt.execute();
 			close();
 		} catch (SQLException addErr) {
 			addErr.printStackTrace();

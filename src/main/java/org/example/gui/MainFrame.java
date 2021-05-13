@@ -115,6 +115,7 @@ private JTextField idTextField;
 			public void actionPerformed(ActionEvent e) {
 				try{
 					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
+					idTextField.setText(null);
 				}catch (Exception delErr) {
 					delErr.printStackTrace();
 				}

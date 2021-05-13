@@ -60,7 +60,7 @@ public class DatabaseConnection {
 			pStmt.setString(3, department);
 			pStmt.setString(4, email);
 			pStmt.setDouble(5, salary);
-			pStmt.executeQuery();
+			pStmt.execute();
 			close();
 		} catch (SQLException addErr) {
 			addErr.printStackTrace();

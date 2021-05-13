@@ -462,7 +462,7 @@ private JTextField idTextField;
 	}
 
 	public double getSalary() {
-		double salary = Double.parseDouble(salaryTextField.getText());
-		return salary;
+		return Double.parseDouble(salaryTextField.getText());
+
 	}
 }

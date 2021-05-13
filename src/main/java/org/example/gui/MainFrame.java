@@ -407,6 +407,12 @@ private JTextField idTextField;
 		JMenuItem aboutItem = new JMenuItem("About the application");
 		aboutItem.setHorizontalAlignment(SwingConstants.CENTER);
 		helpMenu.add(aboutItem);
+		aboutItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				consoleTextArea.setText("Hei på deg");
+			}
+		});
 
 		JMenu exitMenu = new JMenu("Exit");
 		menuBar.add(exitMenu);

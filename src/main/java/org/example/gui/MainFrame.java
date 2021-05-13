@@ -374,21 +374,6 @@ private JTextField idTextField;
 		gbc_consoleTextArea.gridy = 0;
 		consolePanel.add(consoleTextArea, gbc_consoleTextArea);
 		
-		applyBtn.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			consoleTextArea.setText("LOL");
-				/*try {
-					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary());
-					displayMessage("You added: ");
-					System.out.println("test");
-				} catch (Exception exception) {
-					displayMessage("Something went wrong when adding new Employee");
-					System.out.println("test");
-				}*/
-			}
-		});
-		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
@@ -406,7 +391,8 @@ private JTextField idTextField;
 				db.close();
 				consoleTextArea.setText("Connection tested succesfully!");
 			} catch (Exception err) {
-				consoleTextArea.setText("Error with the connection!");
+				consoleTextArea.setText("Error with the connection!" + err);
+				
 			}
 		}			
 		}

@@ -24,7 +24,7 @@ import java.awt.Color;
 import java.sql.SQLException;
 import javax.swing.border.EtchedBorder;
 
-public class MainFrame extends Component {
+public class MainFrame {
 	private DatabaseConnection databaseConnection = new DatabaseConnection();
 
 	public JFrame frame;
@@ -33,23 +33,7 @@ public class MainFrame extends Component {
 	private JTextField emailTextField;
 	private JTextField departmentTextField;
 	private JTextField salaryTextField;
-	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame window = new MainFrame();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextField idTextField;
 
 	/**
 	 * Create the application.
@@ -118,14 +102,14 @@ public class MainFrame extends Component {
 		gbc_idLabel.gridy = 1;
 		deleteIdPanel.add(idLabel, gbc_idLabel);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.anchor = GridBagConstraints.NORTHWEST;
-		gbc_textField.gridx = 2;
-		gbc_textField.gridy = 1;
-		deleteIdPanel.add(textField, gbc_textField);
+		idTextField = new JTextField();
+		idTextField.setColumns(10);
+		GridBagConstraints gbc_idTextField = new GridBagConstraints();
+		gbc_idTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_idTextField.anchor = GridBagConstraints.NORTHWEST;
+		gbc_idTextField.gridx = 2;
+		gbc_idTextField.gridy = 1;
+		deleteIdPanel.add(idTextField, gbc_idTextField);
 		
 		JButton deleteBtn = new JButton("Delete");
 		GridBagConstraints gbc_deleteBtn = new GridBagConstraints();
@@ -272,17 +256,8 @@ public class MainFrame extends Component {
 		gbc_applyBtn.gridx = 1;
 		gbc_applyBtn.gridy = 5;
 		addDataPanel.add(applyBtn, gbc_applyBtn);
-		applyBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), 35000);
-					displayMessage("You added: ");
-				} catch (Exception exception) {
-					displayMessage("Something went wrong when adding new Employee");
-				}
-			}
-		});
+		
+
 		
 		//clear button
 		JButton clearBtn = new JButton("Clear");
@@ -291,15 +266,16 @@ public class MainFrame extends Component {
 		gbc_clearBtn.gridx = 3;
 		gbc_clearBtn.gridy = 5;
 		addDataPanel.add(clearBtn, gbc_clearBtn);
+		
 		clearBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				firstNameTextField.setText(null);
-				lastNameTextField.setText(null);
-				emailTextField.setText(null);
-				departmentTextField.setText(null);
-				emailTextField.setText(null);
-				salaryTextField.setText(null);
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			firstNameTextField.setText(null);
+			lastNameTextField.setText(null);
+			emailTextField.setText(null);
+			departmentTextField.setText(null);
+			emailTextField.setText(null);
+			salaryTextField.setText(null);
 			}
 		});
 		
@@ -324,16 +300,16 @@ public class MainFrame extends Component {
 		gbl_databasePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		databasePanel.setLayout(gbl_databasePanel);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBackground(Color.DARK_GRAY);
-		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.insets = new Insets(0, 0, 5, 0);
-		gbc_textArea.gridheight = 6;
-		gbc_textArea.gridwidth = 7;
-		gbc_textArea.fill = GridBagConstraints.BOTH;
-		gbc_textArea.gridx = 0;
-		gbc_textArea.gridy = 0;
-		databasePanel.add(textArea, gbc_textArea);
+		JTextArea databaseTextArea = new JTextArea();
+		databaseTextArea.setBackground(Color.DARK_GRAY);
+		GridBagConstraints gbc_databaseTextArea = new GridBagConstraints();
+		gbc_databaseTextArea.insets = new Insets(0, 0, 5, 0);
+		gbc_databaseTextArea.gridheight = 6;
+		gbc_databaseTextArea.gridwidth = 7;
+		gbc_databaseTextArea.fill = GridBagConstraints.BOTH;
+		gbc_databaseTextArea.gridx = 0;
+		gbc_databaseTextArea.gridy = 0;
+		databasePanel.add(databaseTextArea, gbc_databaseTextArea);
 		
 		JButton refreshDbBtn = new JButton("Refresh");
 		GridBagConstraints gbc_refreshDbBtn = new GridBagConstraints();
@@ -368,7 +344,8 @@ public class MainFrame extends Component {
 		consolePanel.setLayout(gbl_consolePanel);
 		
 		//console text area
-		JTextArea consoleTextArea = new JTextArea();
+		final JTextArea consoleTextArea = new JTextArea();
+		consoleTextArea.setForeground(Color.WHITE);
 		consoleTextArea.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_consoleTextArea = new GridBagConstraints();
 		gbc_consoleTextArea.gridwidth = 10;
@@ -379,6 +356,21 @@ public class MainFrame extends Component {
 		gbc_consoleTextArea.gridy = 0;
 		consolePanel.add(consoleTextArea, gbc_consoleTextArea);
 		
+		applyBtn.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			consoleTextArea.setText("LOL");
+				/*try {
+					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary());
+					displayMessage("You added: ");
+					System.out.println("test");
+				} catch (Exception exception) {
+					displayMessage("Something went wrong when adding new Employee");
+					System.out.println("test");
+				}*/
+			}
+		});
+		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
@@ -387,6 +379,20 @@ public class MainFrame extends Component {
 		
 		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 		databaseMenu.add(dbTestConnectionItem);
+		dbTestConnectionItem.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				DatabaseConnection db = new DatabaseConnection();
+				db.open();
+				db.test();
+				db.close();
+				consoleTextArea.setText("Connection tested succesfully!");
+			} catch (Exception err) {
+				consoleTextArea.setText("Error with the connection!");
+			}	
+			}
+		});
 		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
@@ -401,6 +407,10 @@ public class MainFrame extends Component {
 		JMenuItem exitItem = new JMenuItem("Exit the application");
 		exitMenu.add(exitItem);
 	}
+	
+	/*public void displayMessage(String message) {
+		consoleTextArea.setText(message);
+	}*/
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
@@ -419,8 +429,8 @@ public class MainFrame extends Component {
 			}
 		});
 	}
-
-	public String getLastName() {
+	
+		public String getLastName() {
 		return lastNameTextField.getText();
 	}
 
@@ -438,12 +448,11 @@ public class MainFrame extends Component {
 	}
 
 
-	/*public double getSalary() {
-		return salaryTextField;
-	}*/
-
-	public void displayMessage(String message) {
-		JOptionPane.showMessageDialog(this, message);
+	public double getSalary() {
+		double salary = Double.parseDouble(salaryTextField.getText());
+		return salary;
 	}
+
+
 
 }

@@ -1,5 +1,4 @@
 package org.example.gui;
-//import org.example.database.DatabaseConnection;
 
 import org.example.database.DatabaseConnection;
 
@@ -20,15 +19,15 @@ import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 
 public class MainFrame {
-	private DatabaseConnection databaseConnection = new DatabaseConnection();
+private DatabaseConnection databaseConnection = new DatabaseConnection();
 
-	public JFrame frame;
-	private JTextField firstNameTextField;
-	private JTextField lastNameTextField;
-	private JTextField emailTextField;
-	private JTextField departmentTextField;
-	private JTextField salaryTextField;
-	private JTextField idTextField;
+public JFrame frame;
+private JTextField firstNameTextField;
+private JTextField lastNameTextField;
+private JTextField emailTextField;
+private JTextField departmentTextField;
+private JTextField salaryTextField;
+private JTextField idTextField;
 
 	/**
 	 * Create the application.
@@ -393,43 +392,14 @@ public class MainFrame {
 			try {
 				DatabaseConnection db = new DatabaseConnection();
 				db.open();
-				db.test();
 				db.close();
 				consoleTextArea.setText("Connection tested succesfully!");
 			} catch (Exception err) {
 				consoleTextArea.setText("Error with the connection!");
-			}	
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String argument  = e.getActionCommand();
-				if (argument.equals("Test database connection")) {
-					try {
-						DatabaseConnection db = new DatabaseConnection();
-						db.open();
-						//db.test();
-						db.close();
-						System.out.println("Connection tested succesfully");
-					}catch (Exception event) {
-						System.out.println("Error with the connection");
-					}
-				}
 			}
-		});
-		
-
-
-						db.close();
-						displayMessage("Connection tested succesfully");
-					}catch (Exception event) {
-						displayMessage("Error with the connection");
-					}
-				}else if (argument.equals("Exit")) {
-					System.exit(0);
-				}
-			}
-		});
-
+		}			
+		}
+		);
 
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
@@ -450,6 +420,7 @@ public class MainFrame {
 			}
 		});
 	}
+	
 	
 	/*public void displayMessage(String message) {
 		consoleTextArea.setText(message);

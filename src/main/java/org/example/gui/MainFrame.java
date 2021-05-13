@@ -29,16 +29,15 @@ private JTextField departmentTextField;
 private JTextField salaryTextField;
 private JTextField idTextField;
 
-	/**
-	 * Create the application.
-	 */
+
+//ADD ACTION EVENT LISTENER BENEATH THE GUI-CONTENT
+
+	//CREATE THE APPLICATION
 	public MainFrame() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	//INITIALIZE CONTENT
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 564, 565);
@@ -50,7 +49,7 @@ private JTextField idTextField;
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
-		// tabbed panel
+		//TABBED PANEL
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPanel = new GridBagConstraints();
 		gbc_tabbedPanel.gridwidth = 4;
@@ -61,7 +60,7 @@ private JTextField idTextField;
 		gbc_tabbedPanel.gridy = 0;
 		frame.getContentPane().add(tabbedPanel, gbc_tabbedPanel);
 		
-		//delete panel
+		//DELETE TAB
 		JPanel deletePanel = new JPanel();
 		tabbedPanel.addTab("Delete", null, deletePanel, null);
 		GridBagLayout gbl_deletePanel = new GridBagLayout();
@@ -285,18 +284,6 @@ private JTextField idTextField;
 		gbc_clearBtn.gridy = 5;
 		addDataPanel.add(clearBtn, gbc_clearBtn);
 		
-		clearBtn.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			firstNameTextField.setText(null);
-			lastNameTextField.setText(null);
-			emailTextField.setText(null);
-			departmentTextField.setText(null);
-			emailTextField.setText(null);
-			salaryTextField.setText(null);
-			}
-		});
-		
 		//update panel
 		JPanel updatePanel = new JPanel();
 		tabbedPanel.addTab("Update", null, updatePanel, null);
@@ -382,21 +369,6 @@ private JTextField idTextField;
 		
 		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 		databaseMenu.add(dbTestConnectionItem);
-		dbTestConnectionItem.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				DatabaseConnection db = new DatabaseConnection();
-				db.open();
-				db.close();
-				consoleTextArea.setText("Connection tested succesfully!");
-			} catch (Exception err) {
-				consoleTextArea.setText("Error with the connection!" + err);
-				
-			}
-		}			
-		}
-		);
 
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
@@ -410,6 +382,38 @@ private JTextField idTextField;
 
 		JMenuItem exitItem = new JMenuItem("Exit the application");
 		exitMenu.add(exitItem);
+		
+		//ACTION EVENT LISTENERS
+		
+		//clear button event
+		clearBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				firstNameTextField.setText(null);
+				lastNameTextField.setText(null);
+				emailTextField.setText(null);
+				departmentTextField.setText(null);
+				emailTextField.setText(null);
+				salaryTextField.setText(null);
+				}
+			});
+		
+		//test connection event
+		dbTestConnectionItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					DatabaseConnection db = new DatabaseConnection();
+					db.open();
+					db.close();
+					consoleTextArea.append("Connection tested succesfully! \n");
+					} catch (Exception err) {
+					consoleTextArea.append("Error with the connection!" + " " + err + "\n" );
+					}
+				}
+			});
+		
+		//exit event
 		exitItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -418,11 +422,7 @@ private JTextField idTextField;
 		});
 	}
 	
-	
-	/*public void displayMessage(String message) {
-		consoleTextArea.setText(message);
-	}*/
-
+	//ADDITIONAL METHODS
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {

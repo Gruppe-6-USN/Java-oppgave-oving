@@ -2,6 +2,8 @@ package org.example.database;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseConnection {
 
@@ -67,35 +69,62 @@ public class DatabaseConnection {
 		}
 	}
 
-		public void updateUser(String id, String firstName, String lastName, String
-		department, String email, double salary){
-
+		public void updateUser(String id, String firstName, String lastName, String department, String email, double salary) throws SQLException{
 			try {
-
 				open();
-
 				String OppdaterSQL = "UPDATE employees SET first_name = ?,  last_name = ?, department = ?, email = ?, salary = ? WHERE id = ?";
-
+				
 				stmt = conn.prepareStatement(OppdaterSQL);
-
-
+				
 				pStmt.setInt(6, Integer.parseInt(id));
 				pStmt.setString(1, firstName);
 				pStmt.setString(2, lastName);
 				pStmt.setString(3, department);
 				pStmt.setString(4, email);
 				pStmt.setDouble(5, salary);
-
-
+				
 				pStmt.execute();
+				
 				JOptionPane.showMessageDialog(null, "Bruker er oppdatert");
 				close();
 
-			} catch (
-					SQLException e1) {
+			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		}
+		
+		public List<Employee> showEmployees() throws SQLException {
+			ArrayList<Employee> employees = new ArrayList<Employee>();
+			try{
+			open();
+		    pStmt = conn.prepareStatement("SELECT * FROM employees");
+		    resSet = pStmt.executeQuery();
+		    
+		    while (resSet.next()) {
+		    	int id = resSet.getInt("id");
+		    	String firstName = resSet.getString("first_name");
+		    	String lastName = resSet.getString("last_name");
+		    	String email = resSet.getString("email");
+		    	String department = resSet.getString("department");
+		    	double salary = resSet.getDouble("salary");
+
+		    	Employee current = new Employee(id, firstName, lastName, email, department, salary);
+		    	employees.add(current);
+		    	/*employees = employees.toString();*/
+		    	
+		    	
+		      }
+		    
+		    close();
+		    return employees;
+		    } catch (SQLException e) {
+		      e.printStackTrace();
+		 }
+			return null;
+				 
+		}
+		
+		
 	}
 
 

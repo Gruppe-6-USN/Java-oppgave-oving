@@ -6,13 +6,14 @@ public class Employee {
     private double salary;
 
 
-    public Employee(String lastName, String firstName, String department, double salary, String email) {
+    public Employee(int id, String firstName, String lastName, String email, String department, double salary) {
         super();
+        this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
-        this.department = department;
-        this.salary = salary;
         this.email = email;
+        this.department = department;
+        this.salary = salary;     
     }
 
     public int getId() {

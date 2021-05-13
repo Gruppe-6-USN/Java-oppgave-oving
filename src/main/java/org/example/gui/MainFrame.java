@@ -5,38 +5,26 @@ import org.example.database.DatabaseConnection;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.SwingConstants;
 import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JPopupMenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JMenu;
 import java.awt.CardLayout;
-import javax.swing.JTextField;
-import javax.swing.JTabbedPane;
 import java.awt.FlowLayout;
 import javax.swing.border.TitledBorder;
-import javax.swing.JTextArea;
 import java.awt.Color;
 import java.sql.SQLException;
 import javax.swing.border.EtchedBorder;
 
-public class MainFrame {
+public class MainFrame extends Component {
 	private DatabaseConnection databaseConnection = new DatabaseConnection();
 
 	public JFrame frame;
@@ -287,7 +275,12 @@ public class MainFrame {
 		applyBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				try {
+					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), 35000);
+					displayMessage("You added: ");
+				} catch (Exception exception) {
+					displayMessage("Something went wrong when adding new Employee");
+				}
 			}
 		});
 		
@@ -404,4 +397,31 @@ public class MainFrame {
 			}
 		});
 	}
+
+	public String getLastName() {
+		return lastNameTextField.getText();
+	}
+
+	public String getFirstName() {
+		return firstNameTextField.getText();
+	}
+
+	public String getDepartment() {
+		return departmentTextField.getText();
+	}
+
+
+	public String getEmail() {
+		return emailTextField.getText();
+	}
+
+
+	/*public double getSalary() {
+		return salaryTextField;
+	}*/
+
+	public void displayMessage(String message) {
+		JOptionPane.showMessageDialog(this, message);
+	}
+
 }

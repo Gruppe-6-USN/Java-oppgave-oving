@@ -55,6 +55,7 @@ private JTextField idTextField;
 		
 		//MAIN FRAME
 		frame = new JFrame();
+		frame.setTitle("DB-Admin v2.0");
 		frame.setBounds(100, 100, 771, 565);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -513,14 +514,14 @@ private JTextField idTextField;
 						throw new MissingTextFieldException("department is not present");
 					
 					databaseConnection.addEmployee(lastName, firstName, department, email, salary);
-					consoleTextArea.setText("Employee is added" + " " +  firstName + " " + lastName);	
+					consoleTextArea.setText("Employee is added" + " " +  firstName + " " + lastName + "\n");	
 				}
 				catch (MissingTextFieldException exception)
 				{
-				    consoleTextArea.append("You must fill out all the fields : " + exception.getMessage());        
+				    consoleTextArea.append("You must fill out all the fields : " + exception.getMessage() + "\n");        
 				}
 				catch (Exception exception) {
-					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage());
+					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage() + "\n");
 				}			
 			}
 		});

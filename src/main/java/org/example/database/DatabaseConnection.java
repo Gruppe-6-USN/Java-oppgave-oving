@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class DatabaseConnection {
 
-	private static final String database = "jdbc:mysql//https://itfag.usn.no/233574";
+	private static final String database = "jdbc:mysql://itfag.usn.no/233574";
 
 	private static final String brukernavn = "233574";
 	private static final String pw = "JWeiMrF0";

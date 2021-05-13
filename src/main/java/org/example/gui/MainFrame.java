@@ -109,17 +109,6 @@ private JTextField idTextField;
 		gbc_deleteBtn.gridx = 2;
 		gbc_deleteBtn.gridy = 2;
 		deleteIdPanel.add(deleteBtn, gbc_deleteBtn);
-
-		deleteBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try{
-					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
-				}catch (Exception delErr) {
-					delErr.printStackTrace();
-				}
-			}
-		});
 		
 		//add panel
 		JPanel addPanel = new JPanel();
@@ -261,11 +250,6 @@ private JTextField idTextField;
 		gbc_applyBtn.gridy = 5;
 		addDataPanel.add(applyBtn, gbc_applyBtn);
 		
-
-
-
-
-		
 		//clear button
 		JButton clearBtn = new JButton("Clear");
 		GridBagConstraints gbc_clearBtn = new GridBagConstraints();
@@ -359,34 +343,6 @@ private JTextField idTextField;
 		
 		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 		databaseMenu.add(dbTestConnectionItem);
-		dbTestConnectionItem.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				DatabaseConnection db = new DatabaseConnection();
-				db.open();
-				db.close();
-				consoleTextArea.setText("Connection tested succesfully!");
-			} catch (Exception err) {
-				consoleTextArea.setText("Error with the connection!" + err);
-				
-			}
-		}			
-		}
-		);
-		applyBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary());
-					consoleTextArea.setText("Employee is added" + " " +  getFirstName() + " " + getLastName() );
-
-				} catch (Exception exception) {
-					consoleTextArea.setText("Something went wrong when adding new Employee");
-				}
-			}
-		});
 
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
@@ -408,6 +364,33 @@ private JTextField idTextField;
 		exitMenu.add(exitItem);
 		
 		//ACTION EVENT LISTENERS
+		
+		//delete button event
+		deleteBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try{
+					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
+				}catch (Exception delErr) {
+					delErr.printStackTrace();
+				}
+			}
+		});
+		
+		//apply button event
+		applyBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), getSalary());
+					consoleTextArea.setText("Employee is added" + " " +  getFirstName() + " " + getLastName() );
+
+				} catch (Exception exception) {
+					consoleTextArea.setText("Something went wrong when adding new Employee");
+				}
+			}
+		});
 		
 		//clear button event
 		clearBtn.addActionListener(new ActionListener() {

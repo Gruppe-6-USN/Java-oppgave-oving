@@ -385,7 +385,6 @@ public class MainFrame {
 			try {
 				DatabaseConnection db = new DatabaseConnection();
 				db.open();
-				db.test();
 				db.close();
 				consoleTextArea.setText("Connection tested succesfully!");
 			} catch (Exception err) {

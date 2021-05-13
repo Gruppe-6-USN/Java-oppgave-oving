@@ -42,7 +42,7 @@ public class DatabaseConnection {
 			pStmt = conn.prepareStatement("delete from employees where id=?");
 			pStmt.setInt(1, Integer.parseInt(id));
 
-			resSet = pStmt.executeQuery();
+			pStmt.executeUpdate();
 
 			close();
 		} catch (SQLException deleteErr) {

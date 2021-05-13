@@ -277,9 +277,9 @@ public class MainFrame extends Component {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					databaseConnection.addEmployee(getFirstName(), getLastName(), getEmail(), getDepartment(), 35000);
-					displayMessage("You added: ");
+					System.out.println("You added: ");
 				} catch (Exception exception) {
-					displayMessage("Something went wrong when adding new Employee");
+					System.out.println("Something went wrong when adding new Employee");
 				}
 			}
 		});
@@ -387,6 +387,23 @@ public class MainFrame extends Component {
 		
 		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 		databaseMenu.add(dbTestConnectionItem);
+		dbTestConnectionItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String argument  = e.getActionCommand();
+				if (argument.equals("Test database connection")) {
+					try {
+						DatabaseConnection db = new DatabaseConnection();
+						db.open();
+						//db.test();
+						db.close();
+						System.out.println("Connection tested succesfully");
+					}catch (Exception event) {
+						System.out.println("Error with the connection");
+					}
+				}
+			}
+		});
 		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
@@ -400,6 +417,12 @@ public class MainFrame extends Component {
 		
 		JMenuItem exitItem = new JMenuItem("Exit the application");
 		exitMenu.add(exitItem);
+		exitItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
@@ -442,8 +465,5 @@ public class MainFrame extends Component {
 		return salaryTextField;
 	}*/
 
-	public void displayMessage(String message) {
-		JOptionPane.showMessageDialog(this, message);
-	}
 
 }

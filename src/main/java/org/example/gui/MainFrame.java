@@ -339,6 +339,7 @@ private JTextField idTextField;
 		gbc_refreshDbBtn.gridx = 2;
 		gbc_refreshDbBtn.gridy = 6;
 		databasePanel.add(refreshDbBtn, gbc_refreshDbBtn);
+		refreshDbBtn.setToolTipText("Refresh to show all the employees in the database");
 		
 		//CLEAR BUTTON
 		JButton clearDbBtn = new JButton("Clear");
@@ -406,6 +407,7 @@ private JTextField idTextField;
 		gbc_clearConsoleBtn.gridx = 0;
 		gbc_clearConsoleBtn.gridy = 3;
 		consolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);
+		clearConsoleBtn.setToolTipText("Clear the console window");
 		
 		//MENU BAR
 		JMenuBar menuBar = new JMenuBar();

@@ -4,6 +4,7 @@ import org.example.database.DatabaseConnection;
 import org.example.database.Employee;
 import org.example.gui.exceptions.MissingTextFieldException;
 
+
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import javax.swing.border.TitledBorder;
@@ -278,6 +280,7 @@ private JTextField idTextField;
 		gbc_clearBtn.gridx = 3;
 		gbc_clearBtn.gridy = 5;
 		addDataPanel.add(clearBtn, gbc_clearBtn);
+		clearBtn.setToolTipText("Clears all information in the form");
 		
 		//UPDATE TAB
 		JPanel updatePanel = new JPanel();
@@ -532,11 +535,14 @@ private JTextField idTextField;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					
+					
 					String firstName = getFirstName();
 					String lastName = getLastName(); //lastNameTextField.getText(); fixe den senere
 					String email = getEmail();
 					String department = getDepartment();
 					double salary = getSalary();
+					
 					
 					// for debugging senere
 					/* System.out.println("<== firstName :: " + firstName + " ==>");
@@ -557,8 +563,16 @@ private JTextField idTextField;
 						throw new MissingTextFieldException("department is not present");
 
 					
+					
+					
+					
 					databaseConnection.addEmployee(lastName, firstName, department, email, salary);
 					consoleTextArea.setText("Employee: " + " " +  firstName + " " + lastName + " is added\n");
+					
+				}
+				catch (NumberFormatException exception)
+				{
+					consoleTextArea.append("salary must be a number" + exception.getMessage() + "\n");
 				}
 				catch (MissingTextFieldException exception)
 				{

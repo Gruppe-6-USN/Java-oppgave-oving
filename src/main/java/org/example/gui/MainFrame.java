@@ -53,8 +53,6 @@ private JTextField idTextField;
 	//INITIALIZE CONTENT
 	public void initialize() {
 
-		final JFileChooser fileChooser = new JFileChooser();
-
 		//MAIN FRAME
 		frame = new JFrame();
 		frame.setTitle("DB-Admin v2.0");
@@ -449,6 +447,7 @@ private JTextField idTextField;
 		//makes new stringwriter and throwable objects that can be used to print stacktrace to console text area in application
 		final StringWriter stackTraceWriter = new StringWriter();
 		final Throwable throwableElement = new Throwable();
+		final JFileChooser fileChooser = new JFileChooser();
 		
 		//REFRESH DB BUTTON - shows updated count of all employees in database text area
         refreshDbBtn.addActionListener(new ActionListener() { 
@@ -522,8 +521,8 @@ private JTextField idTextField;
 					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
 					consoleTextArea.append("Employee with id: " + idTextField.getText() +  " has been deleted.");
 					idTextField.setText("");
-				}catch (Exception error) {
-					error.printStackTrace();
+				}catch (NumberFormatException | SQLException error) {
+					consoleTextArea.append("ID must be a valid ID");
 				}
 			}
 		});
@@ -552,8 +551,11 @@ private JTextField idTextField;
 						throw new MissingTextFieldException("lastName is not present");
 					if (email == null || email.isEmpty())
 						throw new MissingTextFieldException("email is not present");
+					if (!email.contains("@"))
+						throw new Exception("Email must include @");
 					if (department == null || department.isEmpty())
 						throw new MissingTextFieldException("department is not present");
+
 					
 					databaseConnection.addEmployee(lastName, firstName, department, email, salary);
 					consoleTextArea.setText("Employee: " + " " +  firstName + " " + lastName + " is added\n");
@@ -564,7 +566,7 @@ private JTextField idTextField;
 				}
 				catch (Exception exception) {
 					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage() + "\n");
-				}			
+				}
 			}
 		});
 		

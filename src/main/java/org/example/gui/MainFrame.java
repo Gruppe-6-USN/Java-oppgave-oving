@@ -479,7 +479,8 @@ private JTextField idTextField;
 			public void actionPerformed(ActionEvent e) {
 				try{
 					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
-					consoleTextArea.append("Employee has been deleted.");
+					consoleTextArea.append("Employee with id: " + idTextField.getText() +  " has been deleted.");
+					idTextField.setText("");
 				}catch (Exception error) {
 					error.printStackTrace();
 				}
@@ -514,7 +515,7 @@ private JTextField idTextField;
 						throw new MissingTextFieldException("department is not present");
 					
 					databaseConnection.addEmployee(lastName, firstName, department, email, salary);
-					consoleTextArea.setText("Employee is added" + " " +  firstName + " " + lastName + "\n");	
+					consoleTextArea.setText("Employee: " + " " +  firstName + " " + lastName + " is added\n");
 				}
 				catch (MissingTextFieldException exception)
 				{

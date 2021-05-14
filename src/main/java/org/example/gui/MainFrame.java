@@ -525,7 +525,7 @@ private JTextField idTextField;
 					consoleTextArea.append("Employee with id: " + idTextField.getText() +  " has been deleted.");
 					idTextField.setText("");
 				}catch (NumberFormatException | SQLException error) {
-					consoleTextArea.append("ID must be a valid ID");
+					consoleTextArea.append("ID must be a valid ID\n");
 				}
 			}
 		});

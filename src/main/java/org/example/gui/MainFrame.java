@@ -16,12 +16,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.JTextComponent;
 
 import java.awt.Color;
@@ -52,7 +52,9 @@ private JTextField idTextField;
 
 	//INITIALIZE CONTENT
 	public void initialize() {
-		
+
+		final JFileChooser fileChooser = new JFileChooser();
+
 		//MAIN FRAME
 		frame = new JFrame();
 		frame.setTitle("DB-Admin v2.0");
@@ -345,6 +347,14 @@ private JTextField idTextField;
 		gbc_clearDbBtn.gridx = 4;
 		gbc_clearDbBtn.gridy = 6;
 		databasePanel.add(clearDbBtn, gbc_clearDbBtn);
+
+		//SAVE BUTTON
+		JButton saveDbBtn = new JButton("Save");
+		GridBagConstraints gbc_saveDbBtn = new GridBagConstraints();
+		gbc_saveDbBtn.gridwidth = 2;
+		gbc_saveDbBtn.gridx = 8;
+		gbc_saveDbBtn.gridy = 6;
+		databasePanel.add(saveDbBtn, gbc_saveDbBtn);
 		
 		//CONSOLE PANEL
 		JPanel consolePanel = new JPanel();
@@ -464,6 +474,35 @@ private JTextField idTextField;
 				databaseTextArea.setText("");
 				}
         });
+
+        //SAVE DATABASE BUTTON
+		saveDbBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to save");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				//Just allow .txt
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+				fileChooser.setFileFilter(filter);
+
+				int returnVal = fileChooser.showSaveDialog(null);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+
+					try {
+						writeToFile(databaseTextArea.getText(), fileToSave);
+						consoleTextArea.setText("Succesfull when saving the Database");
+					}catch (IOException e1) {
+						consoleTextArea.setText("Error writing into file");
+					}
+				}
+			}
+		});
         
 		//CLEAR CONSOLE BUTTON EVENT
 		clearConsoleBtn.addActionListener(new ActionListener() {
@@ -608,6 +647,12 @@ private JTextField idTextField;
 	public double getSalary() {
 		return Double.parseDouble(salaryTextField.getText());
 
+	}
+
+	public void writeToFile(String text, File file) throws IOException {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		writer.write(text);
+		writer.close();
 	}
 	
 }

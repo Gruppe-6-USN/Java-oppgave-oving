@@ -131,6 +131,7 @@ private JTextField idTextField;
 		gbc_deleteBtn.gridx = 1;
 		gbc_deleteBtn.gridy = 2;
 		deleteIdPanel.add(deleteBtn, gbc_deleteBtn);
+		deleteBtn.setToolTipText("Delete an employee from the database");
 		
 		//ADD TAB
 		JPanel addPanel = new JPanel();
@@ -272,6 +273,7 @@ private JTextField idTextField;
 		gbc_applyBtn.gridx = 1;
 		gbc_applyBtn.gridy = 5;
 		addDataPanel.add(applyBtn, gbc_applyBtn);
+		applyBtn.setToolTipText("Insert information into database");
 		
 		//CLEAR BUTTON
 		JButton clearBtn = new JButton("Clear");
@@ -357,6 +359,7 @@ private JTextField idTextField;
 		gbc_saveDbBtn.gridx = 8;
 		gbc_saveDbBtn.gridy = 6;
 		databasePanel.add(saveDbBtn, gbc_saveDbBtn);
+		saveDbBtn.setToolTipText("save the information from database to text file");
 		
 		//CONSOLE PANEL
 		JPanel consolePanel = new JPanel();
@@ -538,34 +541,26 @@ private JTextField idTextField;
 					
 					
 					String firstName = getFirstName();
-					String lastName = getLastName(); //lastNameTextField.getText(); fixe den senere
+					String lastName = getLastName();
 					String email = getEmail();
 					String department = getDepartment();
-					double salary = getSalary();
+					Double salary = getSalary();
 					
 					
-					// for debugging senere
-					/* System.out.println("<== firstName :: " + firstName + " ==>");
-					System.out.println("<== lastName :: " + lastName + " ==>");
-					System.out.println("<== email :: " + email + " ==>");
-					System.out.println("<== department :: " + department + " ==>");
-					System.out.println("<== Salary :: " + salary + " ==>"); */
-					
-					if (firstName == null || firstName.isEmpty())
+					if (firstName.isEmpty())
 						throw new MissingTextFieldException("firstName is not present");
-					if (lastName == null || lastName.isEmpty())
+					if (lastName.isEmpty())
 						throw new MissingTextFieldException("lastName is not present");
-					if (email == null || email.isEmpty())
+					if (email.isEmpty())
 						throw new MissingTextFieldException("email is not present");
 					if (!email.contains("@"))
 						throw new Exception("Email must include @");
-					if (department == null || department.isEmpty())
+					if (department.isEmpty())
 						throw new MissingTextFieldException("department is not present");
+					if ( salary < 0 )
+						throw new Exception("salary must be a positive number");
 
-					
-					
-					
-					
+
 					databaseConnection.addEmployee(lastName, firstName, department, email, salary);
 					consoleTextArea.setText("Employee: " + " " +  firstName + " " + lastName + " is added\n");
 					

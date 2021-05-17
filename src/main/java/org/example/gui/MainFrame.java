@@ -699,21 +699,30 @@ private JTextField updateSalaryTextField;
 					String lastName = getLastName();
 					String email = getEmail();
 					String department = getDepartment();
-					Double salary = getSalary();
+					double salary;
 					
+					if (firstName.isEmpty() && lastName.isEmpty() && email.isEmpty() && department.isEmpty() && salaryTextField.getText().isEmpty())
+					{
+						
+						throw new MissingTextFieldException("you must fill out all the fields");
+					}
 					
-					if (firstName.isEmpty())
+					else if (firstName.isEmpty())
 						throw new MissingTextFieldException("firstName is not present");
-					if (lastName.isEmpty())
+					else if (lastName.isEmpty())
 						throw new MissingTextFieldException("lastName is not present");
-					if (email.isEmpty())
+					else if (email.isEmpty())
 						throw new MissingTextFieldException("email is not present");
-					if (!email.contains("@"))
+					else if (!email.contains("@"))
 						throw new Exception("Email must include @");
-					if (department.isEmpty())
+					else if (department.isEmpty())
 						throw new MissingTextFieldException("department is not present");
-					if ( salary < 0 )
+					else
+					{
+					 salary = getSalary();
+					 if ( salary < 0 )
 						throw new Exception("salary must be a positive number");
+					}
 
 
 					databaseConnection.addEmployee(lastName, firstName, department, email, salary);
@@ -722,11 +731,11 @@ private JTextField updateSalaryTextField;
 				}
 				catch (NumberFormatException exception)
 				{
-					consoleTextArea.append("salary must be a number" + exception.getMessage() + "\n");
+					consoleTextArea.append("salary must be a number: " + exception.getMessage() + "\n");
 				}
 				catch (MissingTextFieldException exception)
 				{
-				    consoleTextArea.append("You must fill out all the fields : " + exception.getMessage() + "\n");        
+				    consoleTextArea.append(exception.getMessage() + "\n");        
 				}
 				catch (Exception exception) {
 					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage() + "\n");

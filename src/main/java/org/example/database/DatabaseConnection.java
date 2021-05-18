@@ -164,9 +164,10 @@ public class DatabaseConnection {
 		try{
 			open();
 			pStmt = conn.prepareStatement("SELECT * FROM employees WHERE jobTitle = ?");
+			pStmt.setString(1, jobTitle);
 			resSet = pStmt.executeQuery();
 
-			pStmt.setString(1, jobTitle);
+
 
 			while (resSet.next()) {
 				int employeeNumber = resSet.getInt("employeeNumber");

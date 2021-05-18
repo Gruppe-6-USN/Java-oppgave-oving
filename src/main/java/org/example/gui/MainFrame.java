@@ -680,10 +680,30 @@ private JTextField updateSalaryTextField;
 			public void actionPerformed(ActionEvent e) {
 				try{
 					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
-					consoleTextArea.append("Employee with id: " + idTextField.getText() +  " has been deleted.");
+					consoleTextArea.append("Employee with id: " + idTextField.getText() +  " has been deleted. \n");
 					idTextField.setText("");
+					
+					//REFRESHING DATABASE
+					List<Employee> employees = databaseConnection.showEmployees();
+					databaseTextArea.setText("");
+	                for (Employee employee : employees) {
+	                    databaseTextArea.append(employee.getId() + ": " + employee.getFirstName() + ", " + employee.getLastName() + ", " + employee.getDepartment() + ", " + employee.getEmail() + ", " + employee.getSalary() + "\n");
+	                } 
 				}catch (NumberFormatException | SQLException error) {
 					consoleTextArea.append("ID must be a valid ID\n");
+				}
+			}
+		});
+		
+		//UPDATE BUTTON EVENT
+		updateBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					databaseConnection.updateUser(getUpdateFirstName(), getUpdateLastName(), getUpdateDepartment(), getUpdateEmail(), getUpdateSalary(), getUpdateId());
+					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
+				} catch(Exception err){
+					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
+					err.printStackTrace();
 				}
 			}
 		});
@@ -762,9 +782,8 @@ private JTextField updateSalaryTextField;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					DatabaseConnection db = new DatabaseConnection();
-					db.open();
-					db.close();
+					databaseConnection.open();
+					databaseConnection.close();
 					consoleTextArea.append("Connected to database. \n");
 					} catch (Exception err) {
 						throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
@@ -804,7 +823,31 @@ private JTextField updateSalaryTextField;
 		});
 	}
 	
-		public String getLastName() {
+	public int getUpdateId() {
+		return Integer.parseInt(updateIdTextField.getText());
+	}
+	
+	public String getUpdateFirstName() {
+		return updateFirstNameTextField.getText();
+	}
+	
+	public String getUpdateLastName() {
+		return updateLastNameTextField.getText();
+	}
+	
+	public String getUpdateDepartment() {
+		return updateDepartmentTextField.getText();
+	}
+	
+	public String getUpdateEmail() {
+		return updateEmailTextField.getText();
+	}
+	
+	public Double getUpdateSalary() {
+		return Double.parseDouble(updateSalaryTextField.getText());
+	}
+	
+	public String getLastName() {
 		return lastNameTextField.getText();
 	}
 
@@ -823,7 +866,6 @@ private JTextField updateSalaryTextField;
 
 	public double getSalary() {
 		return Double.parseDouble(salaryTextField.getText());
-
 	}
 
 	public void writeToFile(String text, File file) throws IOException {
@@ -831,5 +873,4 @@ private JTextField updateSalaryTextField;
 		writer.write(text);
 		writer.close();
 	}
-	
 }

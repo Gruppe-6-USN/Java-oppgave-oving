@@ -55,7 +55,7 @@ public class DatabaseConnection {
 	public void addEmployee(int employeeNumber, String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException {
 		try {
 			open();
-			pStmt = conn.prepareStatement("insert into employees (last_name, first_name, extension, email, officeCode, jobTitle)" +
+			pStmt = conn.prepareStatement("insert into employees (lastName, firstName, extension, email, officeCode, jobTitle)" +
 					"values (?, ?, ?, ?, ?, ?, ?, ?)");
 			pStmt.setInt(1, employeeNumber);
 			pStmt.setString(2, lastName);
@@ -75,11 +75,11 @@ public class DatabaseConnection {
 		public void updateUser( String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
 			try {
 				open();
-				pStmt = conn.prepareStatement("UPDATE employees SET first_name = ?,  last_name = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ?,  WHERE employeeNumber = ?");
+				pStmt = conn.prepareStatement("UPDATE employees SET lastName = ?,  firstName = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ?,  WHERE employeeNumber = ?");
 				
 				
-				pStmt.setString(1, firstName);
-				pStmt.setString(2, lastName);
+				pStmt.setString(1, lastName);
+				pStmt.setString(2, firstName);
 				pStmt.setString(3, extension);
 				pStmt.setString(4, email);
 				pStmt.setString(5, officeCode);
@@ -103,8 +103,8 @@ public class DatabaseConnection {
 		    
 		    while (resSet.next()) {
 		    	int employeeNumber = resSet.getInt("employeeNumber");
-		    	String firstName = resSet.getString("first_name");
-		    	String lastName = resSet.getString("last_name");
+				String lastName = resSet.getString("lastName");
+		    	String firstName = resSet.getString("firstName");
 				String extension = resSet.getString("extension");
 		    	String email = resSet.getString("email");
 		    	String officeCode = resSet.getString("officeCode");
@@ -113,7 +113,7 @@ public class DatabaseConnection {
 
 
 
-		    	Employee current = new Employee(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
+		    	Employee current = new Employee(employeeNumber, lastName, firstName,  extension, email, officeCode, reportsTo, jobTitle);
 		    	employees.add(current);
 		    	/*employees = employees.toString();*/
 		    	
@@ -140,8 +140,8 @@ public class DatabaseConnection {
 
 			while (resSet.next()) {
 				int employeeNumber = resSet.getInt("employeeNumber");
-				String firstName = resSet.getString("first_name");
-				String lastName = resSet.getString("last_name");
+				String lastName = resSet.getString("lastName");
+				String firstName = resSet.getString("firstName");
 				String extension = resSet.getString("extension");
 				String email = resSet.getString("email");
 				String officeCode = resSet.getString("officeCode");

@@ -2,6 +2,7 @@ package org.example.gui;
 
 import org.example.database.DatabaseConnection;
 import org.example.database.Employee;
+import org.example.database.OrdersList;
 import org.example.gui.exceptions.MissingTextFieldException;
 
 
@@ -855,6 +856,26 @@ private JTextField updateJobTitleTextField;
 				}
         	} 
         });
+        
+        searchByDateBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent searchByDate) {
+        	
+        	try {
+        		List<OrdersList> orders = databaseConnection.showOrders();
+				databaseTextArea.setText("");
+                for (OrdersList order : orders) {
+                    databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() +  ", " + order.getStatus() + ", " + order.getComments() + "\n");
+        		
+                } 
+			} catch (SQLException error) {
+				consoleTextArea.append("Problem fetching from database. Error: " + error);
+				throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+				consoleTextArea.append("Connection failed. Error: " + 
+										throwableElement.toString() + "\n" 
+										+ stackTraceWriter.toString());
+			}
+    	} 
+    });
 		
         //CLEAR DATABASE BUTTON
         clearDbBtn.addActionListener(new ActionListener() {

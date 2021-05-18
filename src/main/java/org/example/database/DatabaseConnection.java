@@ -93,6 +93,36 @@ public class DatabaseConnection {
 				e1.printStackTrace();
 			}
 		}
+		public List<OrdersList> showOrders() throws SQLException{
+			ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
+			try {
+				open();
+				pStmt = conn.prepareStatement("SELECT * FROM orders");
+				resSet = pStmt.executeQuery();
+				
+			    while (resSet.next()) {
+			    	int orderNumber = resSet.getInt("orderNumber");
+			    	int customerNumber = resSet.getInt("customerNumber");
+			    	String orderDate = resSet.getString("orderDate");
+			    	String requiredDate = resSet.getString("requiredDate");
+			    	String shippedDate = resSet.getString("shippeDdate");
+			    	String status = resSet.getString("status");
+			    	String comment = resSet.getString("comments");
+			    	
+
+			    	OrdersList current = new OrdersList(customerNumber, orderNumber, orderDate, requiredDate, shippedDate, status, comment);
+			    	orders.add(current);
+			    	
+			    	
+			    	
+			      }
+				close();
+				return orders;
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return null;
+		}
 		
 		public List<Employee> showEmployees() throws SQLException {
 			ArrayList<Employee> employees = new ArrayList<Employee>();

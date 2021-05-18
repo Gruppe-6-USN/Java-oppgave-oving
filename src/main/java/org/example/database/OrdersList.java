@@ -1,10 +1,10 @@
 package org.example.database;
 
-public class Orders {
+public class OrdersList {
     private int orderNumber, customerNumber;
     private String orderDate, requiredDate, shippedDate, status, comments;
 
-    public Orders(int orderNumber, int customerNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments) {
+    public OrdersList(int orderNumber, int customerNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments) {
         this.orderNumber = orderNumber;
         this.customerNumber = customerNumber;
         this.orderDate = orderDate;

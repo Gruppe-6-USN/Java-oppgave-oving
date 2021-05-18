@@ -701,8 +701,32 @@ private JTextField updateSalaryTextField;
 			public void actionPerformed(ActionEvent e) {
 				DatabaseConnection db = new DatabaseConnection();
 				try {
+					
+					if (updateIdTextField.getText().isEmpty() && updateFirstNameTextField.getText().isEmpty() && updateLastNameTextField.getText().isEmpty() && updateEmailTextField.getText().isEmpty() && updateDepartmentTextField.getText().isEmpty() && updateSalaryTextField.getText().isEmpty())
+					{
+						
+						throw new MissingTextFieldException("you must fill out all the fields");
+					}
+					
+					else if (updateFirstNameTextField.getText().isEmpty())
+						throw new MissingTextFieldException("firstName is not present");
+					else if (updateLastNameTextField.getText().isEmpty())
+						throw new MissingTextFieldException("lastName is not present");
+					else if (updateEmailTextField.getText().isEmpty())
+						throw new MissingTextFieldException("email is not present");
+					else if (updateEmailTextField.getText().contains("@"))
+						throw new Exception("Email must include @");
+					else if (updateSalaryTextField.getText().isEmpty())
+						throw new MissingTextFieldException("department is not present");
+
+					
 					db.updateUser(getUpdateFirstName(), getUpdateLastName(), getUpdateDepartment(), getUpdateEmail(), getUpdateSalary(), getUpdateId());
 					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
+				
+				}
+				catch (MissingTextFieldException exception)
+				{
+					    consoleTextArea.append(exception.getMessage() + "\n");
 				} catch(Exception err){
 					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
 					err.printStackTrace();

@@ -44,14 +44,17 @@ private JTextField idTextField;
 private JTextField updateFirstNameTextField;
 private JTextField updateIdTextField;
 private JTextField updateLastNameTextField;
-private JTextField updateEmailTextField;
-private JTextField updateDepartmentTextField;
+private JTextField updateExtensionTextField;
+private JTextField updateOfficeCodeTextField;
 private JTextField updateSalaryTextField;
 private JTextField dateFromTextField;
 private JTextField dateToTextField;
 private JTextField officeCodeTextField;
 private JTextField reportsToTextField;
 private JTextField jobTitleTextField;
+private JTextField updateEmployeeNumberTextField;
+private JTextField updateEmailTextField;
+private JTextField updateJobTitleTextField;
 
 //TO-DO:
 //add auto-refresh to databaseTextArea when making changes in the database
@@ -82,7 +85,7 @@ private JTextField jobTitleTextField;
 		//TABBED PANEL
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPanel = new GridBagConstraints();
-		gbc_tabbedPanel.gridheight = 3;
+		gbc_tabbedPanel.gridheight = 5;
 		gbc_tabbedPanel.fill = GridBagConstraints.BOTH;
 		gbc_tabbedPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_tabbedPanel.gridx = 0;
@@ -360,9 +363,9 @@ private JTextField jobTitleTextField;
 		tabbedPanel.addTab("Update", null, updatePanel, null);
 		GridBagLayout gbl_updatePanel = new GridBagLayout();
 		gbl_updatePanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_updatePanel.rowHeights = new int[]{40, 40, 40, 40, 40, 40, 40, 0};
-		gbl_updatePanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_updatePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_updatePanel.rowHeights = new int[]{40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 0, 0};
+		gbl_updatePanel.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_updatePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		updatePanel.setLayout(gbl_updatePanel);
 		
 		// UPDATE ID LABEL
@@ -386,13 +389,31 @@ private JTextField jobTitleTextField;
 		gbc_updateIdTextField.gridy = 0;
 		updatePanel.add(updateIdTextField, gbc_updateIdTextField);
 		
+		JLabel updateEmployeeNumberLabel = new JLabel("Employee number:");
+		GridBagConstraints gbc_updateEmployeeNumberLabel = new GridBagConstraints();
+		gbc_updateEmployeeNumberLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_updateEmployeeNumberLabel.anchor = GridBagConstraints.EAST;
+		gbc_updateEmployeeNumberLabel.gridx = 0;
+		gbc_updateEmployeeNumberLabel.gridy = 1;
+		updatePanel.add(updateEmployeeNumberLabel, gbc_updateEmployeeNumberLabel);
+		
+		updateEmployeeNumberTextField = new JTextField();
+		GridBagConstraints gbc_updateEmployeeNumberTextField = new GridBagConstraints();
+		gbc_updateEmployeeNumberTextField.gridwidth = 2;
+		gbc_updateEmployeeNumberTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_updateEmployeeNumberTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_updateEmployeeNumberTextField.gridx = 1;
+		gbc_updateEmployeeNumberTextField.gridy = 1;
+		updatePanel.add(updateEmployeeNumberTextField, gbc_updateEmployeeNumberTextField);
+		updateEmployeeNumberTextField.setColumns(10);
+		
 		// UPDATE FIRST NAME LABEL
 		JLabel updateFirstNameLabel = new JLabel("First Name:");
 		GridBagConstraints gbc_updateFirstNameLabel = new GridBagConstraints();
 		gbc_updateFirstNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_updateFirstNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updateFirstNameLabel.gridx = 0;
-		gbc_updateFirstNameLabel.gridy = 1;
+		gbc_updateFirstNameLabel.gridy = 2;
 		updatePanel.add(updateFirstNameLabel, gbc_updateFirstNameLabel);
 		
 		// UPDATE FIRST NAME TEXT FIELD
@@ -403,7 +424,7 @@ private JTextField jobTitleTextField;
 		gbc_updateFirstNameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateFirstNameTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateFirstNameTextField.gridx = 1;
-		gbc_updateFirstNameTextField.gridy = 1;
+		gbc_updateFirstNameTextField.gridy = 2;
 		updatePanel.add(updateFirstNameTextField, gbc_updateFirstNameTextField);
 		updateFirstNameTextField.setColumns(10);
 		
@@ -413,7 +434,7 @@ private JTextField jobTitleTextField;
 		gbc_updateLastNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_updateLastNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updateLastNameLabel.gridx = 0;
-		gbc_updateLastNameLabel.gridy = 2;
+		gbc_updateLastNameLabel.gridy = 3;
 		updatePanel.add(updateLastNameLabel, gbc_updateLastNameLabel);
 		
 		// UPDATE LAST NAME TEXT FIELD
@@ -425,59 +446,77 @@ private JTextField jobTitleTextField;
 		gbc_updateLastNameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateLastNameTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateLastNameTextField.gridx = 1;
-		gbc_updateLastNameTextField.gridy = 2;
+		gbc_updateLastNameTextField.gridy = 3;
 		updatePanel.add(updateLastNameTextField, gbc_updateLastNameTextField);
 		
 		// UPDATE EMAIL LABEL
-		JLabel updateEmailLabel = new JLabel("Email:");
+		JLabel updateExtensionLabel = new JLabel("Extension: ");
+		GridBagConstraints gbc_updateExtensionLabel = new GridBagConstraints();
+		gbc_updateExtensionLabel.anchor = GridBagConstraints.EAST;
+		gbc_updateExtensionLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_updateExtensionLabel.gridx = 0;
+		gbc_updateExtensionLabel.gridy = 4;
+		updatePanel.add(updateExtensionLabel, gbc_updateExtensionLabel);
+		
+		// UPDATE EMAIL TEXT FIELD
+		updateExtensionTextField = new JTextField();
+		updateExtensionTextField.setText("");
+		updateExtensionTextField.setColumns(10);
+		GridBagConstraints gbc_updateExtensionTextField = new GridBagConstraints();
+		gbc_updateExtensionTextField.gridwidth = 2;
+		gbc_updateExtensionTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_updateExtensionTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_updateExtensionTextField.gridx = 1;
+		gbc_updateExtensionTextField.gridy = 4;
+		updatePanel.add(updateExtensionTextField, gbc_updateExtensionTextField);
+		
+		JLabel updateEmailLabel = new JLabel("Email: ");
 		GridBagConstraints gbc_updateEmailLabel = new GridBagConstraints();
 		gbc_updateEmailLabel.anchor = GridBagConstraints.EAST;
 		gbc_updateEmailLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmailLabel.gridx = 0;
-		gbc_updateEmailLabel.gridy = 3;
+		gbc_updateEmailLabel.gridy = 5;
 		updatePanel.add(updateEmailLabel, gbc_updateEmailLabel);
 		
-		// UPDATE EMAIL TEXT FIELD
 		updateEmailTextField = new JTextField();
-		updateEmailTextField.setText("");
-		updateEmailTextField.setColumns(10);
 		GridBagConstraints gbc_updateEmailTextField = new GridBagConstraints();
 		gbc_updateEmailTextField.gridwidth = 2;
 		gbc_updateEmailTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmailTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmailTextField.gridx = 1;
-		gbc_updateEmailTextField.gridy = 3;
+		gbc_updateEmailTextField.gridy = 5;
 		updatePanel.add(updateEmailTextField, gbc_updateEmailTextField);
+		updateEmailTextField.setColumns(10);
 		
 		// UPDATE DEPARTMENT LABEL
-		JLabel updateDeparmentLabel = new JLabel("Department");
-		GridBagConstraints gbc_updateDeparmentLabel = new GridBagConstraints();
-		gbc_updateDeparmentLabel.anchor = GridBagConstraints.EAST;
-		gbc_updateDeparmentLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_updateDeparmentLabel.gridx = 0;
-		gbc_updateDeparmentLabel.gridy = 4;
-		updatePanel.add(updateDeparmentLabel, gbc_updateDeparmentLabel);
+		JLabel updateOfficeCodeLabel = new JLabel("Office code: ");
+		GridBagConstraints gbc_updateOfficeCodeLabel = new GridBagConstraints();
+		gbc_updateOfficeCodeLabel.anchor = GridBagConstraints.EAST;
+		gbc_updateOfficeCodeLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_updateOfficeCodeLabel.gridx = 0;
+		gbc_updateOfficeCodeLabel.gridy = 6;
+		updatePanel.add(updateOfficeCodeLabel, gbc_updateOfficeCodeLabel);
 		
 		// UPDATE DEPARTMENT TEXT FIELD
-		updateDepartmentTextField = new JTextField();
-		updateDepartmentTextField.setText("");
-		updateDepartmentTextField.setColumns(10);
-		GridBagConstraints gbc_updateDepartmentTextField = new GridBagConstraints();
-		gbc_updateDepartmentTextField.gridwidth = 2;
-		gbc_updateDepartmentTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_updateDepartmentTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_updateDepartmentTextField.gridx = 1;
-		gbc_updateDepartmentTextField.gridy = 4;
-		updatePanel.add(updateDepartmentTextField, gbc_updateDepartmentTextField);
+		updateOfficeCodeTextField = new JTextField();
+		updateOfficeCodeTextField.setText("");
+		updateOfficeCodeTextField.setColumns(10);
+		GridBagConstraints gbc_updateOfficeCodeTextField = new GridBagConstraints();
+		gbc_updateOfficeCodeTextField.gridwidth = 2;
+		gbc_updateOfficeCodeTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_updateOfficeCodeTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_updateOfficeCodeTextField.gridx = 1;
+		gbc_updateOfficeCodeTextField.gridy = 6;
+		updatePanel.add(updateOfficeCodeTextField, gbc_updateOfficeCodeTextField);
 		
 		// UPDATE SALARY LABEL
-		JLabel updateSalaryLabel = new JLabel("Salary");
-		GridBagConstraints gbc_updateSalaryLabel = new GridBagConstraints();
-		gbc_updateSalaryLabel.anchor = GridBagConstraints.EAST;
-		gbc_updateSalaryLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_updateSalaryLabel.gridx = 0;
-		gbc_updateSalaryLabel.gridy = 5;
-		updatePanel.add(updateSalaryLabel, gbc_updateSalaryLabel);
+		JLabel updateReportsToLabel = new JLabel("Reports to: ");
+		GridBagConstraints gbc_updateReportsToLabel = new GridBagConstraints();
+		gbc_updateReportsToLabel.anchor = GridBagConstraints.EAST;
+		gbc_updateReportsToLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_updateReportsToLabel.gridx = 0;
+		gbc_updateReportsToLabel.gridy = 7;
+		updatePanel.add(updateReportsToLabel, gbc_updateReportsToLabel);
 		
 		// UPDATE SALARY TEXT FIELD
 		updateSalaryTextField = new JTextField();
@@ -488,15 +527,33 @@ private JTextField jobTitleTextField;
 		gbc_updateSalaryTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateSalaryTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateSalaryTextField.gridx = 1;
-		gbc_updateSalaryTextField.gridy = 5;
+		gbc_updateSalaryTextField.gridy = 7;
 		updatePanel.add(updateSalaryTextField, gbc_updateSalaryTextField);
+		
+		JLabel updateJobTitleLabel = new JLabel("Job title: ");
+		GridBagConstraints gbc_updateJobTitleLabel = new GridBagConstraints();
+		gbc_updateJobTitleLabel.anchor = GridBagConstraints.EAST;
+		gbc_updateJobTitleLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_updateJobTitleLabel.gridx = 0;
+		gbc_updateJobTitleLabel.gridy = 8;
+		updatePanel.add(updateJobTitleLabel, gbc_updateJobTitleLabel);
+		
+		updateJobTitleTextField = new JTextField();
+		GridBagConstraints gbc_updateJobTitleTextField = new GridBagConstraints();
+		gbc_updateJobTitleTextField.gridwidth = 2;
+		gbc_updateJobTitleTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_updateJobTitleTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_updateJobTitleTextField.gridx = 1;
+		gbc_updateJobTitleTextField.gridy = 8;
+		updatePanel.add(updateJobTitleTextField, gbc_updateJobTitleTextField);
+		updateJobTitleTextField.setColumns(10);
 		
 		// UPDATE BUTTON
 		JButton updateBtn = new JButton("Update");
 		GridBagConstraints gbc_updateBtn = new GridBagConstraints();
 		gbc_updateBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_updateBtn.gridx = 1;
-		gbc_updateBtn.gridy = 6;
+		gbc_updateBtn.gridy = 9;
 		updatePanel.add(updateBtn, gbc_updateBtn);
 		
 		// CLEAR UPDATE BUTTON
@@ -504,7 +561,7 @@ private JTextField jobTitleTextField;
 		GridBagConstraints gbc_ClearUpdateBtn = new GridBagConstraints();
 		gbc_ClearUpdateBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_ClearUpdateBtn.gridx = 2;
-		gbc_ClearUpdateBtn.gridy = 6;
+		gbc_ClearUpdateBtn.gridy = 9;
 		updatePanel.add(ClearUpdateBtn, gbc_ClearUpdateBtn);
 		
 		
@@ -994,11 +1051,11 @@ private JTextField jobTitleTextField;
 	}
 	
 	public String getUpdateDepartment() {
-		return updateDepartmentTextField.getText();
+		return updateOfficeCodeTextField.getText();
 	}
 	
 	public String getUpdateEmail() {
-		return updateEmailTextField.getText();
+		return updateExtensionTextField.getText();
 	}
 	
 	public Double getUpdateSalary() {

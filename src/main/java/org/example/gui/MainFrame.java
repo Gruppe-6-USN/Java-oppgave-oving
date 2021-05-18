@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.nio.CharBuffer;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -851,6 +852,50 @@ private JTextField dateToTextField;
 				System.exit(0);
 			}
 		});
+
+		//BULK IMPORT EVENT
+		bulkImportItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to write to database ");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				fileChooser.showSaveDialog(null);
+
+			}
+		});
+
+		//SAVE TO FILE EVENT
+		saveToFileItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to save");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				//Just allow .txt
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+				fileChooser.setFileFilter(filter);
+
+				int returnVal = fileChooser.showSaveDialog(null);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+
+					try {
+						writeToFile(databaseTextArea.getText(), fileToSave);
+						consoleTextArea.setText("Succesfull when saving the Database");
+					}catch (IOException e1) {
+						consoleTextArea.setText("Error writing into file");
+					}
+				}
+			}
+		});
 		
 	}
 	
@@ -922,5 +967,11 @@ private JTextField dateToTextField;
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		writer.write(text);
 		writer.close();
+	}
+
+	public void readFromFile(String text, File file) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		reader.read(CharBuffer.wrap(text));
+		reader.close();
 	}
 }

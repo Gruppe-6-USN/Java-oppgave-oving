@@ -796,9 +796,9 @@ private JTextField jobTitleTextField;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
-					consoleTextArea.append("Employee with id: " + idTextField.getText() +  " has been deleted. \n");
-					idTextField.setText("");
+					databaseConnection.deleteEmployee(Integer.parseInt(employeeNumberTextField.getText()));
+					consoleTextArea.append("Employee with id: " + employeeNumberTextField.getText() +  " has been deleted. \n");
+					employeeNumberTextField.setText("");
 					
 					//REFRESHING DATABASE
 					List<Employee> employees = databaseConnection.showEmployees();

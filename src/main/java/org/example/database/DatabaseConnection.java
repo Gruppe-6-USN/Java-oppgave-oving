@@ -71,7 +71,7 @@ public class DatabaseConnection {
 		}
 	}
 
-		public void updateUser(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
+		public void updateUser( String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
 			try {
 				open();
 				pStmt = conn.prepareStatement("UPDATE employees SET first_name = ?,  last_name = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ?,  WHERE employeeNumber = ?");

@@ -730,7 +730,7 @@ private JTextField dateToTextField;
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					databaseConnection.updateUser(getUpdateFirstName(), getUpdateLastName(), getUpdateDepartment(), getUpdateEmail(), getUpdateSalary(), getUpdateId());
+					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(), getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
 					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
 				} catch(Exception err){
 					consoleTextArea.append("Something went wrong. Error: " + err + "\n");

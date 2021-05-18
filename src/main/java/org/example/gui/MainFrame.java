@@ -876,8 +876,8 @@ private JTextField updateJobTitleTextField;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					databaseConnection.deleteEmployee(Integer.parseInt(employeeNumberTextField.getText()));
-					consoleTextArea.append("Employee with id: " + employeeNumberTextField.getText() +  " has been deleted. \n");
+					databaseConnection.deleteEmployee(Integer.parseInt(deleteEmployeeNumberTextField.getText()));
+					consoleTextArea.append("Employee with id: " + deleteEmployeeNumberTextField.getText() +  " has been deleted. \n");
 					employeeNumberTextField.setText("");
 					
 					//REFRESHING DATABASE
@@ -932,8 +932,7 @@ private JTextField updateJobTitleTextField;
 						throw new MissingTextFieldException("lastName is not present");
 					else if (email.isEmpty())
 						throw new MissingTextFieldException("email is not present");
-					else if (!email.contains("@"))
-						throw new Exception("Email must include @");
+
 					else if (jobTitle.isEmpty())
 						throw new MissingTextFieldException("Job title is not present");
 

@@ -704,7 +704,7 @@ private JTextField updateSalaryTextField;
 					List<Employee> employees = databaseConnection.showEmployees();
 					databaseTextArea.setText("");
 	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getId() + ": " + employee.getFirstName() + ", " + employee.getLastName() + ", " + employee.getDepartment() + ", " + employee.getEmail() + ", " + employee.getSalary() + "\n");
+	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getEmail() + ", " + employee.getExtension() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
 	                } 
 				}catch (NumberFormatException | SQLException error) {
 					consoleTextArea.append("ID must be a valid ID\n");

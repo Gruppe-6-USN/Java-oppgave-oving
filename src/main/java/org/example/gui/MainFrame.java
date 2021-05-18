@@ -840,7 +840,7 @@ private JTextField jobTitleTextField;
 					int reportsTo = getReportsTo();
 					String jobTitle = getJobTitle();
 					
-					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && reportsTo.isEmpty() && jobTitle.isEmpty())
+					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty())
 					{
 						
 						throw new MissingTextFieldException("you must fill out all the fields");

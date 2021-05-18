@@ -853,9 +853,9 @@ private JTextField updateJobTitleTextField;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
-					consoleTextArea.append("Employee with id: " + idTextField.getText() +  " has been deleted. \n");
-					idTextField.setText("");
+					databaseConnection.deleteEmployee(Integer.parseInt(employeeNumberTextField.getText()));
+					consoleTextArea.append("Employee with id: " + employeeNumberTextField.getText() +  " has been deleted. \n");
+					employeeNumberTextField.setText("");
 					
 					//REFRESHING DATABASE
 					List<Employee> employees = databaseConnection.showEmployees();
@@ -873,7 +873,7 @@ private JTextField updateJobTitleTextField;
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(), getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
+					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
 					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
 				} catch(Exception err){
 					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
@@ -897,7 +897,7 @@ private JTextField updateJobTitleTextField;
 					int reportsTo = getReportsTo();
 					String jobTitle = getJobTitle();
 					
-					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && reportsTo.isEmpty() && jobTitle.isEmpty())
+					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty())
 					{
 						
 						throw new MissingTextFieldException("you must fill out all the fields");
@@ -984,7 +984,6 @@ private JTextField updateJobTitleTextField;
 				fileChooser.setCurrentDirectory(new File("c:\\temp"));
 
 				fileChooser.showSaveDialog(null);
-
 			}
 		});
 
@@ -1061,7 +1060,11 @@ private JTextField updateJobTitleTextField;
 	public Double getUpdateSalary() {
 		return Double.parseDouble(updateSalaryTextField.getText());
 	}
-	
+
+	public int getEmployeeNumber() {
+		return Integer.parseInt(employeeNumberTextField.getText());
+	}
+
 	public String getLastName() {
 		return firstNameTextField.getText();
 	}
@@ -1070,7 +1073,7 @@ private JTextField updateJobTitleTextField;
 		return employeeNumberTextField.getText();
 	}
 
-	public String getDepartment() {
+	public String getExtension() {
 		return extensionTextField.getText();
 	}
 
@@ -1079,8 +1082,16 @@ private JTextField updateJobTitleTextField;
 		return lastNameTextField.getText();
 	}
 
-	public double getSalary() {
-		return Double.parseDouble(emailTextField.getText());
+	public String getOfficeCode() {
+		return officeCodeTextField.getText();
+	}
+
+	public int getReportsTo() {
+		return Integer.parseInt(reportsToTextField.getText());
+	}
+
+	public String getJobTitle() {
+		return jobTitleTextField.getText();
 	}
 
 	public void writeToFile(String text, File file) throws IOException {

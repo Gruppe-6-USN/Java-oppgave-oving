@@ -678,14 +678,13 @@ private JTextField updateSalaryTextField;
 		deleteBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DatabaseConnection db = new DatabaseConnection();
 				try{
 					databaseConnection.deleteEmployee(Integer.parseInt(idTextField.getText()));
 					consoleTextArea.append("Employee with id: " + idTextField.getText() +  " has been deleted. \n");
 					idTextField.setText("");
 					
 					//REFRESHING DATABASE
-					List<Employee> employees = db.showEmployees();
+					List<Employee> employees = databaseConnection.showEmployees();
 					databaseTextArea.setText("");
 	                for (Employee employee : employees) {
 	                    databaseTextArea.append(employee.getId() + ": " + employee.getFirstName() + ", " + employee.getLastName() + ", " + employee.getDepartment() + ", " + employee.getEmail() + ", " + employee.getSalary() + "\n");
@@ -699,9 +698,8 @@ private JTextField updateSalaryTextField;
 		//UPDATE BUTTON EVENT
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DatabaseConnection db = new DatabaseConnection();
 				try {
-					db.updateUser(getUpdateFirstName(), getUpdateLastName(), getUpdateDepartment(), getUpdateEmail(), getUpdateSalary(), getUpdateId());
+					databaseConnection.updateUser(getUpdateFirstName(), getUpdateLastName(), getUpdateDepartment(), getUpdateEmail(), getUpdateSalary(), getUpdateId());
 					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
 				} catch(Exception err){
 					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
@@ -784,9 +782,8 @@ private JTextField updateSalaryTextField;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					DatabaseConnection db = new DatabaseConnection();
-					db.open();
-					db.close();
+					databaseConnection.open();
+					databaseConnection.close();
 					consoleTextArea.append("Connected to database. \n");
 					} catch (Exception err) {
 						throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));

@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.nio.CharBuffer;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -495,16 +496,33 @@ private JTextField dateToTextField;
 		gbc_databaseScroll.gridheight = 9;
 		gbc_databaseScroll.insets = new Insets(0, 0, 5, 0);
 		gbc_databaseScroll.fill = GridBagConstraints.BOTH;
-		gbc_databaseScroll.gridx = 5;
+		gbc_databaseScroll.gridx = 4;
 		gbc_databaseScroll.gridy = 0;
 		databasePanel.add(databaseScroll, gbc_databaseScroll);
+		
+		JLabel chooseJobTitleLabel = new JLabel("Choose jobtitle: ");
+		GridBagConstraints gbc_chooseJobTitleLabel = new GridBagConstraints();
+		gbc_chooseJobTitleLabel.anchor = GridBagConstraints.EAST;
+		gbc_chooseJobTitleLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_chooseJobTitleLabel.gridx = 0;
+		gbc_chooseJobTitleLabel.gridy = 1;
+		databasePanel.add(chooseJobTitleLabel, gbc_chooseJobTitleLabel);
+		
+		JComboBox chooseJobTitleComboBox = new JComboBox();
+		GridBagConstraints gbc_chooseJobTitleComboBox = new GridBagConstraints();
+		gbc_chooseJobTitleComboBox.gridwidth = 3;
+		gbc_chooseJobTitleComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_chooseJobTitleComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_chooseJobTitleComboBox.gridx = 1;
+		gbc_chooseJobTitleComboBox.gridy = 1;
+		databasePanel.add(chooseJobTitleComboBox, gbc_chooseJobTitleComboBox);
 		
 		JLabel dateFromLabel = new JLabel("Date from: ");
 		GridBagConstraints gbc_dateFromLabel = new GridBagConstraints();
 		gbc_dateFromLabel.anchor = GridBagConstraints.EAST;
 		gbc_dateFromLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_dateFromLabel.gridx = 0;
-		gbc_dateFromLabel.gridy = 1;
+		gbc_dateFromLabel.gridy = 2;
 		databasePanel.add(dateFromLabel, gbc_dateFromLabel);
 		
 		dateFromTextField = new JTextField();
@@ -512,7 +530,7 @@ private JTextField dateToTextField;
 		gbc_dateFromTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_dateFromTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dateFromTextField.gridx = 1;
-		gbc_dateFromTextField.gridy = 1;
+		gbc_dateFromTextField.gridy = 2;
 		databasePanel.add(dateFromTextField, gbc_dateFromTextField);
 		dateFromTextField.setColumns(10);
 		
@@ -520,7 +538,7 @@ private JTextField dateToTextField;
 		GridBagConstraints gbc_dateToLabel = new GridBagConstraints();
 		gbc_dateToLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_dateToLabel.gridx = 2;
-		gbc_dateToLabel.gridy = 1;
+		gbc_dateToLabel.gridy = 2;
 		databasePanel.add(dateToLabel, gbc_dateToLabel);
 		
 		dateToTextField = new JTextField();
@@ -528,7 +546,7 @@ private JTextField dateToTextField;
 		gbc_dateToTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_dateToTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dateToTextField.gridx = 3;
-		gbc_dateToTextField.gridy = 1;
+		gbc_dateToTextField.gridy = 2;
 		databasePanel.add(dateToTextField, gbc_dateToTextField);
 		dateToTextField.setColumns(10);
 		
@@ -545,7 +563,7 @@ private JTextField dateToTextField;
 		//CLEAR BUTTON
 		JButton clearDbBtn = new JButton("Clear");
 		GridBagConstraints gbc_clearDbBtn = new GridBagConstraints();
-		gbc_clearDbBtn.insets = new Insets(0, 0, 5, 0);
+		gbc_clearDbBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_clearDbBtn.gridwidth = 2;
 		gbc_clearDbBtn.gridx = 8;
 		gbc_clearDbBtn.gridy = 9;
@@ -834,6 +852,50 @@ private JTextField dateToTextField;
 				System.exit(0);
 			}
 		});
+
+		//BULK IMPORT EVENT
+		bulkImportItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to write to database ");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				fileChooser.showSaveDialog(null);
+
+			}
+		});
+
+		//SAVE TO FILE EVENT
+		saveToFileItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to save");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				//Just allow .txt
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+				fileChooser.setFileFilter(filter);
+
+				int returnVal = fileChooser.showSaveDialog(null);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+
+					try {
+						writeToFile(databaseTextArea.getText(), fileToSave);
+						consoleTextArea.setText("Succesfull when saving the Database");
+					}catch (IOException e1) {
+						consoleTextArea.setText("Error writing into file");
+					}
+				}
+			}
+		});
 		
 	}
 	
@@ -905,5 +967,11 @@ private JTextField dateToTextField;
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		writer.write(text);
 		writer.close();
+	}
+
+	public void readFromFile(String text, File file) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		reader.read(CharBuffer.wrap(text));
+		reader.close();
 	}
 }

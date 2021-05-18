@@ -64,19 +64,19 @@ private JTextField updateSalaryTextField;
 		//MAIN FRAME
 		frame = new JFrame();
 		frame.setTitle("DB-Admin v2.0");
-		frame.setBounds(100, 100, 771, 565);
+		frame.setBounds(100, 100, 973, 703);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
 		gridBagLayout.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		//TABBED PANEL
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPanel = new GridBagConstraints();
-		gbc_tabbedPanel.gridheight = 7;
+		gbc_tabbedPanel.gridheight = 3;
 		gbc_tabbedPanel.fill = GridBagConstraints.BOTH;
 		gbc_tabbedPanel.insets = new Insets(0, 0, 5, 5);
 		gbc_tabbedPanel.gridx = 0;
@@ -144,9 +144,9 @@ private JTextField updateSalaryTextField;
 		tabbedPanel.addTab("Add", null, addPanel, null);
 		GridBagLayout gbl_addPanel = new GridBagLayout();
 		gbl_addPanel.columnWidths = new int[] {40, 40, 40, 40, 40};
-		gbl_addPanel.rowHeights = new int[] {40, 40, 40, 40, 40, 40};
+		gbl_addPanel.rowHeights = new int[] {40, 40, 40, 40, 40};
 		gbl_addPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_addPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_addPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		addPanel.setLayout(gbl_addPanel);
 		
 		//ADD DATA PANEL
@@ -154,7 +154,7 @@ private JTextField updateSalaryTextField;
 		addDataPanel.setBorder(new TitledBorder(null, "Add data", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_addDataPanel = new GridBagConstraints();
 		gbc_addDataPanel.gridwidth = 5;
-		gbc_addDataPanel.gridheight = 6;
+		gbc_addDataPanel.gridheight = 5;
 		gbc_addDataPanel.fill = GridBagConstraints.BOTH;
 		gbc_addDataPanel.gridx = 0;
 		gbc_addDataPanel.gridy = 0;
@@ -315,7 +315,7 @@ private JTextField updateSalaryTextField;
 		updateIdTextField.setText("");
 		updateIdTextField.setColumns(10);
 		GridBagConstraints gbc_updateIdTextField = new GridBagConstraints();
-		gbc_updateIdTextField.gridwidth = 4;
+		gbc_updateIdTextField.gridwidth = 2;
 		gbc_updateIdTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateIdTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateIdTextField.gridx = 1;
@@ -335,7 +335,7 @@ private JTextField updateSalaryTextField;
 		updateFirstNameTextField = new JTextField();
 		updateFirstNameTextField.setText("");
 		GridBagConstraints gbc_updateFirstNameTextField = new GridBagConstraints();
-		gbc_updateFirstNameTextField.gridwidth = 4;
+		gbc_updateFirstNameTextField.gridwidth = 2;
 		gbc_updateFirstNameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateFirstNameTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateFirstNameTextField.gridx = 1;
@@ -357,7 +357,7 @@ private JTextField updateSalaryTextField;
 		updateLastNameTextField.setText("");
 		updateLastNameTextField.setColumns(10);
 		GridBagConstraints gbc_updateLastNameTextField = new GridBagConstraints();
-		gbc_updateLastNameTextField.gridwidth = 4;
+		gbc_updateLastNameTextField.gridwidth = 2;
 		gbc_updateLastNameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateLastNameTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateLastNameTextField.gridx = 1;
@@ -378,7 +378,7 @@ private JTextField updateSalaryTextField;
 		updateEmailTextField.setText("");
 		updateEmailTextField.setColumns(10);
 		GridBagConstraints gbc_updateEmailTextField = new GridBagConstraints();
-		gbc_updateEmailTextField.gridwidth = 4;
+		gbc_updateEmailTextField.gridwidth = 2;
 		gbc_updateEmailTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmailTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmailTextField.gridx = 1;
@@ -399,7 +399,7 @@ private JTextField updateSalaryTextField;
 		updateDepartmentTextField.setText("");
 		updateDepartmentTextField.setColumns(10);
 		GridBagConstraints gbc_updateDepartmentTextField = new GridBagConstraints();
-		gbc_updateDepartmentTextField.gridwidth = 4;
+		gbc_updateDepartmentTextField.gridwidth = 2;
 		gbc_updateDepartmentTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateDepartmentTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateDepartmentTextField.gridx = 1;
@@ -420,7 +420,7 @@ private JTextField updateSalaryTextField;
 		updateSalaryTextField.setText("");
 		updateSalaryTextField.setColumns(10);
 		GridBagConstraints gbc_updateSalaryTextField = new GridBagConstraints();
-		gbc_updateSalaryTextField.gridwidth = 4;
+		gbc_updateSalaryTextField.gridwidth = 2;
 		gbc_updateSalaryTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateSalaryTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateSalaryTextField.gridx = 1;
@@ -449,7 +449,7 @@ private JTextField updateSalaryTextField;
 		JPanel databasePanel = new JPanel();
 		databasePanel.setBorder(new TitledBorder(null, "Database", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_databasePanel = new GridBagConstraints();
-		gbc_databasePanel.gridheight = 7;
+		gbc_databasePanel.gridheight = 5;
 		gbc_databasePanel.gridwidth = 9;
 		gbc_databasePanel.insets = new Insets(0, 0, 5, 0);
 		gbc_databasePanel.fill = GridBagConstraints.BOTH;
@@ -459,8 +459,8 @@ private JTextField updateSalaryTextField;
 		GridBagLayout gbl_databasePanel = new GridBagLayout();
 		gbl_databasePanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40};
 		gbl_databasePanel.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40};
-		gbl_databasePanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_databasePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gbl_databasePanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+		gbl_databasePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
 		databasePanel.setLayout(gbl_databasePanel);
 		
 		//DATABASE TEXT AREA
@@ -485,7 +485,7 @@ private JTextField updateSalaryTextField;
 		gbc_databaseScroll.gridwidth = 7;
 		gbc_databaseScroll.insets = new Insets(0, 0, 5, 0);
 		gbc_databaseScroll.fill = GridBagConstraints.BOTH;
-		gbc_databaseScroll.gridx = 0;
+		gbc_databaseScroll.gridx = 1;
 		gbc_databaseScroll.gridy = 0;
 		databasePanel.add(databaseScroll, gbc_databaseScroll);
 		
@@ -494,7 +494,7 @@ private JTextField updateSalaryTextField;
 		GridBagConstraints gbc_refreshDbBtn = new GridBagConstraints();
 		gbc_refreshDbBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_refreshDbBtn.gridwidth = 2;
-		gbc_refreshDbBtn.gridx = 2;
+		gbc_refreshDbBtn.gridx = 0;
 		gbc_refreshDbBtn.gridy = 6;
 		databasePanel.add(refreshDbBtn, gbc_refreshDbBtn);
 		refreshDbBtn.setToolTipText("Refresh to show all the employees in the database");
@@ -502,16 +502,18 @@ private JTextField updateSalaryTextField;
 		//CLEAR BUTTON
 		JButton clearDbBtn = new JButton("Clear");
 		GridBagConstraints gbc_clearDbBtn = new GridBagConstraints();
+		gbc_clearDbBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_clearDbBtn.gridwidth = 2;
-		gbc_clearDbBtn.gridx = 4;
+		gbc_clearDbBtn.gridx = 1;
 		gbc_clearDbBtn.gridy = 6;
 		databasePanel.add(clearDbBtn, gbc_clearDbBtn);
 
 		//SAVE BUTTON
 		JButton saveDbBtn = new JButton("Save");
 		GridBagConstraints gbc_saveDbBtn = new GridBagConstraints();
+		gbc_saveDbBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_saveDbBtn.gridwidth = 2;
-		gbc_saveDbBtn.gridx = 8;
+		gbc_saveDbBtn.gridx = 4;
 		gbc_saveDbBtn.gridy = 6;
 		databasePanel.add(saveDbBtn, gbc_saveDbBtn);
 		saveDbBtn.setToolTipText("save the information from database to text file");
@@ -521,10 +523,10 @@ private JTextField updateSalaryTextField;
 		consolePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Console", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_consolePanel = new GridBagConstraints();
 		gbc_consolePanel.gridwidth = 10;
-		gbc_consolePanel.gridheight = 3;
+		gbc_consolePanel.gridheight = 5;
 		gbc_consolePanel.fill = GridBagConstraints.BOTH;
 		gbc_consolePanel.gridx = 0;
-		gbc_consolePanel.gridy = 7;
+		gbc_consolePanel.gridy = 5;
 		frame.getContentPane().add(consolePanel, gbc_consolePanel);
 		GridBagLayout gbl_consolePanel = new GridBagLayout();
 		gbl_consolePanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
@@ -570,14 +572,28 @@ private JTextField updateSalaryTextField;
 		
 		//MENU BAR
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBorderPainted(false);
 		frame.setJMenuBar(menuBar);
+		
+		JMenu fileMenu = new JMenu("File");
+		menuBar.add(fileMenu);
+		
+		JMenuItem saveToFileItem = new JMenuItem("Save to file");
+		saveToFileItem.setHorizontalAlignment(SwingConstants.LEFT);
+		fileMenu.add(saveToFileItem);
+		
+		JMenuItem bulkImportItem = new JMenuItem("Bulk import from file...");
+		bulkImportItem.setHorizontalAlignment(SwingConstants.LEFT);
+		fileMenu.add(bulkImportItem);
 		
 		//DATABASE MENU
 		JMenu databaseMenu = new JMenu("Database");
+		databaseMenu.setHorizontalAlignment(SwingConstants.LEFT);
 		menuBar.add(databaseMenu);
 		
 		//TEST CONNECTION DATABASE MENU ITEM
 		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
+		dbTestConnectionItem.setHorizontalAlignment(SwingConstants.LEFT);
 		databaseMenu.add(dbTestConnectionItem);
 		
 		//HELP MENU
@@ -586,7 +602,7 @@ private JTextField updateSalaryTextField;
 		
 		//ABOUT HELP MENU ITEM
 		JMenuItem aboutItem = new JMenuItem("About the application");
-		aboutItem.setHorizontalAlignment(SwingConstants.CENTER);
+		aboutItem.setHorizontalAlignment(SwingConstants.LEFT);
 		helpMenu.add(aboutItem);
 		aboutItem.addActionListener(new ActionListener() {
 			@Override
@@ -601,6 +617,7 @@ private JTextField updateSalaryTextField;
 		
 		//EXIT APPLICATION EXIT MENU ITEM
 		JMenuItem exitItem = new JMenuItem("Exit the application");
+		exitItem.setHorizontalAlignment(SwingConstants.LEFT);
 		exitMenu.add(exitItem);
 		
 //----------------ACTION EVENT LISTENERS---------------//

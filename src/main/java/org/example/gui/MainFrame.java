@@ -678,7 +678,7 @@ private JTextField dateToTextField;
 					List<Employee> employees = db.showEmployees();
 					databaseTextArea.setText("");
 	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getId() + ": " + employee.getFirstName() + ", " + employee.getLastName() + ", " + employee.getDepartment() + ", " + employee.getEmail() + ", " + employee.getSalary() + "\n");
+	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() +  ", " + employee.getOfficeCode() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
 	                } 
 				} catch (SQLException error) {
 					consoleTextArea.append("Problem fetching from database. Error: " + error);
@@ -718,7 +718,7 @@ private JTextField dateToTextField;
 					List<Employee> employees = databaseConnection.showEmployees();
 					databaseTextArea.setText("");
 	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getEmail() + ", " + employee.getExtension() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
+	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() + ", "  + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
 	                } 
 				}catch (NumberFormatException | SQLException error) {
 					consoleTextArea.append("ID must be a valid ID\n");
@@ -745,14 +745,16 @@ private JTextField dateToTextField;
 			public void actionPerformed(ActionEvent e) {
 				try {
 					
-					
+					int employeeNumber = getEmployeeNumber();
 					String firstName = getFirstName();
 					String lastName = getLastName();
+					String extension = getExtension();
 					String email = getEmail();
-					String department = getDepartment();
-					double salary;
+					String officeCode = getOfficeCode();
+					int reportsTo = getReportsTo();
+					String jobTitle = getJobTitle();
 					
-					if (firstName.isEmpty() && lastName.isEmpty() && email.isEmpty() && department.isEmpty() && salaryTextField.getText().isEmpty())
+					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && reportsTo.isEmpty() && jobTitle.isEmpty())
 					{
 						
 						throw new MissingTextFieldException("you must fill out all the fields");
@@ -776,7 +778,7 @@ private JTextField dateToTextField;
 					}
 
 
-					databaseConnection.addEmployee(lastName, firstName, department, email, salary);
+					databaseConnection.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
 					consoleTextArea.setText("Employee: " + " " +  firstName + " " + lastName + " is added\n");
 					
 				}

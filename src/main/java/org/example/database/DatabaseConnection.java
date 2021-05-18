@@ -127,6 +127,43 @@ public class DatabaseConnection {
 			return null;
 				 
 		}
+
+	public List<Employee> showEmployeesJobTitle(String jobTitle) throws SQLException {
+		ArrayList<Employee> employees = new ArrayList<Employee>();
+		try{
+			open();
+			pStmt = conn.prepareStatement("SELECT * FROM employees WHERE jobTitle = ?");
+			resSet = pStmt.executeQuery();
+
+			pStmt.setString(1, jobTitle);
+
+			while (resSet.next()) {
+				int employeeNumber = resSet.getInt("employeeNumber");
+				String firstName = resSet.getString("first_name");
+				String lastName = resSet.getString("last_name");
+				String extension = resSet.getString("extension");
+				String email = resSet.getString("email");
+				String officeCode = resSet.getString("officeCode");
+				int reportsTo = resSet.getInt("reportsTo");
+				resSet.getString("jobTitle");
+
+
+
+				Employee current = new Employee(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
+				employees.add(current);
+				/*employees = employees.toString();*/
+
+
+			}
+
+			close();
+			return employees;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 		
 		
 	}

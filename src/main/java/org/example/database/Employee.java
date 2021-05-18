@@ -6,7 +6,7 @@ public class Employee {
 
 
 
-    public Employee(int employeeNumber, String firstName, String lastName, String email, String extension, String officeCode, int reportsTo,  String jobTitle) {
+    public Employee(int employeeNumber, String firstName, String lastName,  String extension, String email, String officeCode, int reportsTo,  String jobTitle) {
         super();
         this.employeeNumber = employeeNumber;
         this.lastName = lastName;

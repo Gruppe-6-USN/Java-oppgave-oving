@@ -40,7 +40,7 @@ private JTextField firstNameTextField;
 private JTextField lastNameTextField;
 private JTextField extensionTextField;
 private JTextField emailTextField;
-private JTextField idTextField;
+private JTextField deleteEmployeeNumberTextField;
 private JTextField updateFirstNameTextField;
 private JTextField updateIdTextField;
 private JTextField updateLastNameTextField;
@@ -121,24 +121,24 @@ private JTextField updateJobTitleTextField;
 		deleteIdPanel.setLayout(gbl_deleteIdPanel);
 		
 		//ID LABEL
-		JLabel idLabel = new JLabel("ID:");
-		GridBagConstraints gbc_idLabel = new GridBagConstraints();
-		gbc_idLabel.anchor = GridBagConstraints.EAST;
-		gbc_idLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_idLabel.gridx = 0;
-		gbc_idLabel.gridy = 1;
-		deleteIdPanel.add(idLabel, gbc_idLabel);
+		JLabel deleteEmployeeNumberLabel = new JLabel("Employee number: ");
+		GridBagConstraints gbc_deleteEmployeeNumberLabel = new GridBagConstraints();
+		gbc_deleteEmployeeNumberLabel.anchor = GridBagConstraints.EAST;
+		gbc_deleteEmployeeNumberLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_deleteEmployeeNumberLabel.gridx = 0;
+		gbc_deleteEmployeeNumberLabel.gridy = 1;
+		deleteIdPanel.add(deleteEmployeeNumberLabel, gbc_deleteEmployeeNumberLabel);
 		
 		//ID TEXT FIELD
-		idTextField = new JTextField();
-		idTextField.setColumns(10);
-		GridBagConstraints gbc_idTextField = new GridBagConstraints();
-		gbc_idTextField.gridwidth = 2;
-		gbc_idTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_idTextField.anchor = GridBagConstraints.NORTHWEST;
-		gbc_idTextField.gridx = 1;
-		gbc_idTextField.gridy = 1;
-		deleteIdPanel.add(idTextField, gbc_idTextField);
+		deleteEmployeeNumberTextField = new JTextField();
+		deleteEmployeeNumberTextField.setColumns(10);
+		GridBagConstraints gbc_deleteEmployeeNumberTextField = new GridBagConstraints();
+		gbc_deleteEmployeeNumberTextField.gridwidth = 2;
+		gbc_deleteEmployeeNumberTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_deleteEmployeeNumberTextField.anchor = GridBagConstraints.NORTHWEST;
+		gbc_deleteEmployeeNumberTextField.gridx = 1;
+		gbc_deleteEmployeeNumberTextField.gridy = 1;
+		deleteIdPanel.add(deleteEmployeeNumberTextField, gbc_deleteEmployeeNumberTextField);
 		
 		//DELETE BUTTON
 		JButton deleteBtn = new JButton("Delete");

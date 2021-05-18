@@ -927,7 +927,6 @@ private JTextField jobTitleTextField;
 				fileChooser.setCurrentDirectory(new File("c:\\temp"));
 
 				fileChooser.showSaveDialog(null);
-
 			}
 		});
 

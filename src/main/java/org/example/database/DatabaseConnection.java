@@ -103,8 +103,8 @@ public class DatabaseConnection {
 		    
 		    while (resSet.next()) {
 		    	int employeeNumber = resSet.getInt("employeeNumber");
-		    	String firstName = resSet.getString("first_name");
-		    	String lastName = resSet.getString("last_name");
+		    	String firstName = resSet.getString("firstName");
+		    	String lastName = resSet.getString("lastName");
 				String extension = resSet.getString("extension");
 		    	String email = resSet.getString("email");
 		    	String officeCode = resSet.getString("officeCode");

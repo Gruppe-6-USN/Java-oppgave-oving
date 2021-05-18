@@ -135,7 +135,7 @@ private JTextField updateJobTitleTextField;
 		GridBagConstraints gbc_deleteEmployeeNumberTextField = new GridBagConstraints();
 		gbc_deleteEmployeeNumberTextField.gridwidth = 2;
 		gbc_deleteEmployeeNumberTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_deleteEmployeeNumberTextField.anchor = GridBagConstraints.NORTHWEST;
+		gbc_deleteEmployeeNumberTextField.anchor = GridBagConstraints.NORTH;
 		gbc_deleteEmployeeNumberTextField.gridx = 1;
 		gbc_deleteEmployeeNumberTextField.gridy = 1;
 		deleteIdPanel.add(deleteEmployeeNumberTextField, gbc_deleteEmployeeNumberTextField);
@@ -589,9 +589,9 @@ private JTextField updateJobTitleTextField;
 		gbc_databasePanel.gridy = 0;
 		frame.getContentPane().add(databasePanel, gbc_databasePanel);
 		GridBagLayout gbl_databasePanel = new GridBagLayout();
-		gbl_databasePanel.columnWidths = new int[] {40, 52, 40, 52, 40, 40, 40, 40, 40, 40};
+		gbl_databasePanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
 		gbl_databasePanel.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 0};
-		gbl_databasePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+		gbl_databasePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		gbl_databasePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0};
 		databasePanel.setLayout(gbl_databasePanel);
 		
@@ -622,12 +622,12 @@ private JTextField updateJobTitleTextField;
 		JScrollPane databaseScroll = new JScrollPane(databaseTextArea);
 		databaseScroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 		GridBagConstraints gbc_databaseScroll = new GridBagConstraints();
-		gbc_databaseScroll.gridwidth = 7;
-		gbc_databaseScroll.gridheight = 9;
+		gbc_databaseScroll.gridwidth = 13;
+		gbc_databaseScroll.gridheight = 7;
 		gbc_databaseScroll.insets = new Insets(0, 0, 5, 0);
 		gbc_databaseScroll.fill = GridBagConstraints.BOTH;
-		gbc_databaseScroll.gridx = 4;
-		gbc_databaseScroll.gridy = 0;
+		gbc_databaseScroll.gridx = 0;
+		gbc_databaseScroll.gridy = 3;
 		databasePanel.add(databaseScroll, gbc_databaseScroll);
 		
 		//CHOOSE JOB TITLE LABLE
@@ -635,8 +635,8 @@ private JTextField updateJobTitleTextField;
 		GridBagConstraints gbc_chooseJobTitleLabel = new GridBagConstraints();
 		gbc_chooseJobTitleLabel.anchor = GridBagConstraints.EAST;
 		gbc_chooseJobTitleLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_chooseJobTitleLabel.gridx = 0;
-		gbc_chooseJobTitleLabel.gridy = 1;
+		gbc_chooseJobTitleLabel.gridx = 5;
+		gbc_chooseJobTitleLabel.gridy = 0;
 		databasePanel.add(chooseJobTitleLabel, gbc_chooseJobTitleLabel);
 		
 		//CHOOSE JOB TITLE COMBO BOX
@@ -645,8 +645,8 @@ private JTextField updateJobTitleTextField;
 		gbc_chooseJobTitleComboBox.gridwidth = 3;
 		gbc_chooseJobTitleComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_chooseJobTitleComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chooseJobTitleComboBox.gridx = 1;
-		gbc_chooseJobTitleComboBox.gridy = 1;
+		gbc_chooseJobTitleComboBox.gridx = 6;
+		gbc_chooseJobTitleComboBox.gridy = 0;
 		databasePanel.add(chooseJobTitleComboBox, gbc_chooseJobTitleComboBox);
 		
 		//DATE FROM LABEL
@@ -655,7 +655,7 @@ private JTextField updateJobTitleTextField;
 		gbc_dateFromLabel.anchor = GridBagConstraints.EAST;
 		gbc_dateFromLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_dateFromLabel.gridx = 0;
-		gbc_dateFromLabel.gridy = 2;
+		gbc_dateFromLabel.gridy = 1;
 		databasePanel.add(dateFromLabel, gbc_dateFromLabel);
 		
 		//DATE FROM TEXT FIELD
@@ -664,7 +664,7 @@ private JTextField updateJobTitleTextField;
 		gbc_dateFromTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_dateFromTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dateFromTextField.gridx = 1;
-		gbc_dateFromTextField.gridy = 2;
+		gbc_dateFromTextField.gridy = 1;
 		databasePanel.add(dateFromTextField, gbc_dateFromTextField);
 		dateFromTextField.setColumns(10);
 		
@@ -673,7 +673,7 @@ private JTextField updateJobTitleTextField;
 		GridBagConstraints gbc_dateToLabel = new GridBagConstraints();
 		gbc_dateToLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_dateToLabel.gridx = 2;
-		gbc_dateToLabel.gridy = 2;
+		gbc_dateToLabel.gridy = 1;
 		databasePanel.add(dateToLabel, gbc_dateToLabel);
 		
 		//DATE TO TEXT FIELD
@@ -682,16 +682,17 @@ private JTextField updateJobTitleTextField;
 		gbc_dateToTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_dateToTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dateToTextField.gridx = 3;
-		gbc_dateToTextField.gridy = 2;
+		gbc_dateToTextField.gridy = 1;
 		databasePanel.add(dateToTextField, gbc_dateToTextField);
 		dateToTextField.setColumns(10);
 		
 		//SEARCH BY DATE BUTTON
 		JButton searchByDateBtn = new JButton("Search by date");
 		GridBagConstraints gbc_searchByDateBtn = new GridBagConstraints();
+		gbc_searchByDateBtn.gridwidth = 3;
 		gbc_searchByDateBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_searchByDateBtn.gridx = 1;
-		gbc_searchByDateBtn.gridy = 3;
+		gbc_searchByDateBtn.gridy = 2;
 		databasePanel.add(searchByDateBtn, gbc_searchByDateBtn);
 		
 		//REFRESH BUTTON
@@ -699,8 +700,8 @@ private JTextField updateJobTitleTextField;
 		GridBagConstraints gbc_refreshDbBtn = new GridBagConstraints();
 		gbc_refreshDbBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_refreshDbBtn.gridwidth = 2;
-		gbc_refreshDbBtn.gridx = 6;
-		gbc_refreshDbBtn.gridy = 9;
+		gbc_refreshDbBtn.gridx = 1;
+		gbc_refreshDbBtn.gridy = 10;
 		databasePanel.add(refreshDbBtn, gbc_refreshDbBtn);
 		refreshDbBtn.setToolTipText("Refresh to show all the employees in the database");
 		
@@ -709,8 +710,8 @@ private JTextField updateJobTitleTextField;
 		GridBagConstraints gbc_clearDbBtn = new GridBagConstraints();
 		gbc_clearDbBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_clearDbBtn.gridwidth = 2;
-		gbc_clearDbBtn.gridx = 8;
-		gbc_clearDbBtn.gridy = 9;
+		gbc_clearDbBtn.gridx = 3;
+		gbc_clearDbBtn.gridy = 10;
 		databasePanel.add(clearDbBtn, gbc_clearDbBtn);
 		
 		//CHOOSE TABLE COMBOBOX
@@ -839,9 +840,8 @@ private JTextField updateJobTitleTextField;
 		//REFRESH DB BUTTON - shows updated count of all employees in database text area
         refreshDbBtn.addActionListener(new ActionListener() { 
         	public void actionPerformed(ActionEvent refreshDb) {
-        		DatabaseConnection db = new DatabaseConnection();
         		try {
-					List<Employee> employees = db.showEmployees();
+					List<Employee> employees = databaseConnection.showEmployees();
 					databaseTextArea.setText("");
 	                for (Employee employee : employees) {
 	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() +  ", " + employee.getOfficeCode() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");

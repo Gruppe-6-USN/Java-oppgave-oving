@@ -1,27 +1,29 @@
 package org.example.database;
 
 public class Employee {
-    private int id;
-    private String lastName, firstName, department, email;
-    private double salary;
+    private int employeeNumber, reportsTo;
+    private String lastName, firstName, extension, email, officeCode, jobTitle;
 
 
-    public Employee(int id, String firstName, String lastName, String email, String department, double salary) {
+
+    public Employee(int employeeNumber, String firstName, String lastName, String email, String extension, int reportsTo, String jobTitle) {
         super();
-        this.id = id;
+        this.employeeNumber = employeeNumber;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.extension = extension;
         this.email = email;
-        this.department = department;
-        this.salary = salary;     
+        this.officeCode = officeCode;
+        this.reportsTo = reportsTo;
+        this.jobTitle = jobTitle;
     }
 
-    public int getId() {
-        return id;
+    public int getEmployeeNumber() {
+        return employeeNumber;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEmployeeNumber(int employeeNumber) {
+        this.employeeNumber = employeeNumber;
     }
 
     public String getLastName() {
@@ -40,12 +42,12 @@ public class Employee {
         this.firstName = firstName;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getExtension() {
+        return extension;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     public String getEmail() {
@@ -56,11 +58,19 @@ public class Employee {
         this.email = email;
     }
 
-    public double getSalary() {
-        return salary;
+    public String getOfficeCode() { return officeCode;}
+
+    public void setOfficeCode(String officeCode) {this.officeCode = officeCode; }
+
+    public int getReportsTo() {
+        return reportsTo;
     }
 
-    public void setSalary(double salary) {
-        this.salary = salary;
+    public void setReportsTo(int reportsTo) {
+        this.reportsTo = reportsTo;
     }
+
+    public String getJobTitle() { return jobTitle; }
+
+    public void setJobTitle(String jobTitle) { this.jobTitle = jobTitle;}
 }

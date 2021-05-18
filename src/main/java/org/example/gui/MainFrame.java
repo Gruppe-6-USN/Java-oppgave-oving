@@ -21,6 +21,9 @@ import java.awt.event.MouseEvent;
 import java.io.*;
 import java.nio.CharBuffer;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.*;
@@ -859,25 +862,42 @@ public class MainFrame {
 			}
 		});
 
-		searchByDateBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent searchByDate) {
-
-				try {
-					List<OrdersList> orders = databaseConnection.showOrders();
-					databaseTextArea.setText("");
-					for (OrdersList order : orders) {
-						databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() + ", " + order.getStatus() + ", " + order.getComments() + "\n");
-
-					}
-				} catch (SQLException error) {
-					consoleTextArea.append("Problem fetching from database. Error: " + error);
-					throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-					consoleTextArea.append("Connection failed. Error: " +
-							throwableElement.toString() + "\n"
-							+ stackTraceWriter.toString());
+       	// SEARCH BY DATE
+        searchByDateBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent searchByDate) {
+        		
+        	try {
+        		
+        		if (dateFromTextField.getText().isEmpty() || dateToTextField.getText().isEmpty())
+				{
+					
+					throw new MissingTextFieldException("you must fill out all the dates");
 				}
+        		
+        		String dateString1 =  dateFromTextField.getText() ;
+        		String dateString2 =  dateToTextField.getText() ;
+        		DateFormat d = new SimpleDateFormat("yyyy-mm-dd");
+        		d.parse(dateString1);
+        		d.parse(dateString2);
+        		List<OrdersList> orders = databaseConnection.showOrders(dateString1, dateString2);
+				databaseTextArea.setText("");
+                for (OrdersList order : orders) {
+                    databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() +  ", " + order.getStatus() + ", " + order.getComments() + "\n");
+        		
+                } 
+			} catch (SQLException | ParseException error) {
+				consoleTextArea.append("Problem fetching from database. Error: " + error);
+				throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+				consoleTextArea.append("Connection failed. Error: " + 
+										throwableElement.toString() + "\n" 
+										+ stackTraceWriter.toString());
 			}
-		});
+			catch (MissingTextFieldException exception)
+			{
+			    consoleTextArea.append(exception.getMessage() + "\n");        
+			}
+    	} 
+    });
 
 		//CLEAR DATABASE BUTTON
 		clearDbBtn.addActionListener(new ActionListener() {

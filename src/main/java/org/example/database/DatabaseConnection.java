@@ -93,11 +93,14 @@ public class DatabaseConnection {
 				e1.printStackTrace();
 			}
 		}
-		public List<OrdersList> showOrders() throws SQLException{
+		public List<OrdersList> showOrders(String datestr1, String datestr2) throws SQLException{
 			ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
+			
 			try {
 				open();
-				pStmt = conn.prepareStatement("SELECT * FROM orders");
+				pStmt = conn.prepareStatement("SELECT * FROM orders where orderDate >= ? and orderDate <= ?");
+				pStmt.setString(1, datestr1);
+				pStmt.setString(2, datestr2);
 				resSet = pStmt.executeQuery();
 				
 			    while (resSet.next()) {

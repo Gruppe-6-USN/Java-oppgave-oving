@@ -769,7 +769,7 @@ private JTextField updateJobTitleTextField;
 		//CLEAR CONSOLE BUTTON
 		JButton clearConsoleBtn = new JButton("Clear console");
 		GridBagConstraints gbc_clearConsoleBtn = new GridBagConstraints();
-		gbc_clearConsoleBtn.gridwidth = 2;
+		gbc_clearConsoleBtn.gridwidth = 3;
 		gbc_clearConsoleBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_clearConsoleBtn.gridx = 0;
 		gbc_clearConsoleBtn.gridy = 3;

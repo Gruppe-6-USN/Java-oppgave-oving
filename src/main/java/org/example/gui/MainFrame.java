@@ -1058,8 +1058,21 @@ private JTextField updateJobTitleTextField;
 				}
 			}
 		});
-		
+
+		try {
+			List<Employee> employees = databaseConnection.showEmployees();
+			for (Employee employee : employees) {
+				chooseJobTitleComboBox.addItem(employee.getJobTitle());
+			}
+		} catch (SQLException error) {
+			consoleTextArea.append("Problem fetching from database. Error: " + error);
+			throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+			consoleTextArea.append("Connection failed. Error: " +
+					throwableElement.toString() + "\n"
+					+ stackTraceWriter.toString());
+		}
 	}
+	
 	
 //-------------------------ADDITIONAL METHODS-------------------------//
 	private static void addPopup(Component component, final JPopupMenu popup) {

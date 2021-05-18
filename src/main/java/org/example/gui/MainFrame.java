@@ -46,7 +46,7 @@ private JTextField updateIdTextField;
 private JTextField updateLastNameTextField;
 private JTextField updateExtensionTextField;
 private JTextField updateOfficeCodeTextField;
-private JTextField updateSalaryTextField;
+private JTextField updateReportsToTextField;
 private JTextField dateFromTextField;
 private JTextField dateToTextField;
 private JTextField officeCodeTextField;
@@ -519,16 +519,16 @@ private JTextField updateJobTitleTextField;
 		updatePanel.add(updateReportsToLabel, gbc_updateReportsToLabel);
 		
 		// UPDATE SALARY TEXT FIELD
-		updateSalaryTextField = new JTextField();
-		updateSalaryTextField.setText("");
-		updateSalaryTextField.setColumns(10);
+		updateReportsToTextField = new JTextField();
+		updateReportsToTextField.setText("");
+		updateReportsToTextField.setColumns(10);
 		GridBagConstraints gbc_updateSalaryTextField = new GridBagConstraints();
 		gbc_updateSalaryTextField.gridwidth = 2;
 		gbc_updateSalaryTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateSalaryTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateSalaryTextField.gridx = 1;
 		gbc_updateSalaryTextField.gridy = 7;
-		updatePanel.add(updateSalaryTextField, gbc_updateSalaryTextField);
+		updatePanel.add(updateReportsToTextField, gbc_updateSalaryTextField);
 		
 		JLabel updateJobTitleLabel = new JLabel("Job title: ");
 		GridBagConstraints gbc_updateJobTitleLabel = new GridBagConstraints();
@@ -1048,8 +1048,12 @@ private JTextField updateJobTitleTextField;
 	public String getUpdateLastName() {
 		return updateLastNameTextField.getText();
 	}
+
+	public String getUpdateExtension() {
+		return updateExtensionTextField.getText();
+	}
 	
-	public String getUpdateDepartment() {
+	public String getUpdateOfficeCode() {
 		return updateOfficeCodeTextField.getText();
 	}
 	
@@ -1057,9 +1061,18 @@ private JTextField updateJobTitleTextField;
 		return updateExtensionTextField.getText();
 	}
 	
-	public Double getUpdateSalary() {
-		return Double.parseDouble(updateSalaryTextField.getText());
+	public int getUpdateReportsTo() {
+		return Integer.parseInt(updateEmployeeNumberTextField.getText());
 	}
+
+	public String getUpdateJobTitle() {
+		return updateJobTitleTextField.getText();
+	}
+
+	public int getUpdateEmployeeNumber() {
+		return Integer.parseInt(updateEmployeeNumberTextField.getText());
+	}
+
 
 	public int getEmployeeNumber() {
 		return Integer.parseInt(employeeNumberTextField.getText());

@@ -1,11 +1,11 @@
 package org.example.database;
 
 public class Orders {
-    private int id, customerNumber;
+    private int orderNumber, customerNumber;
     private String orderDate, requiredDate, shippedDate, status, comments;
 
-    public Orders(int id, int customerNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments) {
-        this.id = id;
+    public Orders(int orderNumber, int customerNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments) {
+        this.orderNumber = orderNumber;
         this.customerNumber = customerNumber;
         this.orderDate = orderDate;
         this.requiredDate = requiredDate;
@@ -14,12 +14,12 @@ public class Orders {
         this.comments = comments;
     }
 
-    public int getId() {
-        return id;
+    public int getOrderNumber() {
+        return orderNumber;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.orderNumber = orderNumber;
     }
 
     public int getCustomerNumber() {

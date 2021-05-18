@@ -52,18 +52,19 @@ public class DatabaseConnection {
 		}
 	}
 
-	public void addEmployee(String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException {
+	public void addEmployee(int employeeNumber, String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException {
 		try {
 			open();
 			pStmt = conn.prepareStatement("insert into employees (last_name, first_name, extension, email, officeCode, jobTitle)" +
-					"values (?, ?, ?, ?, ?, ?, ?)");
-			pStmt.setString(1, lastName);
-			pStmt.setString(2, firstName);
-			pStmt.setString(3, extension);
-			pStmt.setString(4, email);
-			pStmt.setString(5, officeCode);
-			pStmt.setInt(6, reportsTo);
-			pStmt.setString(7, jobTitle);
+					"values (?, ?, ?, ?, ?, ?, ?, ?)");
+			pStmt.setInt(1, employeeNumber);
+			pStmt.setString(2, lastName);
+			pStmt.setString(3, firstName);
+			pStmt.setString(4, extension);
+			pStmt.setString(5, email);
+			pStmt.setString(6, officeCode);
+			pStmt.setInt(7, reportsTo);
+			pStmt.setString(8, jobTitle);
 			pStmt.execute();
 			close();
 		} catch (SQLException addErr) {

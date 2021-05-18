@@ -23,39 +23,41 @@ import java.nio.CharBuffer;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.*;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.JTextComponent;
 
 import java.awt.Color;
+import java.util.Objects;
 import javax.swing.border.EtchedBorder;
 
 public class MainFrame {
 
-private DatabaseConnection databaseConnection = new DatabaseConnection();
+	private DatabaseConnection databaseConnection = new DatabaseConnection();
 
-public JFrame frame;
-private JTextField employeeNumberTextField;
-private JTextField firstNameTextField;
-private JTextField lastNameTextField;
-private JTextField extensionTextField;
-private JTextField emailTextField;
-private JTextField deleteEmployeeNumberTextField;
-private JTextField updateFirstNameTextField;
-private JTextField updateIdTextField;
-private JTextField updateLastNameTextField;
-private JTextField updateExtensionTextField;
-private JTextField updateOfficeCodeTextField;
-private JTextField updateReportsToTextField;
-private JTextField dateFromTextField;
-private JTextField dateToTextField;
-private JTextField officeCodeTextField;
-private JTextField reportsToTextField;
-private JTextField jobTitleTextField;
-private JTextField updateEmployeeNumberTextField;
-private JTextField updateEmailTextField;
-private JTextField updateJobTitleTextField;
+	public JFrame frame;
+	private JTextField employeeNumberTextField;
+	private JTextField firstNameTextField;
+	private JTextField lastNameTextField;
+	private JTextField extensionTextField;
+	private JTextField emailTextField;
+	private JTextField deleteEmployeeNumberTextField;
+	private JTextField updateFirstNameTextField;
+	private JTextField updateIdTextField;
+	private JTextField updateLastNameTextField;
+	private JTextField updateExtensionTextField;
+	private JTextField updateOfficeCodeTextField;
+	private JTextField updateReportsToTextField;
+	private JTextField dateFromTextField;
+	private JTextField dateToTextField;
+	private JTextField officeCodeTextField;
+	private JTextField reportsToTextField;
+	private JTextField jobTitleTextField;
+	private JTextField updateEmployeeNumberTextField;
+	private JTextField updateEmailTextField;
+	private JTextField updateJobTitleTextField;
 
 //TO-DO:
 //add auto-refresh to databaseTextArea when making changes in the database
@@ -77,12 +79,12 @@ private JTextField updateJobTitleTextField;
 		frame.setBounds(100, 100, 973, 703);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
-		gridBagLayout.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
+		gridBagLayout.columnWidths = new int[]{40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
+		gridBagLayout.rowHeights = new int[]{40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		frame.getContentPane().setLayout(gridBagLayout);
-		
+
 		//TABBED PANEL
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPanel = new GridBagConstraints();
@@ -92,17 +94,17 @@ private JTextField updateJobTitleTextField;
 		gbc_tabbedPanel.gridx = 0;
 		gbc_tabbedPanel.gridy = 0;
 		frame.getContentPane().add(tabbedPanel, gbc_tabbedPanel);
-		
+
 		//DELETE TAB
 		JPanel deletePanel = new JPanel();
 		tabbedPanel.addTab("Delete", null, deletePanel, null);
 		GridBagLayout gbl_deletePanel = new GridBagLayout();
-		gbl_deletePanel.columnWidths = new int[] {40, 40, 0, 40, 40, 40};
-		gbl_deletePanel.rowHeights = new int[] {40, 0, 40, 40, 40, 40, 40, 40};
+		gbl_deletePanel.columnWidths = new int[]{40, 40, 0, 40, 40, 40};
+		gbl_deletePanel.rowHeights = new int[]{40, 0, 40, 40, 40, 40, 40, 40};
 		gbl_deletePanel.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_deletePanel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		deletePanel.setLayout(gbl_deletePanel);
-		
+
 		//DELETE PANEL
 		JPanel deleteIdPanel = new JPanel();
 		deleteIdPanel.setBorder(new TitledBorder(null, "Delete ID", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -115,12 +117,12 @@ private JTextField updateJobTitleTextField;
 		gbc_deleteIdPanel.gridy = 0;
 		deletePanel.add(deleteIdPanel, gbc_deleteIdPanel);
 		GridBagLayout gbl_deleteIdPanel = new GridBagLayout();
-		gbl_deleteIdPanel.columnWidths = new int[] {40, 40, 40, 40};
+		gbl_deleteIdPanel.columnWidths = new int[]{40, 40, 40, 40};
 		gbl_deleteIdPanel.rowHeights = new int[]{20, 0, 0, 0};
 		gbl_deleteIdPanel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_deleteIdPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		deleteIdPanel.setLayout(gbl_deleteIdPanel);
-		
+
 		//ID LABEL
 		JLabel deleteEmployeeNumberLabel = new JLabel("Employee number: ");
 		GridBagConstraints gbc_deleteEmployeeNumberLabel = new GridBagConstraints();
@@ -129,7 +131,7 @@ private JTextField updateJobTitleTextField;
 		gbc_deleteEmployeeNumberLabel.gridx = 0;
 		gbc_deleteEmployeeNumberLabel.gridy = 1;
 		deleteIdPanel.add(deleteEmployeeNumberLabel, gbc_deleteEmployeeNumberLabel);
-		
+
 		//ID TEXT FIELD
 		deleteEmployeeNumberTextField = new JTextField();
 		deleteEmployeeNumberTextField.setColumns(10);
@@ -140,7 +142,7 @@ private JTextField updateJobTitleTextField;
 		gbc_deleteEmployeeNumberTextField.gridx = 1;
 		gbc_deleteEmployeeNumberTextField.gridy = 1;
 		deleteIdPanel.add(deleteEmployeeNumberTextField, gbc_deleteEmployeeNumberTextField);
-		
+
 		//DELETE BUTTON
 		JButton deleteBtn = new JButton("Delete");
 		GridBagConstraints gbc_deleteBtn = new GridBagConstraints();
@@ -148,17 +150,17 @@ private JTextField updateJobTitleTextField;
 		gbc_deleteBtn.gridy = 2;
 		deleteIdPanel.add(deleteBtn, gbc_deleteBtn);
 		deleteBtn.setToolTipText("Delete an employee from the database");
-		
+
 		//ADD TAB
 		JPanel addPanel = new JPanel();
 		tabbedPanel.addTab("Add", null, addPanel, null);
 		GridBagLayout gbl_addPanel = new GridBagLayout();
-		gbl_addPanel.columnWidths = new int[] {40, 40, 40, 40, 40};
-		gbl_addPanel.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40, 40};
+		gbl_addPanel.columnWidths = new int[]{40, 40, 40, 40, 40};
+		gbl_addPanel.rowHeights = new int[]{40, 40, 40, 40, 40, 40, 40, 40};
 		gbl_addPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_addPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		addPanel.setLayout(gbl_addPanel);
-		
+
 		//ADD DATA PANEL
 		JPanel addDataPanel = new JPanel();
 		addDataPanel.setBorder(new TitledBorder(null, "Add data", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -170,12 +172,12 @@ private JTextField updateJobTitleTextField;
 		gbc_addDataPanel.gridy = 0;
 		addPanel.add(addDataPanel, gbc_addDataPanel);
 		GridBagLayout gbl_addDataPanel = new GridBagLayout();
-		gbl_addDataPanel.columnWidths = new int[] {40, 40, 40, 30, 40, 40, 40};
-		gbl_addDataPanel.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 0, 40};
+		gbl_addDataPanel.columnWidths = new int[]{40, 40, 40, 30, 40, 40, 40};
+		gbl_addDataPanel.rowHeights = new int[]{40, 40, 40, 40, 40, 40, 40, 40, 0, 40};
 		gbl_addDataPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 0.0};
 		gbl_addDataPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		addDataPanel.setLayout(gbl_addDataPanel);
-		
+
 		//EMPLOYEE NUMBER LABEL
 		JLabel employeeNumberLabel = new JLabel("Employee number: ");
 		GridBagConstraints gbc_employeeNumberLabel = new GridBagConstraints();
@@ -185,7 +187,7 @@ private JTextField updateJobTitleTextField;
 		gbc_employeeNumberLabel.gridx = 0;
 		gbc_employeeNumberLabel.gridy = 0;
 		addDataPanel.add(employeeNumberLabel, gbc_employeeNumberLabel);
-		
+
 		//EMPLOYEE NUMBER TEXT FIELD
 		employeeNumberTextField = new JTextField();
 		employeeNumberTextField.setColumns(10);
@@ -196,7 +198,7 @@ private JTextField updateJobTitleTextField;
 		gbc_employeeNumberTextField.gridx = 2;
 		gbc_employeeNumberTextField.gridy = 0;
 		addDataPanel.add(employeeNumberTextField, gbc_employeeNumberTextField);
-		
+
 		//FIRST NAME LABEL
 		JLabel firstNameLabel = new JLabel("First name:");
 		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
@@ -206,7 +208,7 @@ private JTextField updateJobTitleTextField;
 		gbc_firstNameLabel.gridx = 0;
 		gbc_firstNameLabel.gridy = 1;
 		addDataPanel.add(firstNameLabel, gbc_firstNameLabel);
-		
+
 		//FIRST NAME TEXT FIELD
 		firstNameTextField = new JTextField();
 		firstNameTextField.setColumns(10);
@@ -217,7 +219,7 @@ private JTextField updateJobTitleTextField;
 		gbc_firstNameTextField.gridx = 2;
 		gbc_firstNameTextField.gridy = 1;
 		addDataPanel.add(firstNameTextField, gbc_firstNameTextField);
-		
+
 		//LAST NAME LABEL
 		JLabel lastNameLabel = new JLabel("Last name:");
 		GridBagConstraints gbc_lastNameLabel = new GridBagConstraints();
@@ -227,7 +229,7 @@ private JTextField updateJobTitleTextField;
 		gbc_lastNameLabel.gridx = 0;
 		gbc_lastNameLabel.gridy = 2;
 		addDataPanel.add(lastNameLabel, gbc_lastNameLabel);
-		
+
 		//LAST NAME TEXT FIELD
 		lastNameTextField = new JTextField();
 		lastNameTextField.setColumns(10);
@@ -238,7 +240,7 @@ private JTextField updateJobTitleTextField;
 		gbc_lastNameTextField.gridx = 2;
 		gbc_lastNameTextField.gridy = 2;
 		addDataPanel.add(lastNameTextField, gbc_lastNameTextField);
-		
+
 		//EXTENSION LABEL
 		JLabel extensionLabel = new JLabel("Extension: ");
 		GridBagConstraints gbc_extensionLabel = new GridBagConstraints();
@@ -248,7 +250,7 @@ private JTextField updateJobTitleTextField;
 		gbc_extensionLabel.gridx = 0;
 		gbc_extensionLabel.gridy = 3;
 		addDataPanel.add(extensionLabel, gbc_extensionLabel);
-		
+
 		//EXTENSION TEXT FIELD
 		extensionTextField = new JTextField();
 		extensionTextField.setColumns(10);
@@ -259,7 +261,7 @@ private JTextField updateJobTitleTextField;
 		gbc_extensionTextField.gridx = 2;
 		gbc_extensionTextField.gridy = 3;
 		addDataPanel.add(extensionTextField, gbc_extensionTextField);
-		
+
 		//EMAIL LABEL
 		JLabel emailLabel = new JLabel("Email: ");
 		GridBagConstraints gbc_emailLabel = new GridBagConstraints();
@@ -269,7 +271,7 @@ private JTextField updateJobTitleTextField;
 		gbc_emailLabel.gridx = 0;
 		gbc_emailLabel.gridy = 4;
 		addDataPanel.add(emailLabel, gbc_emailLabel);
-		
+
 		//EMAIL TEXT FIELD
 		emailTextField = new JTextField();
 		emailTextField.setColumns(10);
@@ -280,7 +282,7 @@ private JTextField updateJobTitleTextField;
 		gbc_emailTextField.gridx = 2;
 		gbc_emailTextField.gridy = 4;
 		addDataPanel.add(emailTextField, gbc_emailTextField);
-		
+
 		//OFFICE CODE TEXT FIELD
 		officeCodeTextField = new JTextField();
 		GridBagConstraints gbc_officeCodeTextField = new GridBagConstraints();
@@ -291,7 +293,7 @@ private JTextField updateJobTitleTextField;
 		gbc_officeCodeTextField.gridy = 5;
 		addDataPanel.add(officeCodeTextField, gbc_officeCodeTextField);
 		officeCodeTextField.setColumns(10);
-		
+
 		//REPORTS TO LABEL
 		JLabel reportsToLabel = new JLabel("Reports to: ");
 		GridBagConstraints gbc_reportsToLabel = new GridBagConstraints();
@@ -301,7 +303,7 @@ private JTextField updateJobTitleTextField;
 		gbc_reportsToLabel.gridx = 0;
 		gbc_reportsToLabel.gridy = 6;
 		addDataPanel.add(reportsToLabel, gbc_reportsToLabel);
-		
+
 		//REPORTS TO TEXT FIELD
 		reportsToTextField = new JTextField();
 		GridBagConstraints gbc_reportsToTextField = new GridBagConstraints();
@@ -312,7 +314,7 @@ private JTextField updateJobTitleTextField;
 		gbc_reportsToTextField.gridy = 6;
 		addDataPanel.add(reportsToTextField, gbc_reportsToTextField);
 		reportsToTextField.setColumns(10);
-		
+
 		//JOB TITLE LABEL
 		JLabel jobTitleLabel = new JLabel("Job title: ");
 		GridBagConstraints gbc_jobTitleLabel = new GridBagConstraints();
@@ -322,7 +324,7 @@ private JTextField updateJobTitleTextField;
 		gbc_jobTitleLabel.gridx = 0;
 		gbc_jobTitleLabel.gridy = 7;
 		addDataPanel.add(jobTitleLabel, gbc_jobTitleLabel);
-		
+
 		//JOB TITLE TEXT FIELD
 		jobTitleTextField = new JTextField();
 		GridBagConstraints gbc_jobTitleTextField = new GridBagConstraints();
@@ -333,7 +335,7 @@ private JTextField updateJobTitleTextField;
 		gbc_jobTitleTextField.gridy = 7;
 		addDataPanel.add(jobTitleTextField, gbc_jobTitleTextField);
 		jobTitleTextField.setColumns(10);
-		
+
 		//APPLY BUTTON
 		JButton applyBtn = new JButton("Apply");
 		GridBagConstraints gbc_applyBtn = new GridBagConstraints();
@@ -343,7 +345,7 @@ private JTextField updateJobTitleTextField;
 		gbc_applyBtn.gridy = 8;
 		addDataPanel.add(applyBtn, gbc_applyBtn);
 		applyBtn.setToolTipText("Insert information into database");
-		
+
 		//CLEAR BUTTON
 		JButton clearBtn = new JButton("Clear");
 		GridBagConstraints gbc_clearBtn = new GridBagConstraints();
@@ -353,7 +355,7 @@ private JTextField updateJobTitleTextField;
 		gbc_clearBtn.gridy = 8;
 		addDataPanel.add(clearBtn, gbc_clearBtn);
 		clearBtn.setToolTipText("Clears all information in the form");
-		
+
 		//OFFICE CODE LABEL
 		JLabel officeCodeLabel = new JLabel("Office code: ");
 		GridBagConstraints gbc_officeCodeLabel = new GridBagConstraints();
@@ -363,7 +365,7 @@ private JTextField updateJobTitleTextField;
 		gbc_officeCodeLabel.gridx = 0;
 		gbc_officeCodeLabel.gridy = 5;
 		addDataPanel.add(officeCodeLabel, gbc_officeCodeLabel);
-		
+
 		//UPDATE TAB
 		JPanel updatePanel = new JPanel();
 		updatePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Update data", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -374,7 +376,7 @@ private JTextField updateJobTitleTextField;
 		gbl_updatePanel.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		gbl_updatePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		updatePanel.setLayout(gbl_updatePanel);
-		
+
 		// UPDATE ID LABEL
 		JLabel updateIdLabel = new JLabel("ID:");
 		GridBagConstraints gbc_updateIdLabel = new GridBagConstraints();
@@ -383,7 +385,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateIdLabel.gridx = 0;
 		gbc_updateIdLabel.gridy = 0;
 		updatePanel.add(updateIdLabel, gbc_updateIdLabel);
-		
+
 		// UPDATE ID TEXT FIELD
 		updateIdTextField = new JTextField();
 		updateIdTextField.setText("");
@@ -395,7 +397,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateIdTextField.gridx = 1;
 		gbc_updateIdTextField.gridy = 0;
 		updatePanel.add(updateIdTextField, gbc_updateIdTextField);
-		
+
 		//UPDATE EMPLOYEE NUMBER LABEL
 		JLabel updateEmployeeNumberLabel = new JLabel("Employee number:");
 		GridBagConstraints gbc_updateEmployeeNumberLabel = new GridBagConstraints();
@@ -404,7 +406,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateEmployeeNumberLabel.gridx = 0;
 		gbc_updateEmployeeNumberLabel.gridy = 1;
 		updatePanel.add(updateEmployeeNumberLabel, gbc_updateEmployeeNumberLabel);
-		
+
 		//UPDATE EMPLOYEE NUMBER TEXT FIELD
 		updateEmployeeNumberTextField = new JTextField();
 		GridBagConstraints gbc_updateEmployeeNumberTextField = new GridBagConstraints();
@@ -415,7 +417,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateEmployeeNumberTextField.gridy = 1;
 		updatePanel.add(updateEmployeeNumberTextField, gbc_updateEmployeeNumberTextField);
 		updateEmployeeNumberTextField.setColumns(10);
-		
+
 		// UPDATE FIRST NAME LABEL
 		JLabel updateFirstNameLabel = new JLabel("First Name:");
 		GridBagConstraints gbc_updateFirstNameLabel = new GridBagConstraints();
@@ -424,7 +426,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateFirstNameLabel.gridx = 0;
 		gbc_updateFirstNameLabel.gridy = 2;
 		updatePanel.add(updateFirstNameLabel, gbc_updateFirstNameLabel);
-		
+
 		// UPDATE FIRST NAME TEXT FIELD
 		updateFirstNameTextField = new JTextField();
 		updateFirstNameTextField.setText("");
@@ -436,7 +438,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateFirstNameTextField.gridy = 2;
 		updatePanel.add(updateFirstNameTextField, gbc_updateFirstNameTextField);
 		updateFirstNameTextField.setColumns(10);
-		
+
 		// UPDATE LAST NAME LABEL
 		JLabel updateLastNameLabel = new JLabel("Last Name:");
 		GridBagConstraints gbc_updateLastNameLabel = new GridBagConstraints();
@@ -445,7 +447,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateLastNameLabel.gridx = 0;
 		gbc_updateLastNameLabel.gridy = 3;
 		updatePanel.add(updateLastNameLabel, gbc_updateLastNameLabel);
-		
+
 		// UPDATE LAST NAME TEXT FIELD
 		updateLastNameTextField = new JTextField();
 		updateLastNameTextField.setText("");
@@ -457,7 +459,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateLastNameTextField.gridx = 1;
 		gbc_updateLastNameTextField.gridy = 3;
 		updatePanel.add(updateLastNameTextField, gbc_updateLastNameTextField);
-		
+
 		// UPDATE EXTENSION LABEL
 		JLabel updateExtensionLabel = new JLabel("Extension: ");
 		GridBagConstraints gbc_updateExtensionLabel = new GridBagConstraints();
@@ -466,7 +468,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateExtensionLabel.gridx = 0;
 		gbc_updateExtensionLabel.gridy = 4;
 		updatePanel.add(updateExtensionLabel, gbc_updateExtensionLabel);
-		
+
 		// UPDATE EXTENSION TEXT FIELD
 		updateExtensionTextField = new JTextField();
 		updateExtensionTextField.setText("");
@@ -478,7 +480,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateExtensionTextField.gridx = 1;
 		gbc_updateExtensionTextField.gridy = 4;
 		updatePanel.add(updateExtensionTextField, gbc_updateExtensionTextField);
-		
+
 		//UPDATE EMAIL LABEL
 		JLabel updateEmailLabel = new JLabel("Email: ");
 		GridBagConstraints gbc_updateEmailLabel = new GridBagConstraints();
@@ -487,7 +489,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateEmailLabel.gridx = 0;
 		gbc_updateEmailLabel.gridy = 5;
 		updatePanel.add(updateEmailLabel, gbc_updateEmailLabel);
-		
+
 		//UPDATE EMAIL TEXT FIELD
 		updateEmailTextField = new JTextField();
 		GridBagConstraints gbc_updateEmailTextField = new GridBagConstraints();
@@ -498,7 +500,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateEmailTextField.gridy = 5;
 		updatePanel.add(updateEmailTextField, gbc_updateEmailTextField);
 		updateEmailTextField.setColumns(10);
-		
+
 		// UPDATE OFFICE CODE LABEL
 		JLabel updateOfficeCodeLabel = new JLabel("Office code: ");
 		GridBagConstraints gbc_updateOfficeCodeLabel = new GridBagConstraints();
@@ -507,7 +509,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateOfficeCodeLabel.gridx = 0;
 		gbc_updateOfficeCodeLabel.gridy = 6;
 		updatePanel.add(updateOfficeCodeLabel, gbc_updateOfficeCodeLabel);
-		
+
 		// UPDATE OFFICE CODE TEXT FIELD
 		updateOfficeCodeTextField = new JTextField();
 		updateOfficeCodeTextField.setText("");
@@ -519,7 +521,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateOfficeCodeTextField.gridx = 1;
 		gbc_updateOfficeCodeTextField.gridy = 6;
 		updatePanel.add(updateOfficeCodeTextField, gbc_updateOfficeCodeTextField);
-		
+
 		// UPDATE REPORTS TO LABEL
 		JLabel updateReportsToLabel = new JLabel("Reports to: ");
 		GridBagConstraints gbc_updateReportsToLabel = new GridBagConstraints();
@@ -528,7 +530,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateReportsToLabel.gridx = 0;
 		gbc_updateReportsToLabel.gridy = 7;
 		updatePanel.add(updateReportsToLabel, gbc_updateReportsToLabel);
-		
+
 		// UPDATE SALARY TEXT FIELD
 		updateReportsToTextField = new JTextField();
 		updateReportsToTextField.setText("");
@@ -540,7 +542,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateSalaryTextField.gridx = 1;
 		gbc_updateSalaryTextField.gridy = 7;
 		updatePanel.add(updateReportsToTextField, gbc_updateSalaryTextField);
-		
+
 		//UPDATE JOB TITLE LABEL
 		JLabel updateJobTitleLabel = new JLabel("Job title: ");
 		GridBagConstraints gbc_updateJobTitleLabel = new GridBagConstraints();
@@ -549,7 +551,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateJobTitleLabel.gridx = 0;
 		gbc_updateJobTitleLabel.gridy = 8;
 		updatePanel.add(updateJobTitleLabel, gbc_updateJobTitleLabel);
-		
+
 		//UPDATE JOB TITLE TEXT FIELD
 		updateJobTitleTextField = new JTextField();
 		GridBagConstraints gbc_updateJobTitleTextField = new GridBagConstraints();
@@ -560,7 +562,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateJobTitleTextField.gridy = 8;
 		updatePanel.add(updateJobTitleTextField, gbc_updateJobTitleTextField);
 		updateJobTitleTextField.setColumns(10);
-		
+
 		// UPDATE BUTTON
 		JButton updateBtn = new JButton("Update");
 		GridBagConstraints gbc_updateBtn = new GridBagConstraints();
@@ -568,7 +570,7 @@ private JTextField updateJobTitleTextField;
 		gbc_updateBtn.gridx = 1;
 		gbc_updateBtn.gridy = 9;
 		updatePanel.add(updateBtn, gbc_updateBtn);
-		
+
 		// CLEAR UPDATE BUTTON
 		JButton ClearUpdateBtn = new JButton("Clear");
 		GridBagConstraints gbc_ClearUpdateBtn = new GridBagConstraints();
@@ -576,8 +578,8 @@ private JTextField updateJobTitleTextField;
 		gbc_ClearUpdateBtn.gridx = 2;
 		gbc_ClearUpdateBtn.gridy = 9;
 		updatePanel.add(ClearUpdateBtn, gbc_ClearUpdateBtn);
-		
-		
+
+
 		//DATABASE PANEL
 		JPanel databasePanel = new JPanel();
 		databasePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Database View", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -590,12 +592,12 @@ private JTextField updateJobTitleTextField;
 		gbc_databasePanel.gridy = 0;
 		frame.getContentPane().add(databasePanel, gbc_databasePanel);
 		GridBagLayout gbl_databasePanel = new GridBagLayout();
-		gbl_databasePanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
-		gbl_databasePanel.rowHeights = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 0};
+		gbl_databasePanel.columnWidths = new int[]{40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
+		gbl_databasePanel.rowHeights = new int[]{40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 0};
 		gbl_databasePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		gbl_databasePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0};
 		databasePanel.setLayout(gbl_databasePanel);
-		
+
 		//CHOOSE TABLE LABEL
 		JLabel chooseTableLabel = new JLabel("Choose table: ");
 		GridBagConstraints gbc_chooseTableLabel = new GridBagConstraints();
@@ -604,7 +606,7 @@ private JTextField updateJobTitleTextField;
 		gbc_chooseTableLabel.gridx = 0;
 		gbc_chooseTableLabel.gridy = 0;
 		databasePanel.add(chooseTableLabel, gbc_chooseTableLabel);
-		
+
 		//DATABASE TEXT AREA
 		final JTextArea databaseTextArea = new JTextArea();
 		databaseTextArea.setForeground(Color.WHITE);
@@ -618,10 +620,10 @@ private JTextField updateJobTitleTextField;
 		gbc_databaseTextArea.gridx = 0;
 		gbc_databaseTextArea.gridy = 0;
 		databasePanel.add(databaseTextArea, gbc_databaseTextArea);
-		
+
 		//DATABASE SCROLL PANE
 		JScrollPane databaseScroll = new JScrollPane(databaseTextArea);
-		databaseScroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+		databaseScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_databaseScroll = new GridBagConstraints();
 		gbc_databaseScroll.gridwidth = 13;
 		gbc_databaseScroll.gridheight = 7;
@@ -630,7 +632,7 @@ private JTextField updateJobTitleTextField;
 		gbc_databaseScroll.gridx = 0;
 		gbc_databaseScroll.gridy = 3;
 		databasePanel.add(databaseScroll, gbc_databaseScroll);
-		
+
 		//CHOOSE JOB TITLE LABLE
 		JLabel chooseJobTitleLabel = new JLabel("Choose jobtitle: ");
 		GridBagConstraints gbc_chooseJobTitleLabel = new GridBagConstraints();
@@ -639,7 +641,7 @@ private JTextField updateJobTitleTextField;
 		gbc_chooseJobTitleLabel.gridx = 5;
 		gbc_chooseJobTitleLabel.gridy = 0;
 		databasePanel.add(chooseJobTitleLabel, gbc_chooseJobTitleLabel);
-		
+
 		//CHOOSE JOB TITLE COMBO BOX
 		JComboBox chooseJobTitleComboBox = new JComboBox();
 		GridBagConstraints gbc_chooseJobTitleComboBox = new GridBagConstraints();
@@ -649,7 +651,7 @@ private JTextField updateJobTitleTextField;
 		gbc_chooseJobTitleComboBox.gridx = 6;
 		gbc_chooseJobTitleComboBox.gridy = 0;
 		databasePanel.add(chooseJobTitleComboBox, gbc_chooseJobTitleComboBox);
-		
+
 		//DATE FROM LABEL
 		JLabel dateFromLabel = new JLabel("Date from: ");
 		GridBagConstraints gbc_dateFromLabel = new GridBagConstraints();
@@ -658,7 +660,7 @@ private JTextField updateJobTitleTextField;
 		gbc_dateFromLabel.gridx = 0;
 		gbc_dateFromLabel.gridy = 1;
 		databasePanel.add(dateFromLabel, gbc_dateFromLabel);
-		
+
 		//DATE FROM TEXT FIELD
 		dateFromTextField = new JTextField();
 		GridBagConstraints gbc_dateFromTextField = new GridBagConstraints();
@@ -668,7 +670,7 @@ private JTextField updateJobTitleTextField;
 		gbc_dateFromTextField.gridy = 1;
 		databasePanel.add(dateFromTextField, gbc_dateFromTextField);
 		dateFromTextField.setColumns(10);
-		
+
 		//DATE TO LABEL
 		JLabel dateToLabel = new JLabel("to: ");
 		GridBagConstraints gbc_dateToLabel = new GridBagConstraints();
@@ -676,7 +678,7 @@ private JTextField updateJobTitleTextField;
 		gbc_dateToLabel.gridx = 2;
 		gbc_dateToLabel.gridy = 1;
 		databasePanel.add(dateToLabel, gbc_dateToLabel);
-		
+
 		//DATE TO TEXT FIELD
 		dateToTextField = new JTextField();
 		GridBagConstraints gbc_dateToTextField = new GridBagConstraints();
@@ -686,7 +688,7 @@ private JTextField updateJobTitleTextField;
 		gbc_dateToTextField.gridy = 1;
 		databasePanel.add(dateToTextField, gbc_dateToTextField);
 		dateToTextField.setColumns(10);
-		
+
 		//SEARCH BY DATE BUTTON
 		JButton searchByDateBtn = new JButton("Search by date");
 		GridBagConstraints gbc_searchByDateBtn = new GridBagConstraints();
@@ -695,7 +697,7 @@ private JTextField updateJobTitleTextField;
 		gbc_searchByDateBtn.gridx = 1;
 		gbc_searchByDateBtn.gridy = 2;
 		databasePanel.add(searchByDateBtn, gbc_searchByDateBtn);
-		
+
 		//REFRESH BUTTON
 		JButton refreshDbBtn = new JButton("Refresh");
 		GridBagConstraints gbc_refreshDbBtn = new GridBagConstraints();
@@ -705,7 +707,7 @@ private JTextField updateJobTitleTextField;
 		gbc_refreshDbBtn.gridy = 10;
 		databasePanel.add(refreshDbBtn, gbc_refreshDbBtn);
 		refreshDbBtn.setToolTipText("Refresh to show all the employees in the database");
-		
+
 		//CLEAR BUTTON
 		JButton clearDbBtn = new JButton("Clear");
 		GridBagConstraints gbc_clearDbBtn = new GridBagConstraints();
@@ -714,7 +716,7 @@ private JTextField updateJobTitleTextField;
 		gbc_clearDbBtn.gridx = 3;
 		gbc_clearDbBtn.gridy = 10;
 		databasePanel.add(clearDbBtn, gbc_clearDbBtn);
-		
+
 		//CHOOSE TABLE COMBOBOX
 		JComboBox chooseTableComboBox = new JComboBox();
 		GridBagConstraints gbc_chooseTableComboBox = new GridBagConstraints();
@@ -724,7 +726,7 @@ private JTextField updateJobTitleTextField;
 		gbc_chooseTableComboBox.gridx = 1;
 		gbc_chooseTableComboBox.gridy = 0;
 		databasePanel.add(chooseTableComboBox, gbc_chooseTableComboBox);
-		
+
 		//CONSOLE PANEL
 		JPanel consolePanel = new JPanel();
 		consolePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Console", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -736,12 +738,12 @@ private JTextField updateJobTitleTextField;
 		gbc_consolePanel.gridy = 5;
 		frame.getContentPane().add(consolePanel, gbc_consolePanel);
 		GridBagLayout gbl_consolePanel = new GridBagLayout();
-		gbl_consolePanel.columnWidths = new int[] {40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
-		gbl_consolePanel.rowHeights = new int[] {40, 40, 40, 0};
+		gbl_consolePanel.columnWidths = new int[]{40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40};
+		gbl_consolePanel.rowHeights = new int[]{40, 40, 40, 0};
 		gbl_consolePanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		gbl_consolePanel.rowWeights = new double[]{1.0, Double.MIN_VALUE, 0.0, 1.0};
 		consolePanel.setLayout(gbl_consolePanel);
-		
+
 		//CONSOLE TEXT AREA
 		final JTextArea consoleTextArea = new JTextArea();
 		consoleTextArea.setEditable(false);
@@ -755,7 +757,7 @@ private JTextField updateJobTitleTextField;
 		gbc_consoleTextArea.gridx = 0;
 		gbc_consoleTextArea.gridy = 0;
 		consolePanel.add(consoleTextArea, gbc_consoleTextArea);
-		
+
 		//CONSOLE SCROLL PANE
 		JScrollPane consoleScroll = new JScrollPane(consoleTextArea);
 		consoleScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -767,7 +769,7 @@ private JTextField updateJobTitleTextField;
 		gbc_consoleScroll.gridx = 0;
 		gbc_consoleScroll.gridy = 0;
 		consolePanel.add(consoleScroll, gbc_consoleScroll);
-		
+
 		//CLEAR CONSOLE BUTTON
 		JButton clearConsoleBtn = new JButton("Clear console");
 		GridBagConstraints gbc_clearConsoleBtn = new GridBagConstraints();
@@ -777,40 +779,40 @@ private JTextField updateJobTitleTextField;
 		gbc_clearConsoleBtn.gridy = 3;
 		consolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);
 		clearConsoleBtn.setToolTipText("Clear the console window");
-		
+
 		//MENU BAR
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBorderPainted(false);
 		frame.setJMenuBar(menuBar);
-		
+
 		//FILE MENU
 		JMenu fileMenu = new JMenu("File");
 		menuBar.add(fileMenu);
-		
+
 		//SAVE TO FILE FILE MENU ITEM
 		JMenuItem saveToFileItem = new JMenuItem("Save to file");
 		saveToFileItem.setHorizontalAlignment(SwingConstants.LEFT);
 		fileMenu.add(saveToFileItem);
-		
+
 		//BULK IMPORT FILE MENU ITEM
 		JMenuItem bulkImportItem = new JMenuItem("Bulk import from file...");
 		bulkImportItem.setHorizontalAlignment(SwingConstants.LEFT);
 		fileMenu.add(bulkImportItem);
-		
+
 		//DATABASE MENU
 		JMenu databaseMenu = new JMenu("Database");
 		databaseMenu.setHorizontalAlignment(SwingConstants.LEFT);
 		menuBar.add(databaseMenu);
-		
+
 		//TEST CONNECTION DATABASE MENU ITEM
 		JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 		dbTestConnectionItem.setHorizontalAlignment(SwingConstants.LEFT);
 		databaseMenu.add(dbTestConnectionItem);
-		
+
 		//HELP MENU
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
-		
+
 		//ABOUT HELP MENU ITEM
 		JMenuItem aboutItem = new JMenuItem("About the application");
 		aboutItem.setHorizontalAlignment(SwingConstants.LEFT);
@@ -821,117 +823,117 @@ private JTextField updateJobTitleTextField;
 				consoleTextArea.setText("Hei på deg");
 			}
 		});
-		
+
 		//EXIT MENU
 		JMenu exitMenu = new JMenu("Exit");
 		menuBar.add(exitMenu);
-		
+
 		//EXIT APPLICATION EXIT MENU ITEM
 		JMenuItem exitItem = new JMenuItem("Exit the application");
 		exitItem.setHorizontalAlignment(SwingConstants.LEFT);
 		exitMenu.add(exitItem);
-		
+
 //----------------ACTION EVENT LISTENERS---------------//
-		
+
 		//makes new stringwriter and throwable objects that can be used to print stacktrace to console text area in application
 		final StringWriter stackTraceWriter = new StringWriter();
 		final Throwable throwableElement = new Throwable();
 		final JFileChooser fileChooser = new JFileChooser();
-		
+
 		//REFRESH DB BUTTON - shows updated count of all employees in database text area
-        refreshDbBtn.addActionListener(new ActionListener() { 
-        	public void actionPerformed(ActionEvent refreshDb) {
-        		try {
+		refreshDbBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent refreshDb) {
+				try {
 					List<Employee> employees = databaseConnection.showEmployees();
 					databaseTextArea.setText("");
-	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() +  ", " + employee.getOfficeCode() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
-	                } 
+					for (Employee employee : employees) {
+						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() + ", " + employee.getOfficeCode() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
+					}
 				} catch (SQLException error) {
 					consoleTextArea.append("Problem fetching from database. Error: " + error);
 					throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-					consoleTextArea.append("Connection failed. Error: " + 
-											throwableElement.toString() + "\n" 
-											+ stackTraceWriter.toString());
+					consoleTextArea.append("Connection failed. Error: " +
+							throwableElement.toString() + "\n"
+							+ stackTraceWriter.toString());
 				}
-        	} 
-        });
-        
-        searchByDateBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent searchByDate) {
-        	
-        	try {
-        		List<OrdersList> orders = databaseConnection.showOrders();
-				databaseTextArea.setText("");
-                for (OrdersList order : orders) {
-                    databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() +  ", " + order.getStatus() + ", " + order.getComments() + "\n");
-        		
-                } 
-			} catch (SQLException error) {
-				consoleTextArea.append("Problem fetching from database. Error: " + error);
-				throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-				consoleTextArea.append("Connection failed. Error: " + 
-										throwableElement.toString() + "\n" 
-										+ stackTraceWriter.toString());
 			}
-    	} 
-    });
-		
-        //CLEAR DATABASE BUTTON
-        clearDbBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-				databaseTextArea.setText("");
+		});
+
+		searchByDateBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent searchByDate) {
+
+				try {
+					List<OrdersList> orders = databaseConnection.showOrders();
+					databaseTextArea.setText("");
+					for (OrdersList order : orders) {
+						databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() + ", " + order.getStatus() + ", " + order.getComments() + "\n");
+
+					}
+				} catch (SQLException error) {
+					consoleTextArea.append("Problem fetching from database. Error: " + error);
+					throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+					consoleTextArea.append("Connection failed. Error: " +
+							throwableElement.toString() + "\n"
+							+ stackTraceWriter.toString());
 				}
-        });
-        
+			}
+		});
+
+		//CLEAR DATABASE BUTTON
+		clearDbBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				databaseTextArea.setText("");
+			}
+		});
+
 		//CLEAR CONSOLE BUTTON EVENT
 		clearConsoleBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				consoleTextArea.setText("");
-				}
-			});
-		
+			}
+		});
+
 		//DELETE BUTTON EVENT
 		deleteBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try{
+				try {
 					databaseConnection.deleteEmployee(Integer.parseInt(deleteEmployeeNumberTextField.getText()));
-					consoleTextArea.append("Employee with id: " + deleteEmployeeNumberTextField.getText() +  " has been deleted. \n");
+					consoleTextArea.append("Employee with id: " + deleteEmployeeNumberTextField.getText() + " has been deleted. \n");
 					employeeNumberTextField.setText("");
-					
+
 					//REFRESHING DATABASE
 					List<Employee> employees = databaseConnection.showEmployees();
 					databaseTextArea.setText("");
-	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() + ", "  + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
-	                } 
-				}catch (NumberFormatException | SQLException error) {
+					for (Employee employee : employees) {
+						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
+					}
+				} catch (NumberFormatException | SQLException error) {
 					consoleTextArea.append("ID must be a valid ID\n");
 				}
 			}
 		});
-		
+
 		//UPDATE BUTTON EVENT
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
+					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(), getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
 					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
-				} catch(Exception err){
+				} catch (Exception err) {
 					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
 					err.printStackTrace();
 				}
 			}
 		});
-		
+
 		//APPLY BUTTON EVENT
 		applyBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					
+
 					int employeeNumber = getEmployeeNumber();
 					String firstName = getFirstName();
 					String lastName = getLastName();
@@ -940,14 +942,11 @@ private JTextField updateJobTitleTextField;
 					String officeCode = getOfficeCode();
 					int reportsTo = getReportsTo();
 					String jobTitle = getJobTitle();
-					
-					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty())
-					{
-						
+
+					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty()) {
+
 						throw new MissingTextFieldException("you must fill out all the fields");
-					}
-					
-					else if (firstName.isEmpty())
+					} else if (firstName.isEmpty())
 						throw new MissingTextFieldException("firstName is not present");
 					else if (lastName.isEmpty())
 						throw new MissingTextFieldException("lastName is not present");
@@ -958,25 +957,19 @@ private JTextField updateJobTitleTextField;
 						throw new MissingTextFieldException("Job title is not present");
 
 
-
 					databaseConnection.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
-					consoleTextArea.setText("Employee: " + " " +  firstName + " " + lastName + " is added\n");
-					
-				}
-				catch (NumberFormatException exception)
-				{
+					consoleTextArea.setText("Employee: " + " " + firstName + " " + lastName + " is added\n");
+
+				} catch (NumberFormatException exception) {
 					consoleTextArea.append("salary must be a number: " + exception.getMessage() + "\n");
-				}
-				catch (MissingTextFieldException exception)
-				{
-				    consoleTextArea.append(exception.getMessage() + "\n");        
-				}
-				catch (Exception exception) {
+				} catch (MissingTextFieldException exception) {
+					consoleTextArea.append(exception.getMessage() + "\n");
+				} catch (Exception exception) {
 					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage() + "\n");
 				}
 			}
 		});
-		
+
 		//CLEAR BUTTON EVENT
 		clearBtn.addActionListener(new ActionListener() {
 			@Override
@@ -988,9 +981,9 @@ private JTextField updateJobTitleTextField;
 				lastNameTextField.setText(null);
 				emailTextField.setText(null);
 				consoleTextArea.append("All fields have been cleared. \n");
-				}
-			});
-		
+			}
+		});
+
 		//TEST CONNECTION EVENT
 		dbTestConnectionItem.addActionListener(new ActionListener() {
 			@Override
@@ -999,15 +992,15 @@ private JTextField updateJobTitleTextField;
 					databaseConnection.open();
 					databaseConnection.close();
 					consoleTextArea.append("Connected to database. \n");
-					} catch (Exception err) {
-						throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-						consoleTextArea.append("Connection failed. Error: " + 
-												throwableElement.toString() + "\n" 
-												+ stackTraceWriter.toString());
-					}
+				} catch (Exception err) {
+					throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+					consoleTextArea.append("Connection failed. Error: " +
+							throwableElement.toString() + "\n"
+							+ stackTraceWriter.toString());
 				}
-			});
-		
+			}
+		});
+
 		//EXIT EVENT
 		exitItem.addActionListener(new ActionListener() {
 			@Override
@@ -1052,7 +1045,7 @@ private JTextField updateJobTitleTextField;
 					try {
 						writeToFile(databaseTextArea.getText(), fileToSave);
 						consoleTextArea.setText("Succesfull when saving the Database");
-					}catch (IOException e1) {
+					} catch (IOException e1) {
 						consoleTextArea.setText("Error writing into file");
 					}
 				}
@@ -1061,18 +1054,29 @@ private JTextField updateJobTitleTextField;
 
 		try {
 			List<Employee> employees = databaseConnection.showEmployees();
-			for (Employee employee : employees) {
-				chooseJobTitleComboBox.addItem(employee.getJobTitle());
-			}
-		} catch (SQLException error) {
-			consoleTextArea.append("Problem fetching from database. Error: " + error);
-			throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-			consoleTextArea.append("Connection failed. Error: " +
-					throwableElement.toString() + "\n"
-					+ stackTraceWriter.toString());
-		}
+
+						java.util.HashSet unique = new HashSet();
+							for (Employee employee : employees) {
+
+								if (unique.add(employee.getJobTitle())) {
+
+									chooseJobTitleComboBox.addItem(employee.getJobTitle());
+								}
+							}
+		}catch(SQLException error){
+						consoleTextArea.append("Problem fetching from database. Error: " + error);
+						throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+						consoleTextArea.append("Connection failed. Error: " +
+								throwableElement.toString() + "\n"
+								+ stackTraceWriter.toString());
+					}
+
+
+
+
 	}
-	
+
+
 	
 //-------------------------ADDITIONAL METHODS-------------------------//
 	private static void addPopup(Component component, final JPopupMenu popup) {

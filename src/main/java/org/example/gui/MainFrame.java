@@ -611,6 +611,13 @@ private JTextField jobTitleTextField;
 		databasePanel.add(dateToTextField, gbc_dateToTextField);
 		dateToTextField.setColumns(10);
 		
+		JButton searchByDateBtn = new JButton("Search by date");
+		GridBagConstraints gbc_searchByDateBtn = new GridBagConstraints();
+		gbc_searchByDateBtn.insets = new Insets(0, 0, 5, 5);
+		gbc_searchByDateBtn.gridx = 1;
+		gbc_searchByDateBtn.gridy = 3;
+		databasePanel.add(searchByDateBtn, gbc_searchByDateBtn);
+		
 		//REFRESH BUTTON
 		JButton refreshDbBtn = new JButton("Refresh");
 		GridBagConstraints gbc_refreshDbBtn = new GridBagConstraints();

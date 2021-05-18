@@ -816,7 +816,7 @@ private JTextField jobTitleTextField;
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(), getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
+					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
 					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
 				} catch(Exception err){
 					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
@@ -993,8 +993,8 @@ private JTextField jobTitleTextField;
 		return updateLastNameTextField.getText();
 	}
 	
-	public String getUpdateDepartment() {
-		return updateDepartmentTextField.getText();
+	public String getUpdateExtension() {
+		return updateExtensionTextField.getText();
 	}
 	
 	public String getUpdateEmail() {
@@ -1004,7 +1004,11 @@ private JTextField jobTitleTextField;
 	public Double getUpdateSalary() {
 		return Double.parseDouble(updateSalaryTextField.getText());
 	}
-	
+
+	public int getEmployeeNumber() {
+		return Integer.parseInt(employeeNumberTextField.getText());
+	}
+
 	public String getLastName() {
 		return firstNameTextField.getText();
 	}
@@ -1013,7 +1017,7 @@ private JTextField jobTitleTextField;
 		return employeeNumberTextField.getText();
 	}
 
-	public String getDepartment() {
+	public String getExtension() {
 		return extensionTextField.getText();
 	}
 
@@ -1022,8 +1026,16 @@ private JTextField jobTitleTextField;
 		return lastNameTextField.getText();
 	}
 
-	public double getSalary() {
-		return Double.parseDouble(emailTextField.getText());
+	public String getOfficeCode() {
+		return officeCodeTextField.getText();
+	}
+
+	public int getReportsTo() {
+		return Integer.parseInt(reportsToTextField.getText());
+	}
+
+	public String getJobTitle() {
+		return jobTitleTextField.getText();
 	}
 
 	public void writeToFile(String text, File file) throws IOException {

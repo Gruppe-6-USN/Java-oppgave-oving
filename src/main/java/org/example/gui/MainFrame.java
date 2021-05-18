@@ -786,14 +786,9 @@ private JTextField dateToTextField;
 						throw new MissingTextFieldException("email is not present");
 					else if (!email.contains("@"))
 						throw new Exception("Email must include @");
-					else if (department.isEmpty())
-						throw new MissingTextFieldException("department is not present");
-					else
-					{
-					 salary = getSalary();
-					 if ( salary < 0 )
-						throw new Exception("salary must be a positive number");
-					}
+					else if (jobTitle.isEmpty())
+						throw new MissingTextFieldException("Job title is not present");
+
 
 
 					databaseConnection.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);

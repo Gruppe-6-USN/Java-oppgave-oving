@@ -618,7 +618,7 @@ private JTextField updateSalaryTextField;
 					List<Employee> employees = db.showEmployees();
 					databaseTextArea.setText("");
 	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getId() + ": " + employee.getFirstName() + ", " + employee.getLastName() + ", " + employee.getDepartment() + ", " + employee.getEmail() + ", " + employee.getSalary() + "\n");
+	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getEmail() + ", " + employee.getExtension() + ", " + employee.getOfficeCode() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
 	                } 
 				} catch (SQLException error) {
 					consoleTextArea.append("Problem fetching from database. Error: " + error);

@@ -55,7 +55,7 @@ public class DatabaseConnection {
 	public void addEmployee(int employeeNumber, String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException {
 		try {
 			open();
-			pStmt = conn.prepareStatement("insert into employees (lastName, firstName, extension, email, officeCode, jobTitle)" +
+			pStmt = conn.prepareStatement("insert into employees (employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle)" +
 					"values (?, ?, ?, ?, ?, ?, ?, ?)");
 			pStmt.setInt(1, employeeNumber);
 			pStmt.setString(2, lastName);

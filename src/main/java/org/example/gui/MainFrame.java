@@ -1101,11 +1101,11 @@ private JTextField updateJobTitleTextField;
 	}
 
 	public String getLastName() {
-		return firstNameTextField.getText();
+		return lastNameTextField.getText();
 	}
 
 	public String getFirstName() {
-		return employeeNumberTextField.getText();
+		return firstNameTextField.getText();
 	}
 
 	public String getExtension() {
@@ -1114,7 +1114,7 @@ private JTextField updateJobTitleTextField;
 
 
 	public String getEmail() {
-		return lastNameTextField.getText();
+		return emailTextField.getText();
 	}
 
 	public String getOfficeCode() {

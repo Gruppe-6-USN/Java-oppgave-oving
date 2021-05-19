@@ -4,7 +4,7 @@ public class OrdersList {
     private int orderNumber, customerNumber;
     private String orderDate, requiredDate, shippedDate, status, comments;
 
-    public OrdersList(int orderNumber, int customerNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments) {
+    public OrdersList(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) {
         this.orderNumber = orderNumber;
         this.customerNumber = customerNumber;
         this.orderDate = orderDate;

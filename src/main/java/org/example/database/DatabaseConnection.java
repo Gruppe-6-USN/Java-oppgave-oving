@@ -72,6 +72,27 @@ public class DatabaseConnection {
 		}
 	}
 
+	public void addOrder(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) {
+		try {
+			open();
+			pStmt = conn.prepareStatement("insert into orders (orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber)" +
+					"values (?, ?, ?, ?, ?, ?, ?)");
+
+			pStmt.setInt(1, orderNumber);
+			pStmt.setString(2, orderDate);
+			pStmt.setString(3, requiredDate);
+			pStmt.setString(4, shippedDate);
+			pStmt.setString(5, status);
+			pStmt.setString(6, comments);
+			pStmt.setInt(7, customerNumber);
+			pStmt.execute();
+			close();
+
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
+	}
+
 		public void updateUser( String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
 			try {
 				open();

@@ -92,6 +92,7 @@ public class EmployeeTab extends JPanel{
 	private JPanel EmployeeConsolePanel;
 	private JTextArea consoleTextArea;
 	private JButton clearConsoleBtn;
+	private JButton sortDatabaseViewBtn;
 	
 	//-------------------MAIN CONTENT------------------//
 	public EmployeeTab() {
@@ -496,6 +497,13 @@ public class EmployeeTab extends JPanel{
 		gbc_chooseJobTitleComboBox.gridx = 1;
 		gbc_chooseJobTitleComboBox.gridy = 0;
 		EmployeeDatabasePanel.add(chooseJobTitleComboBox, gbc_chooseJobTitleComboBox);
+		
+		sortDatabaseViewBtn = new JButton("Sort");
+		GridBagConstraints gbc_sortDatabaseViewBtn = new GridBagConstraints();
+		gbc_sortDatabaseViewBtn.insets = new Insets(0, 0, 5, 0);
+		gbc_sortDatabaseViewBtn.gridx = 2;
+		gbc_sortDatabaseViewBtn.gridy = 0;
+		EmployeeDatabasePanel.add(sortDatabaseViewBtn, gbc_sortDatabaseViewBtn);
 
 		databaseTextArea = new JTextArea();
 		databaseTextArea.setForeground(Color.WHITE);

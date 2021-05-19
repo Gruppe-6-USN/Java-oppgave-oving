@@ -57,7 +57,7 @@ public class OfficesTab extends JPanel {
 	private JLabel addCountryLabel;
 	private JLabel addPostalCodeLabel;
 	private JTextField addPhoneTextField;
-	private JTextField addStreetAdressTextField;
+	private JTextField addStreetAddressTextField;
 	private JTextField addAptTextField;
 	private JTextField addStateTextField;
 	private JTextField addOfficeCodeTextField;
@@ -88,8 +88,8 @@ public class OfficesTab extends JPanel {
 	private JButton refreshDatabaseTextAreaBtn;
 	private JComboBox chooseJobTitleComboBox;
 	private JLabel chooseJobTitleLabel;
-	private JPanel EmployeeConsolePanel;
-	private JTextArea consoleTextArea;
+	private JPanel OfficeConsolePanel;
+	private JTextArea officeConsoleTextArea;
 	private JButton clearConsoleBtn;
 	private JLabel addTerritoryLabel;
 	private JTextField addTerritorytextField;
@@ -170,14 +170,14 @@ public class OfficesTab extends JPanel {
 		gbc_addStreetAdressLabel.gridy = 2;
 		AddOfficePanel.add(addStreetAdressLabel, gbc_addStreetAdressLabel);
 		
-		addStreetAdressTextField = new JTextField();
-		addStreetAdressTextField.setColumns(10);
-		GridBagConstraints gbc_addStreetAdressTextField = new GridBagConstraints();
-		gbc_addStreetAdressTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_addStreetAdressTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_addStreetAdressTextField.gridx = 1;
-		gbc_addStreetAdressTextField.gridy = 2;
-		AddOfficePanel.add(addStreetAdressTextField, gbc_addStreetAdressTextField);
+		addStreetAddressTextField = new JTextField();
+		addStreetAddressTextField.setColumns(10);
+		GridBagConstraints gbc_addStreetAddressTextField = new GridBagConstraints();
+		gbc_addStreetAddressTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_addStreetAddressTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_addStreetAddressTextField.gridx = 1;
+		gbc_addStreetAddressTextField.gridy = 2;
+		AddOfficePanel.add(addStreetAddressTextField, gbc_addStreetAddressTextField);
 		
 		addAptNumberLabel = new JLabel("Apt number:");
 		GridBagConstraints gbc_addAptNumberLabel = new GridBagConstraints();
@@ -560,33 +560,33 @@ public class OfficesTab extends JPanel {
 		gbc_refreshDatabaseTextAreaBtn.gridy = 2;
 		OfficeDbView.add(refreshDatabaseTextAreaBtn, gbc_refreshDatabaseTextAreaBtn);
 		
-		EmployeeConsolePanel = new JPanel();
-		EmployeeConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		GridBagConstraints gbc_EmployeeConsolePanel = new GridBagConstraints();
-		gbc_EmployeeConsolePanel.gridwidth = 2;
-		gbc_EmployeeConsolePanel.insets = new Insets(0, 0, 0, 5);
-		gbc_EmployeeConsolePanel.fill = GridBagConstraints.BOTH;
-		gbc_EmployeeConsolePanel.gridx = 0;
-		gbc_EmployeeConsolePanel.gridy = 2;
-		add(EmployeeConsolePanel, gbc_EmployeeConsolePanel);
-		GridBagLayout gbl_EmployeeConsolePanel = new GridBagLayout();
-		gbl_EmployeeConsolePanel.columnWidths = new int[]{0, 0};
-		gbl_EmployeeConsolePanel.rowHeights = new int[]{0, 0, 0};
-		gbl_EmployeeConsolePanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_EmployeeConsolePanel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		EmployeeConsolePanel.setLayout(gbl_EmployeeConsolePanel);
+		OfficeConsolePanel = new JPanel();
+		OfficeConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_OfficeConsolePanel = new GridBagConstraints();
+		gbc_OfficeConsolePanel.gridwidth = 2;
+		gbc_OfficeConsolePanel.insets = new Insets(0, 0, 0, 5);
+		gbc_OfficeConsolePanel.fill = GridBagConstraints.BOTH;
+		gbc_OfficeConsolePanel.gridx = 0;
+		gbc_OfficeConsolePanel.gridy = 2;
+		add(OfficeConsolePanel, gbc_OfficeConsolePanel);
+		GridBagLayout gbl_OfficeConsolePanel = new GridBagLayout();
+		gbl_OfficeConsolePanel.columnWidths = new int[]{0, 0};
+		gbl_OfficeConsolePanel.rowHeights = new int[]{0, 0, 0};
+		gbl_OfficeConsolePanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_OfficeConsolePanel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		OfficeConsolePanel.setLayout(gbl_OfficeConsolePanel);
 		
-		consoleTextArea = new JTextArea();
-		consoleTextArea.setEditable(false);
-		consoleTextArea.setBackground(Color.DARK_GRAY);
-		GridBagConstraints gbc_consoleTextArea = new GridBagConstraints();
-		gbc_consoleTextArea.insets = new Insets(0, 0, 5, 0);
-		gbc_consoleTextArea.fill = GridBagConstraints.BOTH;
-		gbc_consoleTextArea.gridx = 0;
-		gbc_consoleTextArea.gridy = 0;
-		EmployeeConsolePanel.add(consoleTextArea, gbc_consoleTextArea);
+		officeConsoleTextArea = new JTextArea();
+		officeConsoleTextArea.setEditable(false);
+		officeConsoleTextArea.setBackground(Color.DARK_GRAY);
+		GridBagConstraints gbc_officeConsoleTextArea = new GridBagConstraints();
+		gbc_officeConsoleTextArea.insets = new Insets(0, 0, 5, 0);
+		gbc_officeConsoleTextArea.fill = GridBagConstraints.BOTH;
+		gbc_officeConsoleTextArea.gridx = 0;
+		gbc_officeConsoleTextArea.gridy = 0;
+		OfficeConsolePanel.add(officeConsoleTextArea, gbc_officeConsoleTextArea);
 		
-		JScrollPane consoleScroll = new JScrollPane(consoleTextArea);
+		JScrollPane consoleScroll = new JScrollPane(officeConsoleTextArea);
 		consoleScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_consoleScroll = new GridBagConstraints();
 		gbc_consoleScroll.gridwidth = 3;
@@ -594,13 +594,13 @@ public class OfficesTab extends JPanel {
 		gbc_consoleScroll.fill = GridBagConstraints.BOTH;
 		gbc_consoleScroll.gridx = 0;
 		gbc_consoleScroll.gridy = 0;
-		EmployeeConsolePanel.add(consoleScroll, gbc_consoleScroll);
+		OfficeConsolePanel.add(consoleScroll, gbc_consoleScroll);
 		
 		clearConsoleBtn = new JButton("Clear console");
 		GridBagConstraints gbc_clearConsoleBtn = new GridBagConstraints();
 		gbc_clearConsoleBtn.gridx = 0;
 		gbc_clearConsoleBtn.gridy = 1;
-		EmployeeConsolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);
+		OfficeConsolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);
 		//DELETE BUTTON
 		JButton deleteBtn = new JButton("Delete");
 		GridBagConstraints gbc_deleteBtn = new GridBagConstraints();
@@ -614,10 +614,73 @@ public class OfficesTab extends JPanel {
 		//CLEAR CONSOLE BUTTON EVENT
 		clearConsoleBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				consoleTextArea.setText("");
+				officeConsoleTextArea.setText("");
 			}
 		});
-		
+				
+				addOfficeBtn.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							
+							String officeCode = getOfficeCode();
+							String city = getCity();
+							String phone = getPhone();
+							String addressLine1 = getAddressLine1();
+							String addressLine2 = getAddressLine2();
+							String state = getState();
+							String country = getCountry();
+							String postalCode = getPostalCode();
+							String territory = getTerritory();
+
+							db.addOffice(officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory);
+							officeConsoleTextArea.setText("Office updated: " + " " + officeCode + " " + city + " is added\n");
+
+
+						} catch (Exception exception) {
+							officeConsoleTextArea.append("Something went wrong when adding new Office : " + exception.getMessage() + "\n");
+						}
+					}
+				});
 	}
+
+
+
+public String getOfficeCode() {
+    return addOfficeCodeTextField.getText();
+}
+
+public String getCity() {
+	return addCityTextField.getText();
+}
+
+public String getPhone() {
+    return addPhoneTextField.getText();
+}
+
+public String getAddressLine1() {
+	return addStreetAddressTextField.getText();
+}
+
+public String getAddressLine2() {
+	return addAptTextField.getText();
+}
+
+public String getState() {
+	return addStateTextField.getText();
+}
+
+public String getCountry() {
+	return addCountryTextField.getText();
+}
+
+public String getPostalCode() {
+	return addPostalCodeTextField.getText();
+}
+
+public String getTerritory() {
+	return addTerritorytextField.getText();
+}
+
 
 }

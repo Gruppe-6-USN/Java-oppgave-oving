@@ -71,6 +71,26 @@ public class DatabaseConnection {
 			addErr.printStackTrace();
 		}
 	}
+	public void addOffice(String officeCode, String city, String phone, String addressLine1, String addressLine2, String state, String country, String postalCode, String territory) throws SQLException {
+		try {
+			open();
+			pStmt = conn.prepareStatement("UPDATE offices SET city = ?, phone = ?, addressLine1 = ?, addressLine2 = ?, state = ?, country = ?, postalCode = ?, territory = ? WHERE officeCode = ?");
+					
+			pStmt.setString(1, officeCode);
+			pStmt.setString(2, city);
+			pStmt.setString(3, phone);
+			pStmt.setString(4, addressLine1);
+			pStmt.setString(5, addressLine2);
+			pStmt.setString(6, state);
+			pStmt.setString(7, country);
+			pStmt.setString(8, postalCode);
+			pStmt.setString(9, territory);
+			pStmt.execute();
+			close();
+		} catch (SQLException addErr) {
+			addErr.printStackTrace();
+		}
+	}
 
 	public void addOrder(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) {
 		try {

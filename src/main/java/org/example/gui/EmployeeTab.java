@@ -587,12 +587,24 @@ public class EmployeeTab extends JPanel{
 		//----------------ACTION EVENT LISTENERS--------------------//
 		// + try catch blocks to fetch data without event listeners
 		
+		//SORT DATABASE VIEW BUTTON - filters database view from chooseJobTitleComboBox
+		sortDatabaseViewBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					refreshDatabaseTextArea(getChosenJobTitle());
+					consoleTextArea.append("Employees filtered by: '" + getChosenJobTitle() + "'.\n");
+				}catch(Exception err){
+					err.printStackTrace();
+				}
+			}
+		});
+		
 		//DELETE EMPLOYEE BUTTON EVENT - deletes employee and refreshes jobtitle and employee number comboboxes
 		deleteEmployeeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				try{
 					db.deleteEmployee(getDeleteEmployeeNumber());
-					consoleTextArea.append("Employee with employee number: " + getDeleteEmployeeNumber() +  " has been deleted. \n");
+					consoleTextArea.append("Employee successfully deleted! \n");
 					//functions that refreshes the combobox values and the database view
 					refreshDatabaseTextArea();
 					refreshEmployeeNumberComboBox();
@@ -628,7 +640,7 @@ public class EmployeeTab extends JPanel{
 					else if (getUpdateJobTitle().isEmpty())
 						throw new MissingTextFieldException("Job title is not present");
 					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber() );
-					consoleTextArea.append("Employee with employee number: " + getUpdateEmployeeNumber() + " has been updated. \n");
+					consoleTextArea.append("Employee successfully updated! \n");
 					
 					//functions that refreshes the combobox values and the database view
 					refreshDatabaseTextArea();
@@ -685,7 +697,7 @@ public class EmployeeTab extends JPanel{
 						throw new MissingTextFieldException("Job title is not present");
 
 					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
-					consoleTextArea.setText("Employee: " + " " + firstName + " " + lastName + " is added\n");
+					consoleTextArea.setText("New employee successfully added! \n");
 					
 					//functions that refreshes the combobox values and the database view
 					refreshDatabaseTextArea();
@@ -777,6 +789,10 @@ public class EmployeeTab extends JPanel{
 		return addJobTitleTextField.getText();
 	}
 
+	public String getChosenJobTitle() {
+		String chosenJobTitle = (String) chooseJobTitleComboBox.getSelectedItem();
+		return chosenJobTitle;
+	}
 	//---------------ADDITIONAL METHODS-----------------//
 	public void writeToFile(String text, File file) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -795,6 +811,7 @@ public class EmployeeTab extends JPanel{
 					deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
 				}
 			}
+		consoleTextArea.append("*refreshed employee number selection. \n");
 		}catch(SQLException err) {
 			err.printStackTrace();
 		}
@@ -809,6 +826,7 @@ public class EmployeeTab extends JPanel{
 					chooseJobTitleComboBox.addItem(employee.getJobTitle());
 				}
 			}
+		consoleTextArea.append("*refreshed job title selection. \n");
 		}catch(SQLException err) {
 			err.printStackTrace();
 		}
@@ -821,6 +839,20 @@ public class EmployeeTab extends JPanel{
 			for (Employee employee : employees) {
 				databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
 			}
+		consoleTextArea.append("*refreshed the database view. \n");
+		} catch (SQLException err) {
+			err.printStackTrace();
+		}
+	}
+	
+	public void refreshDatabaseTextArea(String chosenJobTitle) {
+		try {
+		List<Employee> employees = db.sortEmployeesJobTitle(chosenJobTitle);
+		databaseTextArea.setText("");
+			for (Employee employee : employees) {
+					databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+			}
+		consoleTextArea.append("*refreshed the database view. \n");
 		} catch (SQLException err) {
 			err.printStackTrace();
 		}
@@ -834,6 +866,7 @@ public class EmployeeTab extends JPanel{
 		updateEmailTextField.setText("");
 		updateReportsToTextField.setText("");
 		updateJobTitleTextField.setText("");
+		consoleTextArea.append("*cleared text fields for update employee. \n");
 	}
 	
 	public void clearAddFields() {
@@ -845,6 +878,7 @@ public class EmployeeTab extends JPanel{
 		addEmailTextField.setText("");
 		addReportsToTextField.setText("");
 		addJobTitleTextField.setText("");
+		consoleTextArea.append("*cleared text fields for add employee. \n");
 	}
 
 

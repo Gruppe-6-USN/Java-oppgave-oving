@@ -1,5 +1,7 @@
 package org.example.gui;
 
+import org.example.database.DatabaseConnection;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,13 +16,26 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AppMenu extends JMenuBar {
+	private int employeeNumber;
+	private String lastName;
+	private String firstName;
+	private String extension;
+	private String email;
+	private String officeCode;
+	private int reportsTo;
+	private String jobTitle;
+
+	DatabaseConnection db = new DatabaseConnection();
+
 	final JFileChooser fileChooser = new JFileChooser();
 	private Font primaryFont = new Font("Calibri", Font.PLAIN, 40);
 
 	JMenuBar appMenu = new JMenuBar();
+
 	
 	public AppMenu(){
 		//MENU BAR
+
 				
 				appMenu.setBorderPainted(false);
 
@@ -65,7 +80,7 @@ public class AppMenu extends JMenuBar {
 				JMenuItem bulkImportItem = new JMenuItem("Bulk import from file...");
 				bulkImportItem.setHorizontalAlignment(SwingConstants.LEFT);
 				fileMenu.add(bulkImportItem);
-				/*bulkImportItem.addActionListener(new ActionListener() {
+				bulkImportItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JFileChooser jfc = new JFileChooser(".");
@@ -82,22 +97,60 @@ public class AppMenu extends JMenuBar {
 
 									while(fileIn.hasNextLine()) {
 										String line = fileIn.nextLine();
-										saveData();
-										System.out.println(line);
+										//System.out.println(line);
+										try(Scanner data = new Scanner(line)){
+											/*while(!data.hasNextInt()) {
+												employeeNumber += data.nextInt() + " ";
+											}
+											employeeNumber = employeeNumber.trim();*/
+
+											if(data.hasNextInt()) {
+												employeeNumber = data.nextInt();
+											}
+
+
+											if(data.hasNextLine()) {
+												lastName = data.next();
+											}
+											if(data.hasNextLine()) {
+												firstName = data.next();
+											}
+											if(data.hasNextLine()) {
+												extension = data.next();
+											}
+											if(data.hasNextLine()) {
+												email = data.next();
+											}
+											if(data.hasNextLine()) {
+												officeCode = data.next();
+											}
+											if(data.hasNextInt()) {
+												reportsTo = data.nextInt();
+											}
+											if(data.hasNextLine()) {
+												jobTitle = data.next();
+											}
+										}
+										db.addEmployee(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
+										System.out.println(employeeNumber + "\t" + lastName + "\t" + firstName + "\t" +
+												extension + "\t" + email + "\t" + officeCode + "\t" + reportsTo + "\t"
+												+ jobTitle + "ugga bugga");
 									}
 								}
 								else {
 									System.out.println("Not a file");
 								}
 								fileIn.close();
-							} catch (FileNotFoundException | SQLException fileNotFoundException) {
+							} catch (FileNotFoundException err1) {
 								System.out.println("Filen eksisterer ikke");
 							}catch (NumberFormatException numberFormatException) {
 								numberFormatException.printStackTrace();
+							} catch (SQLException throwables) {
+								throwables.printStackTrace();
 							}
 						}
 					}
-				});*/
+				});
 
 				//DATABASE MENU
 				JMenu databaseMenu = new JMenu("Database");

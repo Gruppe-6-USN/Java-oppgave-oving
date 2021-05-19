@@ -21,7 +21,7 @@ public class AppMenu extends JMenuBar {
 	private String firstName;
 	private String extension;
 	private String email;
-	private String officeCode;
+	private int officeCode;
 	private int reportsTo;
 	private String jobTitle;
 
@@ -119,8 +119,8 @@ public class AppMenu extends JMenuBar {
 											if(data.hasNextLine()) {
 												email = data.next();
 											}
-											if(data.hasNextLine()) {
-												officeCode = data.next();
+											if(data.hasNextInt()) {
+												officeCode = data.nextInt();
 											}
 											if(data.hasNextInt()) {
 												reportsTo = data.nextInt();

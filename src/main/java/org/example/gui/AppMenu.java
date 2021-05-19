@@ -1,17 +1,22 @@
 package org.example.gui;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AppMenu extends JMenuBar {
-	
+	final JFileChooser fileChooser = new JFileChooser();
+	private Font primaryFont = new Font("Calibri", Font.PLAIN, 40);
+
 	JMenuBar appMenu = new JMenuBar();
 	
 	public AppMenu(){
@@ -27,11 +32,72 @@ public class AppMenu extends JMenuBar {
 				JMenuItem saveToFileItem = new JMenuItem("Save to file");
 				saveToFileItem.setHorizontalAlignment(SwingConstants.LEFT);
 				fileMenu.add(saveToFileItem);
+				/*saveToFileItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+						fileChooser.setDialogTitle("Specify a file to save");
 
-				//BULK IMPORT FILE MENU ITEM
+						//Set default folder
+						fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+						//Just allow .txt
+						FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+						fileChooser.setFileFilter(filter);
+
+						int returnVal = fileChooser.showSaveDialog(null);
+
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							File fileToSave = fileChooser.getSelectedFile();
+
+							try {
+								writeToFile(databaseTextArea.getText(), fileToSave);
+								consoleTextArea.setText("Succesfull when saving the Database");
+							}catch (IOException e1) {
+								consoleTextArea.setText("Error writing into file");
+							}
+						}
+					}
+				});*/
+
+
+		//BULK IMPORT FILE MENU ITEM
 				JMenuItem bulkImportItem = new JMenuItem("Bulk import from file...");
 				bulkImportItem.setHorizontalAlignment(SwingConstants.LEFT);
 				fileMenu.add(bulkImportItem);
+				/*bulkImportItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JFileChooser jfc = new JFileChooser(".");
+						jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
+						int response = jfc.showSaveDialog(null);
+
+						if (response ==JFileChooser.APPROVE_OPTION) {
+							File file = jfc.getSelectedFile();
+
+							try {
+								Scanner fileIn = new Scanner(file);
+								if (file.isFile()) {
+
+									while(fileIn.hasNextLine()) {
+										String line = fileIn.nextLine();
+										saveData();
+										System.out.println(line);
+									}
+								}
+								else {
+									System.out.println("Not a file");
+								}
+								fileIn.close();
+							} catch (FileNotFoundException | SQLException fileNotFoundException) {
+								System.out.println("Filen eksisterer ikke");
+							}catch (NumberFormatException numberFormatException) {
+								numberFormatException.printStackTrace();
+							}
+						}
+					}
+				});*/
 
 				//DATABASE MENU
 				JMenu databaseMenu = new JMenu("Database");
@@ -42,6 +108,21 @@ public class AppMenu extends JMenuBar {
 				JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 				dbTestConnectionItem.setHorizontalAlignment(SwingConstants.LEFT);
 				databaseMenu.add(dbTestConnectionItem);
+				/*dbTestConnectionItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							databaseConnection.open();
+							databaseConnection.close();
+							consoleTextArea.append("Connected to database. \n");
+						} catch (Exception err) {
+							throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+							consoleTextArea.append("Connection failed. Error: " +
+									throwableElement.toString() + "\n"
+									+ stackTraceWriter.toString());
+						}
+					}
+				});*/
 
 				//HELP MENU
 				JMenu helpMenu = new JMenu("Help");
@@ -51,12 +132,12 @@ public class AppMenu extends JMenuBar {
 				JMenuItem aboutItem = new JMenuItem("About the application");
 				aboutItem.setHorizontalAlignment(SwingConstants.LEFT);
 				helpMenu.add(aboutItem);
-				/*aboutItem.addActionListener(new ActionListener() {
+				aboutItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						consoleTextArea.setText("Hei på deg");
+						displayMessage("About the application");
 					}
-				});*/
+				});
 
 				//EXIT MENU
 				JMenu exitMenu = new JMenu("Exit");
@@ -66,8 +147,48 @@ public class AppMenu extends JMenuBar {
 				JMenuItem exitItem = new JMenuItem("Exit the application");
 				exitItem.setHorizontalAlignment(SwingConstants.LEFT);
 				exitMenu.add(exitItem);
-				
-				
+				exitItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.exit(0);
+					}
+				});
 	}
 
+	
+
+	public void writeToFile(String text, File file) throws IOException {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		writer.write(text);
+		writer.close();
+	}
+
+	private void displayMessage(String message) {
+		JOptionPane.showMessageDialog(this, message);
+	}
+
+	/*public void saveData() throws SQLException {
+		final String database = "jdbc:mysql://itfag.usn.no/233574";
+		final String brukernavn = "233574";
+		final String pw = "JWeiMrF0";
+		Connection conn = DriverManager.getConnection(database, brukernavn, pw);
+		try {
+			Connection connection = conn;
+			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO employees VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+
+			preparedStatement.setInt(1, getEmployeeNumber());
+			preparedStatement.setString(2, getFirstName());
+			preparedStatement.setString(3, getLastName());
+			preparedStatement.setString(4, getExtension());
+			preparedStatement.setString(5, getEmail());
+			preparedStatement.setString(6, getOfficeCode());
+			preparedStatement.setInt(7, getReportsTo());
+			preparedStatement.setString(8, getJobTitle());
+
+			preparedStatement.execute();
+
+		}catch (SQLException e) {
+			System.out.println("Feil");
+		}
+	}*/
 }

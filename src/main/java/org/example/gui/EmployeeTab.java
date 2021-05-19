@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 import javax.swing.JButton;
@@ -666,6 +667,8 @@ public class EmployeeTab extends JPanel{
 				} catch(MissingTextFieldException err){
 					consoleTextArea.append("Something went wrong. Error: " + err.getMessage() + "\n");
 					err.printStackTrace();
+				} catch (SQLIntegrityConstraintViolationException errSql) {
+					consoleTextArea.append("Something went wrong. Error: " + errSql.getMessage() + "\n" );
 				} catch(Exception errEmail) {
 					consoleTextArea.append("Something went wrong. Error: " + errEmail.getMessage() + "\n");
 				}

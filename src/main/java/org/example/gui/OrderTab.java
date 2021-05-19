@@ -573,7 +573,7 @@ public class OrderTab extends JPanel {
 					int customerNumber = getCustomerNumber();
 
 					databaseConnection.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
-					employeeConsoleTextArea.setText("You added order " + orderNumber);
+					employeeConsoleTextArea.setText("You added a order with order number" + orderNumber);
 				}//Må ha en catch her for å gi tilbakemeldinger
 				catch (Exception exception) {
 					exception.printStackTrace();

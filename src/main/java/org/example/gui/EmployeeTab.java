@@ -617,7 +617,7 @@ public class EmployeeTab extends JPanel{
 				try {
 					List<Employee> employees = db.showEmployees();
 					databaseTextArea.setText("");
-					chooseJobTitleComboBox.removeAllItems();
+					chooseJobTitleComboBox.setSelectedItem("");
 					for (Employee employee : employees) {
 						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
 						if (unique.add(employee.getJobTitle())) {

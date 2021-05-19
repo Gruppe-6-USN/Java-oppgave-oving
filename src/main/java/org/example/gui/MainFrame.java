@@ -846,19 +846,6 @@ private JTextField updateJobTitleTextField;
 			}
 		});
 
-		//UPDATE BUTTON EVENT
-		updateBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
-					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
-				} catch(Exception err){
-					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
-					err.printStackTrace();
-				}
-			}
-		});
-
 
 
 		//CLEAR BUTTON EVENT
@@ -899,71 +886,6 @@ private JTextField updateJobTitleTextField;
 				System.exit(0);
 			}
 		});
-
-		//BULK IMPORT EVENT
-		bulkImportItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser jfc = new JFileChooser(".");
-				jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-				int response = jfc.showSaveDialog(null);
-
-				if (response ==JFileChooser.APPROVE_OPTION) {
-					File file = jfc.getSelectedFile();
-
-					try {
-						Scanner fileIn = new Scanner(file);
-						if (file.isFile()) {
-
-							while(fileIn.hasNextLine()) {
-								String line = fileIn.nextLine();
-								saveData();
-								System.out.println(line);
-							}
-						}
-						else {
-							System.out.println("Not a file");
-						}
-						fileIn.close();
-					} catch (FileNotFoundException | SQLException fileNotFoundException) {
-						System.out.println("Filen eksisterer ikke");
-					}catch (NumberFormatException numberFormatException) {
-						numberFormatException.printStackTrace();
-					}
-				}
-			}
-		});
-
-		//SAVE TO FILE EVENT
-		saveToFileItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				fileChooser.setDialogTitle("Specify a file to save");
-
-				//Set default folder
-				fileChooser.setCurrentDirectory(new File("c:\\temp"));
-
-				//Just allow .txt
-				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
-				fileChooser.setFileFilter(filter);
-
-				int returnVal = fileChooser.showSaveDialog(null);
-
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File fileToSave = fileChooser.getSelectedFile();
-
-					try {
-						writeToFile(databaseTextArea.getText(), fileToSave);
-						consoleTextArea.setText("Succesfull when saving the Database");
-					}catch (IOException e1) {
-						consoleTextArea.setText("Error writing into file");
-					}
-				}
-			}
-		});
-
 	}
 
 //-------------------------ADDITIONAL METHODS-------------------------//
@@ -986,28 +908,4 @@ private JTextField updateJobTitleTextField;
 	}
 
 
-	public void saveData() throws SQLException {
-		final String database = "jdbc:mysql://itfag.usn.no/233574";
-		final String brukernavn = "233574";
-		final String pw = "JWeiMrF0";
-		Connection conn = DriverManager.getConnection(database, brukernavn, pw);
-			try {
-				Connection connection = conn;
-				PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO employees VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
-
-				preparedStatement.setInt(1, getEmployeeNumber());
-				preparedStatement.setString(2, getFirstName());
-				preparedStatement.setString(3, getLastName());
-				preparedStatement.setString(4, getExtension());
-				preparedStatement.setString(5, getEmail());
-				preparedStatement.setString(6, getOfficeCode());
-				preparedStatement.setInt(7, getReportsTo());
-				preparedStatement.setString(8, getJobTitle());
-
-				preparedStatement.execute();
-
-			}catch (SQLException e) {
-				System.out.println("Feil");
-			}
-	}
 }

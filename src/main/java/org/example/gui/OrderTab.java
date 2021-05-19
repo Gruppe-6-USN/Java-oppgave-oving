@@ -1,5 +1,7 @@
 package org.example.gui;
 
+import org.example.database.DatabaseConnection;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.TextArea;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -36,7 +39,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
-public class OrderTab extends JPanel{
+public class OrderTab extends JPanel {
 	
 	
 	private final JPanel employeeTab = new JPanel();
@@ -87,7 +90,8 @@ public class OrderTab extends JPanel{
 	private JTextArea employeeConsoleTextArea;
 	private JButton clearEmployeeConsoleBtn;
 	
-	public OrderTab() { 
+	public OrderTab() {
+		final DatabaseConnection databaseConnection = new DatabaseConnection();
         
         GridBagLayout gbl_employeeTab = new GridBagLayout();
         gbl_employeeTab.columnWidths = new int[] {80, 80, 80, 80, 80, 80, 80, 80, 80, 80};
@@ -561,14 +565,17 @@ public class OrderTab extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int orderNumber = getOrderNumber();
-					int customerNumber = getCustomerNumber();
 					String orderDate = getOrderDate();
 					String requiredDate = getRequiredDate();
 					String shippedDate = getShippedDate();
 					String status = getStatus();
-					//String comment = getComment();
-					
-				} catch (Exception exception) {
+					String comments = getComment();
+					int customerNumber = getCustomerNumber();
+
+					databaseConnection.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
+					displayMessage("You added order: " + orderNumber);
+				}//Må ha en catch her for å gi tilbakemeldinger
+				catch (Exception exception) {
 					exception.printStackTrace();
 				}
 			}
@@ -598,9 +605,13 @@ public class OrderTab extends JPanel{
 		return addStatusTextField.getText();
 	}
 
-	/*public String getComment() {
-		return
-	}*/
+	public String getComment() {
+		return addCommentsTextField.getText();
+	}
+
+	private void displayMessage(String message) {
+		JOptionPane.showMessageDialog(this, message);
+	}
 
 }
 

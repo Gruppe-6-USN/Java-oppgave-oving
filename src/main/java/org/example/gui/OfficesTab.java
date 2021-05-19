@@ -637,8 +637,11 @@ public class OfficesTab extends JPanel {
 							officeConsoleTextArea.setText("Office updated: " + " " + officeCode + " " + city + " is added\n");
 
 
-						} catch (Exception exception) {
-							officeConsoleTextArea.append("Something went wrong when adding new Office : " + exception.getMessage() + "\n");
+						} catch(SQLException sqlErr) {
+							sqlErr.printStackTrace();
+						}
+						catch (Exception exception) {
+							exception.printStackTrace();
 						}
 					}
 				});

@@ -76,16 +76,17 @@ public class DatabaseConnection {
 			open();
 			pStmt = conn.prepareStatement("UPDATE offices SET city = ?, phone = ?, addressLine1 = ?, addressLine2 = ?, state = ?, country = ?, postalCode = ?, territory = ? WHERE officeCode = ?");
 					
-			pStmt.setString(1, officeCode);
-			pStmt.setString(2, city);
-			pStmt.setString(3, phone);
-			pStmt.setString(4, addressLine1);
-			pStmt.setString(5, addressLine2);
-			pStmt.setString(6, state);
-			pStmt.setString(7, country);
-			pStmt.setString(8, postalCode);
-			pStmt.setString(9, territory);
-			pStmt.execute();
+
+			pStmt.setString(1, city);
+			pStmt.setString(2, phone);
+			pStmt.setString(3, addressLine1);
+			pStmt.setString(4, addressLine2);
+			pStmt.setString(5, state);
+			pStmt.setString(6, country);
+			pStmt.setString(7, postalCode);
+			pStmt.setString(8, territory);
+			pStmt.setString(9, officeCode);
+			pStmt.executeUpdate();
 			close();
 		} catch (SQLException addErr) {
 			addErr.printStackTrace();

@@ -817,6 +817,14 @@ private JTextField updateJobTitleTextField;
 		final Throwable throwableElement = new Throwable();
 		final JFileChooser fileChooser = new JFileChooser();
 
+		//CLEAR CONSOLE BUTTON EVENT
+		clearConsoleBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				consoleTextArea.setText("");
+				}
+			});
+
 		//DELETE BUTTON EVENT
 		deleteBtn.addActionListener(new ActionListener() {
 			@Override
@@ -837,6 +845,35 @@ private JTextField updateJobTitleTextField;
 				}
 			}
 		});
+
+		//UPDATE BUTTON EVENT
+		updateBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					databaseConnection.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
+					consoleTextArea.append("User with user-ID: " + getUpdateId() + " has been updated. \n");
+				} catch(Exception err){
+					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
+					err.printStackTrace();
+				}
+			}
+		});
+
+
+
+		//CLEAR BUTTON EVENT
+		clearBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				employeeNumberTextField.setText(null);
+				firstNameTextField.setText(null);
+				lastNameTextField.setText(null);
+				extensionTextField.setText(null);
+				lastNameTextField.setText(null);
+				emailTextField.setText(null);
+				consoleTextArea.append("All fields have been cleared. \n");
+				}
+			});
 
 		//TEST CONNECTION EVENT
 		dbTestConnectionItem.addActionListener(new ActionListener() {

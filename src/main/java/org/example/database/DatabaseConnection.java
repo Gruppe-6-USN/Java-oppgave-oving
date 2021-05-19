@@ -86,59 +86,59 @@ public class DatabaseConnection {
 		}
 	}
 		
-		public List<OrdersList> showOrders(String datestr1, String datestr2) throws SQLException{
-			ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
-			try {
-				open();
-				pStmt = conn.prepareStatement("SELECT * FROM orders where orderDate >= ? and orderDate <= ?");
-				pStmt.setString(1, datestr1);
-				pStmt.setString(2, datestr2);
-				resSet = pStmt.executeQuery();	
-			    while (resSet.next()) {
-			    	int orderNumber = resSet.getInt("orderNumber");
-			    	int customerNumber = resSet.getInt("customerNumber");
-			    	String orderDate = resSet.getString("orderDate");
-			    	String requiredDate = resSet.getString("requiredDate");
-			    	String shippedDate = resSet.getString("shippeDdate");
-			    	String status = resSet.getString("status");
-			    	String comment = resSet.getString("comments");	
-			    	OrdersList current = new OrdersList(customerNumber, orderNumber, orderDate, requiredDate, shippedDate, status, comment);
-			    	orders.add(current);
-			    }
-				close();
-				return orders;
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			return null;
-		}
-		
-		public List<Employee> showEmployees() throws SQLException {
-			ArrayList<Employee> employees = new ArrayList<Employee>();
-			try{
-				open();
-				pStmt = conn.prepareStatement("SELECT * FROM employees");
-				resSet = pStmt.executeQuery();
-				while (resSet.next()) {
-					int employeeNumber = resSet.getInt("employeeNumber");
-					String firstName = resSet.getString("firstName");
-					String lastName = resSet.getString("lastName");
-					String extension = resSet.getString("extension");
-					String email = resSet.getString("email");
-					String officeCode = resSet.getString("officeCode");
-					int reportsTo = resSet.getInt("reportsTo");
-					String jobTitle = resSet.getString("jobTitle");
-					Employee current = new Employee(employeeNumber, lastName, firstName,  extension, email, officeCode, reportsTo, jobTitle);
-					employees.add(current);
-					/*employees = employees.toString();*/		
-				}  
-				close();
-				return employees;
-		    } catch (SQLException e) {
-		    	e.printStackTrace();
+	public List<OrdersList> showOrders(String datestr1, String datestr2) throws SQLException{
+		ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
+		try {
+			open();
+			pStmt = conn.prepareStatement("SELECT * FROM orders where orderDate >= ? and orderDate <= ?");
+			pStmt.setString(1, datestr1);
+			pStmt.setString(2, datestr2);
+			resSet = pStmt.executeQuery();	
+		    while (resSet.next()) {
+		    	int orderNumber = resSet.getInt("orderNumber");
+		    	int customerNumber = resSet.getInt("customerNumber");
+		    	String orderDate = resSet.getString("orderDate");
+		    	String requiredDate = resSet.getString("requiredDate");
+		    	String shippedDate = resSet.getString("shippeDdate");
+		    	String status = resSet.getString("status");
+		    	String comment = resSet.getString("comments");	
+		    	OrdersList current = new OrdersList(customerNumber, orderNumber, orderDate, requiredDate, shippedDate, status, comment);
+		    	orders.add(current);
 		    }
-			return null;	 
+			close();
+			return orders;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
+		return null;
+	}
+		
+	public List<Employee> showEmployees() throws SQLException {
+		ArrayList<Employee> employees = new ArrayList<Employee>();
+		try{
+			open();
+			pStmt = conn.prepareStatement("SELECT * FROM employees");
+			resSet = pStmt.executeQuery();
+			while (resSet.next()) {
+				int employeeNumber = resSet.getInt("employeeNumber");
+				String firstName = resSet.getString("firstName");
+				String lastName = resSet.getString("lastName");
+				String extension = resSet.getString("extension");
+				String email = resSet.getString("email");
+				String officeCode = resSet.getString("officeCode");
+				int reportsTo = resSet.getInt("reportsTo");
+				String jobTitle = resSet.getString("jobTitle");
+				Employee current = new Employee(employeeNumber, lastName, firstName,  extension, email, officeCode, reportsTo, jobTitle);
+				employees.add(current);
+				/*employees = employees.toString();*/		
+			}  
+			close();
+			return employees;
+	    } catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
+		return null;	 
+	}
 
 	public List<Employee> showEmployeesJobTitle(String jobTitle) throws SQLException {
 		ArrayList<Employee> employees = new ArrayList<Employee>();

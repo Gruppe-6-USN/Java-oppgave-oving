@@ -583,17 +583,35 @@ public class EmployeeTab extends JPanel{
 		//REFRESH DB BUTTON - shows updated count of all employees in database text area
         refreshDatabaseTextAreaBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent refreshDb) {
-        		DatabaseConnection db = new DatabaseConnection();
-        		try {
+				DatabaseConnection db = new DatabaseConnection();
+				try {
 					List<Employee> employees = db.showEmployees();
 					databaseTextArea.setText("");
-	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
-	                }
+					chooseJobTitleComboBox.removeAllItems();
+					for (Employee employee : employees) {
+						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+					}
 				} catch (SQLException error) {
 					consoleTextArea.append("Problem fetching from database. Error: " + error);
 				}
-        	}
+
+				try {
+					List<Employee> employees = db.showEmployees();
+					java.util.HashSet unique = new HashSet();
+
+					for (Employee employee : employees) {
+
+						if (unique.add(employee.getJobTitle())) {
+							chooseJobTitleComboBox.addItem(employee.getJobTitle());
+
+						}
+					}
+				} catch (SQLException error) {
+					consoleTextArea.append("Problem fetching from database. Error: " + error);
+
+				}
+
+			}
         });
         
 		//UPDATE BUTTON EVENT

@@ -87,8 +87,8 @@ public class OrderTab extends JPanel {
 	private JComboBox chooseEmployeeJobTitleComboBox;
 	private JLabel chooseEmpJobTitleLabel;
 	private JPanel OrderConsolePanel;
-	private JTextArea employeeConsoleTextArea;
-	private JButton clearEmployeeConsoleBtn;
+	private JTextArea orderConsoleTextArea;
+	private JButton clearOrderConsoleBtn;
 	
 	public OrderTab() {
 		final DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -517,18 +517,18 @@ public class OrderTab extends JPanel {
 		gbl_OrderConsolePanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_OrderConsolePanel.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		OrderConsolePanel.setLayout(gbl_OrderConsolePanel);
-		
-		employeeConsoleTextArea = new JTextArea();
-		employeeConsoleTextArea.setEditable(false);
-		employeeConsoleTextArea.setBackground(Color.DARK_GRAY);
+
+		orderConsoleTextArea = new JTextArea();
+		orderConsoleTextArea.setEditable(false);
+		orderConsoleTextArea.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_employeeConsoleTextArea = new GridBagConstraints();
 		gbc_employeeConsoleTextArea.insets = new Insets(0, 0, 5, 0);
 		gbc_employeeConsoleTextArea.fill = GridBagConstraints.BOTH;
 		gbc_employeeConsoleTextArea.gridx = 0;
 		gbc_employeeConsoleTextArea.gridy = 0;
-		OrderConsolePanel.add(employeeConsoleTextArea, gbc_employeeConsoleTextArea);
+		OrderConsolePanel.add(orderConsoleTextArea, gbc_employeeConsoleTextArea);
 		
-		JScrollPane consoleScroll = new JScrollPane(employeeConsoleTextArea);
+		JScrollPane consoleScroll = new JScrollPane(orderConsoleTextArea);
 		consoleScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_consoleScroll = new GridBagConstraints();
 		gbc_consoleScroll.gridwidth = 3;
@@ -537,16 +537,16 @@ public class OrderTab extends JPanel {
 		gbc_consoleScroll.gridx = 0;
 		gbc_consoleScroll.gridy = 0;
 		OrderConsolePanel.add(consoleScroll, gbc_consoleScroll);
-		
-		clearEmployeeConsoleBtn = new JButton("Clear console");
-		clearEmployeeConsoleBtn.addActionListener(new ActionListener() {
+
+		clearOrderConsoleBtn = new JButton("Clear console");
+		clearOrderConsoleBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		GridBagConstraints gbc_clearEmployeeConsoleBtn = new GridBagConstraints();
 		gbc_clearEmployeeConsoleBtn.gridx = 0;
 		gbc_clearEmployeeConsoleBtn.gridy = 1;
-		OrderConsolePanel.add(clearEmployeeConsoleBtn, gbc_clearEmployeeConsoleBtn);
+		OrderConsolePanel.add(clearOrderConsoleBtn, gbc_clearEmployeeConsoleBtn);
 		//DELETE BUTTON
 		JButton deleteBtn = new JButton("Delete");
 		GridBagConstraints gbc_deleteBtn = new GridBagConstraints();
@@ -573,11 +573,19 @@ public class OrderTab extends JPanel {
 					int customerNumber = getCustomerNumber();
 
 					databaseConnection.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
-					employeeConsoleTextArea.setText("You added a order with order number" + orderNumber);
+					orderConsoleTextArea.setText("You added a order with order number" + orderNumber);
 				}//Må ha en catch her for å gi tilbakemeldinger
 				catch (Exception exception) {
 					exception.printStackTrace();
 				}
+			}
+		});
+
+		//CLEAR CONSOLE EVENT
+		clearOrderConsoleBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				orderConsoleTextArea.setText("");
 			}
 		});
 	}

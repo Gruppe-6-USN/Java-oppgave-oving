@@ -135,7 +135,7 @@ public class DatabaseConnection {
 			    	String comment = resSet.getString("comments");
 			    	
 
-			    	OrdersList current = new OrdersList(customerNumber, orderNumber, orderDate, requiredDate, shippedDate, status, comment);
+			    	OrdersList current = new OrdersList(customerNumber, orderDate, requiredDate, shippedDate, status, comment, orderNumber);
 			    	orders.add(current);
 			    	
 			    	
@@ -183,6 +183,39 @@ public class DatabaseConnection {
 			return null;
 				 
 		}
+
+	public List<OrdersList> showOrders() throws SQLException {
+		ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
+		try{
+			open();
+			pStmt = conn.prepareStatement("SELECT * FROM orders");
+			resSet = pStmt.executeQuery();
+
+			while (resSet.next()) {
+				int orderNumber = resSet.getInt("orderNumber");
+				String orderDate = resSet.getString("orderDate");
+				String requiredDate = resSet.getString("requiredDate");
+				String shippedDate = resSet.getString("shippedDate");
+				String status = resSet.getString("status");
+				String comments = resSet.getString("comments");
+				int customerNumber = resSet.getInt("customerNumber");
+
+
+				OrdersList current = new OrdersList(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
+				orders.add(current);
+				/*employees = employees.toString();*/
+
+
+			}
+
+			close();
+			return orders;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 
 	public List<Employee> showEmployeesJobTitle(String jobTitle) throws SQLException {
 		ArrayList<Employee> employees = new ArrayList<Employee>();

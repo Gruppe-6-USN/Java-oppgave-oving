@@ -1,6 +1,8 @@
 package org.example.gui;
 
 import org.example.database.DatabaseConnection;
+import org.example.database.Employee;
+import org.example.database.OrdersList;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -15,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -83,7 +86,7 @@ public class OrderTab extends JPanel {
 	private JButton deleteEmployeeBtn;
 	private JPanel OrderDbView;
 	private JTextArea databaseTextArea;
-	private JButton refreshEmployeeDbViewBtn;
+	private JButton refreshOrderDbViewBtn;
 	private JComboBox chooseEmployeeJobTitleComboBox;
 	private JLabel chooseEmpJobTitleLabel;
 	private JPanel OrderConsolePanel;
@@ -494,13 +497,13 @@ public class OrderTab extends JPanel {
 		gbc_databaseScroll.gridx = 0;
 		gbc_databaseScroll.gridy = 1;
 		OrderDbView.add(databaseScroll, gbc_databaseScroll);
-		
-		refreshEmployeeDbViewBtn = new JButton("Refresh view");
+
+		refreshOrderDbViewBtn = new JButton("Refresh view");
 		GridBagConstraints gbc_refreshEmployeeDbViewBtn = new GridBagConstraints();
 		gbc_refreshEmployeeDbViewBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_refreshEmployeeDbViewBtn.gridx = 0;
 		gbc_refreshEmployeeDbViewBtn.gridy = 2;
-		OrderDbView.add(refreshEmployeeDbViewBtn, gbc_refreshEmployeeDbViewBtn);
+		OrderDbView.add(refreshOrderDbViewBtn, gbc_refreshEmployeeDbViewBtn);
 		
 		OrderConsolePanel = new JPanel();
 		OrderConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -586,6 +589,24 @@ public class OrderTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				orderConsoleTextArea.setText("");
+			}
+		});
+
+		////REFRESH DB BUTTON - shows updated count of all orders in database text area
+		refreshOrderDbViewBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DatabaseConnection db = new DatabaseConnection();
+				try {
+					List<OrdersList> orders = db.showOrders();
+					databaseTextArea.setText("");
+					for (OrdersList ordersList : orders) {
+						databaseTextArea.append(ordersList.getOrderNumber() + ": " + ordersList.getOrderDate() + ", " + ordersList.getRequiredDate() + ", " +
+								ordersList.getShippedDate() + ", " + ordersList.getStatus() + ", " + ordersList.getComments() + ", " + ordersList.getCustomerNumber() + "\n");
+					}
+				} catch (SQLException error) {
+					databaseTextArea.append("Problem fetching from database. Error: " + error);
+				}
 			}
 		});
 	}

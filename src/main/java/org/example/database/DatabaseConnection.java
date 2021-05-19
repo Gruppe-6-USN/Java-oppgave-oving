@@ -71,6 +71,27 @@ public class DatabaseConnection {
 			addErr.printStackTrace();
 		}
 	}
+	public void addOffice(String officeCode, String city, String phone, String addressLine1, String addressLine2, String state, String country, String postalCode, String territory) throws SQLException {
+		try {
+			open();
+			pStmt = conn.prepareStatement("UPDATE offices SET city = ?, phone = ?, addressLine1 = ?, addressLine2 = ?, state = ?, country = ?, postalCode = ?, territory = ? WHERE officeCode = ?");
+					
+
+			pStmt.setString(1, city);
+			pStmt.setString(2, phone);
+			pStmt.setString(3, addressLine1);
+			pStmt.setString(4, addressLine2);
+			pStmt.setString(5, state);
+			pStmt.setString(6, country);
+			pStmt.setString(7, postalCode);
+			pStmt.setString(8, territory);
+			pStmt.setString(9, officeCode);
+			pStmt.executeUpdate();
+			close();
+		} catch (SQLException addErr) {
+			addErr.printStackTrace();
+		}
+	}
 
 	public void addOrder(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) {
 		try {
@@ -93,7 +114,7 @@ public class DatabaseConnection {
 		}
 	}
 
-		public void updateUser( String lastName, String firstName, String extension, String email, int officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
+		public void updateUser( String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
 			try {
 				open();
 				pStmt = conn.prepareStatement("UPDATE employees SET lastName = ?,  firstName = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ? WHERE employeeNumber = ?");
@@ -103,7 +124,7 @@ public class DatabaseConnection {
 				pStmt.setString(2, firstName);
 				pStmt.setString(3, extension);
 				pStmt.setString(4, email);
-				pStmt.setInt(5, officeCode);
+				pStmt.setString(5, officeCode);
 				pStmt.setInt(6, reportsTo);
 				pStmt.setString(7, jobTitle);
 				pStmt.setInt(8, employeeNumber);
@@ -135,7 +156,7 @@ public class DatabaseConnection {
 			    	String comment = resSet.getString("comments");
 			    	
 
-			    	OrdersList current = new OrdersList(customerNumber, orderNumber, orderDate, requiredDate, shippedDate, status, comment);
+			    	OrdersList current = new OrdersList(customerNumber, orderDate, requiredDate, shippedDate, status, comment, orderNumber);
 			    	orders.add(current);
 			    	
 			    	
@@ -184,6 +205,39 @@ public class DatabaseConnection {
 				 
 		}
 
+	public List<OrdersList> showOrders() throws SQLException {
+		ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
+		try{
+			open();
+			pStmt = conn.prepareStatement("SELECT * FROM orders");
+			resSet = pStmt.executeQuery();
+
+			while (resSet.next()) {
+				int orderNumber = resSet.getInt("orderNumber");
+				String orderDate = resSet.getString("orderDate");
+				String requiredDate = resSet.getString("requiredDate");
+				String shippedDate = resSet.getString("shippedDate");
+				String status = resSet.getString("status");
+				String comments = resSet.getString("comments");
+				int customerNumber = resSet.getInt("customerNumber");
+
+
+				OrdersList current = new OrdersList(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
+				orders.add(current);
+				/*employees = employees.toString();*/
+
+
+			}
+
+			close();
+			return orders;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
 	public List<Employee> showEmployeesJobTitle(String jobTitle) throws SQLException {
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 		try{
@@ -221,8 +275,9 @@ public class DatabaseConnection {
 		return null;
 
 	}
-		
-		
-	}
+
+
+
+}
 
 

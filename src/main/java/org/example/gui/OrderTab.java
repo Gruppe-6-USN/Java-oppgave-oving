@@ -1,6 +1,8 @@
 package org.example.gui;
 
 import org.example.database.DatabaseConnection;
+import org.example.database.Employee;
+import org.example.database.OrdersList;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -15,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -63,27 +66,27 @@ public class OrderTab extends JPanel {
 	private JButton addOrderBtn;
 	private JLabel updOrdNumLabel;
 	private JLabel updateOrderDateLabel;
-	private JLabel updEmpLastNameLabel;
-	private JLabel updEmpExtensionLabel;
-	private JLabel updEmpEmailLabel;
-	private JLabel updEmpOfficeCodeLabel;
-	private JLabel updEmpReportsToLabel;
+	private JLabel updOrderRequiredLabel;
+	private JLabel updOrderShippedLabel;
+	private JLabel updOrderStatusLabel;
+	private JLabel updOrderCommentsLabel;
+	private JLabel updOrderCustomerNumberLabel;
 	private JLabel updEmpJobTitleLabel;
 	private JComboBox updateEmployeeNumberComboBox;
-	private JTextField updateEmployeeFirstNameTextField;
-	private JTextField updateEmployeeLastNameTextField;
-	private JTextField updateEmployeeExtensionTextField;
-	private JTextField updateEmployeeEmailTextField;
-	private JTextField updateEmployeeOfficeCodeTextField;
-	private JTextField updateEmployeeReportsToTextField;
+	private JTextField updateOrderDateTextField;
+	private JTextField updateOrderRequiredTextField;
+	private JTextField updateOrderShippedTextField;
+	private JTextField updateOrderStatusTextField;
+	private JTextField updateOrderCommentsTextField;
+	private JTextField updateOrderCustomerNumberTextField;
 	private JTextField updateEmployeeJobTitleTextField;
-	private JButton updateEmployeeBtn;
+	private JButton updateOrderBtn;
 	private JLabel delEmpNumLabel;
 	private JComboBox deleteEmployeeNumberComboBox;
 	private JButton deleteEmployeeBtn;
 	private JPanel OrderDbView;
 	private JTextArea databaseTextArea;
-	private JButton refreshEmployeeDbViewBtn;
+	private JButton refreshOrderDbViewBtn;
 	private JComboBox chooseEmployeeJobTitleComboBox;
 	private JLabel chooseEmpJobTitleLabel;
 	private JPanel OrderConsolePanel;
@@ -318,131 +321,114 @@ public class OrderTab extends JPanel {
 		gbc_updateEmployeeNumberComboBox.gridy = 0;
 		UpdateOrderPanel.add(updateEmployeeNumberComboBox, gbc_updateEmployeeNumberComboBox);
 		
-		updateOrderDateLabel = new JLabel("First name: ");
+		updateOrderDateLabel = new JLabel("Order date: ");
 		GridBagConstraints gbc_updateOrderDateLabel = new GridBagConstraints();
 		gbc_updateOrderDateLabel.anchor = GridBagConstraints.EAST;
 		gbc_updateOrderDateLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updateOrderDateLabel.gridx = 0;
 		gbc_updateOrderDateLabel.gridy = 1;
 		UpdateOrderPanel.add(updateOrderDateLabel, gbc_updateOrderDateLabel);
-		
-		updateEmployeeFirstNameTextField = new JTextField();
-		updateEmployeeFirstNameTextField.setColumns(10);
+
+		updateOrderDateTextField = new JTextField();
+		updateOrderDateTextField.setColumns(10);
 		GridBagConstraints gbc_updateEmployeeFirstNameTextField = new GridBagConstraints();
 		gbc_updateEmployeeFirstNameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeFirstNameTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmployeeFirstNameTextField.gridx = 1;
 		gbc_updateEmployeeFirstNameTextField.gridy = 1;
-		UpdateOrderPanel.add(updateEmployeeFirstNameTextField, gbc_updateEmployeeFirstNameTextField);
-		
-		updEmpLastNameLabel = new JLabel("Last name: ");
+		UpdateOrderPanel.add(updateOrderDateTextField, gbc_updateEmployeeFirstNameTextField);
+
+		updOrderRequiredLabel = new JLabel("Required date: ");
 		GridBagConstraints gbc_updEmpLastNameLabel = new GridBagConstraints();
 		gbc_updEmpLastNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_updEmpLastNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updEmpLastNameLabel.gridx = 0;
 		gbc_updEmpLastNameLabel.gridy = 2;
-		UpdateOrderPanel.add(updEmpLastNameLabel, gbc_updEmpLastNameLabel);
+		UpdateOrderPanel.add(updOrderRequiredLabel, gbc_updEmpLastNameLabel);
 		
-		updateEmployeeLastNameTextField = new JTextField();
-		updateEmployeeLastNameTextField.setColumns(10);
+		updateOrderRequiredTextField = new JTextField();
+		updateOrderRequiredTextField.setColumns(10);
 		GridBagConstraints gbc_updateEmployeeLastNameTextField = new GridBagConstraints();
 		gbc_updateEmployeeLastNameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeLastNameTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmployeeLastNameTextField.gridx = 1;
 		gbc_updateEmployeeLastNameTextField.gridy = 2;
-		UpdateOrderPanel.add(updateEmployeeLastNameTextField, gbc_updateEmployeeLastNameTextField);
+		UpdateOrderPanel.add(updateOrderRequiredTextField, gbc_updateEmployeeLastNameTextField);
 		
-		updEmpExtensionLabel = new JLabel("Extension: ");
+		updOrderShippedLabel = new JLabel("Shipped date: ");
 		GridBagConstraints gbc_updEmpExtensionLabel = new GridBagConstraints();
 		gbc_updEmpExtensionLabel.anchor = GridBagConstraints.EAST;
 		gbc_updEmpExtensionLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updEmpExtensionLabel.gridx = 0;
 		gbc_updEmpExtensionLabel.gridy = 3;
-		UpdateOrderPanel.add(updEmpExtensionLabel, gbc_updEmpExtensionLabel);
+		UpdateOrderPanel.add(updOrderShippedLabel, gbc_updEmpExtensionLabel);
 		
-		updateEmployeeExtensionTextField = new JTextField();
-		updateEmployeeExtensionTextField.setColumns(10);
+		updateOrderShippedTextField = new JTextField();
+		updateOrderShippedTextField.setColumns(10);
 		GridBagConstraints gbc_updateEmployeeExtensionTextField = new GridBagConstraints();
 		gbc_updateEmployeeExtensionTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeExtensionTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmployeeExtensionTextField.gridx = 1;
 		gbc_updateEmployeeExtensionTextField.gridy = 3;
-		UpdateOrderPanel.add(updateEmployeeExtensionTextField, gbc_updateEmployeeExtensionTextField);
+		UpdateOrderPanel.add(updateOrderShippedTextField, gbc_updateEmployeeExtensionTextField);
 		
-		updEmpEmailLabel = new JLabel("Email: ");
+		updOrderStatusLabel = new JLabel("Status: ");
 		GridBagConstraints gbc_updEmpEmailLabel = new GridBagConstraints();
 		gbc_updEmpEmailLabel.anchor = GridBagConstraints.EAST;
 		gbc_updEmpEmailLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updEmpEmailLabel.gridx = 0;
 		gbc_updEmpEmailLabel.gridy = 4;
-		UpdateOrderPanel.add(updEmpEmailLabel, gbc_updEmpEmailLabel);
+		UpdateOrderPanel.add(updOrderStatusLabel, gbc_updEmpEmailLabel);
 		
-		updateEmployeeEmailTextField = new JTextField();
-		updateEmployeeEmailTextField.setColumns(10);
+		updateOrderStatusTextField = new JTextField();
+		updateOrderStatusTextField.setColumns(10);
 		GridBagConstraints gbc_updateEmployeeEmailTextField = new GridBagConstraints();
 		gbc_updateEmployeeEmailTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeEmailTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmployeeEmailTextField.gridx = 1;
 		gbc_updateEmployeeEmailTextField.gridy = 4;
-		UpdateOrderPanel.add(updateEmployeeEmailTextField, gbc_updateEmployeeEmailTextField);
+		UpdateOrderPanel.add(updateOrderStatusTextField, gbc_updateEmployeeEmailTextField);
 		
-		updEmpOfficeCodeLabel = new JLabel("Office code: ");
+		updOrderCommentsLabel = new JLabel("Comments: ");
 		GridBagConstraints gbc_updEmpOfficeCodeLabel = new GridBagConstraints();
 		gbc_updEmpOfficeCodeLabel.anchor = GridBagConstraints.EAST;
 		gbc_updEmpOfficeCodeLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updEmpOfficeCodeLabel.gridx = 0;
 		gbc_updEmpOfficeCodeLabel.gridy = 5;
-		UpdateOrderPanel.add(updEmpOfficeCodeLabel, gbc_updEmpOfficeCodeLabel);
+		UpdateOrderPanel.add(updOrderCommentsLabel, gbc_updEmpOfficeCodeLabel);
 		
-		updateEmployeeOfficeCodeTextField = new JTextField();
-		updateEmployeeOfficeCodeTextField.setColumns(10);
+		updateOrderCommentsTextField = new JTextField();
+		updateOrderCommentsTextField.setColumns(10);
 		GridBagConstraints gbc_updateEmployeeOfficeCodeTextField = new GridBagConstraints();
 		gbc_updateEmployeeOfficeCodeTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeOfficeCodeTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmployeeOfficeCodeTextField.gridx = 1;
 		gbc_updateEmployeeOfficeCodeTextField.gridy = 5;
-		UpdateOrderPanel.add(updateEmployeeOfficeCodeTextField, gbc_updateEmployeeOfficeCodeTextField);
+		UpdateOrderPanel.add(updateOrderCommentsTextField, gbc_updateEmployeeOfficeCodeTextField);
 		
-		updEmpReportsToLabel = new JLabel("Reports to: ");
+		updOrderCustomerNumberLabel = new JLabel("Customer number: ");
 		GridBagConstraints gbc_updEmpReportsToLabel = new GridBagConstraints();
 		gbc_updEmpReportsToLabel.anchor = GridBagConstraints.EAST;
 		gbc_updEmpReportsToLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_updEmpReportsToLabel.gridx = 0;
 		gbc_updEmpReportsToLabel.gridy = 6;
-		UpdateOrderPanel.add(updEmpReportsToLabel, gbc_updEmpReportsToLabel);
+		UpdateOrderPanel.add(updOrderCustomerNumberLabel, gbc_updEmpReportsToLabel);
 		
-		updateEmployeeReportsToTextField = new JTextField();
-		updateEmployeeReportsToTextField.setColumns(10);
+		updateOrderCustomerNumberTextField = new JTextField();
+		updateOrderCustomerNumberTextField.setColumns(10);
 		GridBagConstraints gbc_updateEmployeeReportsToTextField = new GridBagConstraints();
 		gbc_updateEmployeeReportsToTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeReportsToTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmployeeReportsToTextField.gridx = 1;
 		gbc_updateEmployeeReportsToTextField.gridy = 6;
-		UpdateOrderPanel.add(updateEmployeeReportsToTextField, gbc_updateEmployeeReportsToTextField);
-		
-		updEmpJobTitleLabel = new JLabel("Job title: ");
-		GridBagConstraints gbc_updEmpJobTitleLabel = new GridBagConstraints();
-		gbc_updEmpJobTitleLabel.anchor = GridBagConstraints.EAST;
-		gbc_updEmpJobTitleLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_updEmpJobTitleLabel.gridx = 0;
-		gbc_updEmpJobTitleLabel.gridy = 7;
-		UpdateOrderPanel.add(updEmpJobTitleLabel, gbc_updEmpJobTitleLabel);
-		
-		updateEmployeeJobTitleTextField = new JTextField();
-		updateEmployeeJobTitleTextField.setColumns(10);
-		GridBagConstraints gbc_updateEmployeeJobTitleTextField = new GridBagConstraints();
-		gbc_updateEmployeeJobTitleTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_updateEmployeeJobTitleTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_updateEmployeeJobTitleTextField.gridx = 1;
-		gbc_updateEmployeeJobTitleTextField.gridy = 7;
-		UpdateOrderPanel.add(updateEmployeeJobTitleTextField, gbc_updateEmployeeJobTitleTextField);
-		
-		updateEmployeeBtn = new JButton("Add employee");
+		UpdateOrderPanel.add(updateOrderCustomerNumberTextField, gbc_updateEmployeeReportsToTextField);
+
+		updateOrderBtn = new JButton("Update order");
 		GridBagConstraints gbc_updateEmployeeBtn = new GridBagConstraints();
 		gbc_updateEmployeeBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_updateEmployeeBtn.gridx = 1;
 		gbc_updateEmployeeBtn.gridy = 8;
-		UpdateOrderPanel.add(updateEmployeeBtn, gbc_updateEmployeeBtn);
+		UpdateOrderPanel.add(updateOrderBtn, gbc_updateEmployeeBtn);
 		
 		OrderDbView = new JPanel();
 		OrderDbView.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Order table view", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -494,13 +480,13 @@ public class OrderTab extends JPanel {
 		gbc_databaseScroll.gridx = 0;
 		gbc_databaseScroll.gridy = 1;
 		OrderDbView.add(databaseScroll, gbc_databaseScroll);
-		
-		refreshEmployeeDbViewBtn = new JButton("Refresh view");
+
+		refreshOrderDbViewBtn = new JButton("Refresh view");
 		GridBagConstraints gbc_refreshEmployeeDbViewBtn = new GridBagConstraints();
 		gbc_refreshEmployeeDbViewBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_refreshEmployeeDbViewBtn.gridx = 0;
 		gbc_refreshEmployeeDbViewBtn.gridy = 2;
-		OrderDbView.add(refreshEmployeeDbViewBtn, gbc_refreshEmployeeDbViewBtn);
+		OrderDbView.add(refreshOrderDbViewBtn, gbc_refreshEmployeeDbViewBtn);
 		
 		OrderConsolePanel = new JPanel();
 		OrderConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -586,6 +572,24 @@ public class OrderTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				orderConsoleTextArea.setText("");
+			}
+		});
+
+		////REFRESH DB BUTTON - shows updated count of all orders in database text area
+		refreshOrderDbViewBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DatabaseConnection db = new DatabaseConnection();
+				try {
+					List<OrdersList> orders = db.showOrders();
+					databaseTextArea.setText("");
+					for (OrdersList ordersList : orders) {
+						databaseTextArea.append(ordersList.getOrderNumber() + ": " + ordersList.getOrderDate() + ", " + ordersList.getRequiredDate() + ", " +
+								ordersList.getShippedDate() + ", " + ordersList.getStatus() + ", " + ordersList.getComments() + ", " + ordersList.getCustomerNumber() + "\n");
+					}
+				} catch (SQLException error) {
+					databaseTextArea.append("Problem fetching from database. Error: " + error);
+				}
 			}
 		});
 	}

@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 import javax.swing.JButton;
@@ -621,6 +622,20 @@ public class EmployeeTab extends JPanel{
 		updateEmployeeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if (getUpdateFirstName().isEmpty() && getUpdateLastName().isEmpty() && getUpdateExtension().isEmpty() && getUpdateEmail().isEmpty() && getUpdateOfficeCode().isEmpty() && getUpdateJobTitle().isEmpty())
+					{
+						throw new MissingTextFieldException("you must fill out all the fields");
+					} else if (getUpdateFirstName().isEmpty())
+						throw new MissingTextFieldException("firstName is not present");
+					else if (getUpdateLastName().isEmpty())
+						throw new MissingTextFieldException("lastName is not present");
+					else if (getUpdateEmail().isEmpty())
+						throw new MissingTextFieldException("email is not present");
+					else if (!getUpdateEmail().contains("@"))
+						throw new Exception("Email must include @");
+					else if (getUpdateJobTitle().isEmpty())
+						throw new MissingTextFieldException("Job title is not present");
+
 					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber() );
 					consoleTextArea.append("User with user-ID: " + getUpdateEmployeeNumber() + " has been updated. \n");
 					//updates comboboxes
@@ -637,9 +652,13 @@ public class EmployeeTab extends JPanel{
 							deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
 						}
 					}
-				} catch(Exception err){
-					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
+				} catch(MissingTextFieldException err){
+					consoleTextArea.append("Something went wrong. Error: " + err.getMessage() + "\n");
 					err.printStackTrace();
+				} catch (SQLIntegrityConstraintViolationException errSql) {
+					consoleTextArea.append("Something went wrong. Error: " + errSql.getMessage() + "\n" );
+				} catch(Exception errEmail) {
+					consoleTextArea.append("Something went wrong. Error: " + errEmail.getMessage() + "\n");
 				}
 			}
 		});
@@ -741,8 +760,8 @@ public class EmployeeTab extends JPanel{
 		return updateExtensionTextField.getText();
 	}
 
-	public int getUpdateOfficeCode() {
-		return Integer.parseInt(updateOfficeCodeTextField.getText());
+	public String getUpdateOfficeCode() {
+		return updateOfficeCodeTextField.getText();
 	}
 
 	public String getUpdateEmail() {

@@ -588,21 +588,9 @@ public class EmployeeTab extends JPanel{
 					db.deleteEmployee(getDeleteEmployeeNumber());
 					consoleTextArea.append("Employee with id: " + getDeleteEmployeeNumber() +  " has been deleted. \n");
 					deleteEmployeeNumberComboBox.setSelectedItem("");
-
+					refresh();
 					//REFRESHING DATABASE TEXT AREA and jobtitle and employeenumber combobox
-					List<Employee> employees = db.showEmployees();
-					databaseTextArea.setText("");
-					for (Employee employee : employees) {
-						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
-						if (unique.add(employee.getJobTitle())) {
-
-							chooseJobTitleComboBox.addItem(employee.getJobTitle());
-						}
-						if (unique.add(employee.getEmployeeNumber())) {
-							updateEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
-							deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
-						}
-					}
+					
 				}catch (NumberFormatException | SQLException error) {
 					consoleTextArea.append("ID must be a valid ID\n");
 				}
@@ -616,7 +604,7 @@ public class EmployeeTab extends JPanel{
 				try {
 					List<Employee> employees = db.showEmployees();
 					databaseTextArea.setText("");
-					chooseJobTitleComboBox.removeAllItems();
+					chooseJobTitleComboBox.setSelectedItem("");
 					for (Employee employee : employees) {
 						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
 						if (unique.add(employee.getJobTitle())) {
@@ -775,7 +763,8 @@ public class EmployeeTab extends JPanel{
 	}
 	
 	public int getDeleteEmployeeNumber() {
-		return Integer.parseInt((String)deleteEmployeeNumberComboBox.getSelectedItem());
+		int deleteEmployeeNumber = (int) deleteEmployeeNumberComboBox.getSelectedItem();
+		return deleteEmployeeNumber;
 	}
 	
 	public int getEmployeeNumber() {
@@ -816,4 +805,33 @@ public class EmployeeTab extends JPanel{
 		writer.close();
 	}
 	
+	/*public void refreshJobTitles() {
+		try {
+		List<Employee> employees = db.showEmployees();
+		chooseJobTitleComboBox.setSelectedItem("");
+		
+		}catch(SQLException err) {
+			err.printStackTrace();
+		}
+	}*/ //må gjøres ferdig
+	
+	public void refresh() {
+		try {
+		List<Employee> employees = db.showEmployees();
+		databaseTextArea.setText("");
+		for (Employee employee : employees) {
+			databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+			if (unique.add(employee.getJobTitle())) {
+
+				chooseJobTitleComboBox.addItem(employee.getJobTitle());
+			}
+			if (unique.add(employee.getEmployeeNumber())) {
+				updateEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+				deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+			}
+		}
+		} catch (SQLException err) {
+			err.printStackTrace();
+		}
+	}
 }

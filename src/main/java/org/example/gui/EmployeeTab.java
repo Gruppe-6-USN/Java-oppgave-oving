@@ -770,7 +770,8 @@ public class EmployeeTab extends JPanel{
 	}
 	
 	public int getUpdateEmployeeNumber() {
-		return Integer.parseInt((String)updateEmployeeNumberComboBox.getSelectedItem());
+		int updateEmployeeNumber = (int) updateEmployeeNumberComboBox.getSelectedItem();
+		return updateEmployeeNumber;
 	}
 	
 	public int getDeleteEmployeeNumber() {

@@ -222,6 +222,42 @@ public class DatabaseConnection {
 		    }
 			return null;	 
 		}
+		
+		public List<OfficesList> showOffices() throws SQLException {
+			ArrayList<OfficesList> offices = new ArrayList<OfficesList>();
+			try{
+			open();
+		    pStmt = conn.prepareStatement("SELECT * FROM offices");
+		    resSet = pStmt.executeQuery();
+		    
+		    while (resSet.next()) {
+		    	String officeCode = resSet.getString("officeCode");
+		    	String city = resSet.getString("city");
+		    	String phone = resSet.getString("phone");
+				String addressLine1 = resSet.getString("addressLine1");
+		    	String addressLine2 = resSet.getString("addressLine2");
+		    	String state = resSet.getString("state");
+		    	String country = resSet.getString("country");
+		    	String postalCode = resSet.getString("postalCode");
+		    	String territory = resSet.getString("territory");
+
+
+
+		    	OfficesList current = new OfficesList(officeCode, city, phone,  addressLine1, addressLine2, state, country, postalCode, territory);
+		    	offices.add(current);
+		    	
+		    	
+		    	
+		      }
+		    
+		    close();
+		    return offices;
+		    } catch (SQLException e) {
+		      e.printStackTrace();
+		 }
+			return null;
+				 
+		}
 
 	public List<OrdersList> showOrders() throws SQLException {
 		ArrayList<OrdersList> orders = new ArrayList<OrdersList>();

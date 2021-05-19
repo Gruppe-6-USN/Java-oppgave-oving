@@ -278,6 +278,7 @@ public class OfficesTab extends JPanel {
 		OfficeDbView.setLayout(gbl_OfficeDbView);
 		
 		databaseTextArea = new JTextArea();
+		databaseTextArea.setForeground(Color.WHITE);
 		databaseTextArea.setEditable(false);
 		databaseTextArea.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_databaseTextArea = new GridBagConstraints();
@@ -321,6 +322,7 @@ public class OfficesTab extends JPanel {
 		OfficeConsolePanel.setLayout(gbl_OfficeConsolePanel);
 		
 		officeConsoleTextArea = new JTextArea();
+		officeConsoleTextArea.setForeground(Color.WHITE);
 		officeConsoleTextArea.setEditable(false);
 		officeConsoleTextArea.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_officeConsoleTextArea = new GridBagConstraints();
@@ -355,18 +357,34 @@ public class OfficesTab extends JPanel {
 		deleteBtn.setToolTipText("Delete an employee from the database");
 		setVisible(true);
 		
+		//-------FUNCTIONS TO RUN AT STARTUP------//
+		
+		//functions that refreshes the combobox values and the database view
+		refreshDatabaseTextArea();
+		
+		//----------------ACTION EVENT LISTENERS--------------------//
+		// + try catch blocks to fetch data without event listeners
+		
 		//CLEAR CONSOLE BUTTON EVENT
 		clearConsoleBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				officeConsoleTextArea.setText("");
 			}
 		});
-				
+		
+		//REFRESH DB BUTTON - shows updated count of all employees in database text area and refreshes job title JComboBox
+        refreshDatabaseTextAreaBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent refreshDb) {
+					refreshDatabaseTextArea();
+			}
+        });
+		
+				// UPDATE OFFICE BUTTON EVENT
 				updateOfficeBtn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						try {
-							
+														
 							String officeCode = getOfficeCode();
 							String city = getCity();
 							String phone = getPhone();
@@ -376,6 +394,28 @@ public class OfficesTab extends JPanel {
 							String country = getCountry();
 							String postalCode = getPostalCode();
 							String territory = getTerritory();
+							
+							if (officeCode.isEmpty() && city.isEmpty() && phone.isEmpty() && addressLine1.isEmpty() && addressLine2.isEmpty() && state.isEmpty() && country.isEmpty() && postalCode.isEmpty() && territory.isEmpty())
+							{
+								throw new MissingTextFieldException("you must fill out all the fields");
+							} else if (officeCode.isEmpty())
+								throw new MissingTextFieldException("OfficeCode must be a number");
+							else if (city.isEmpty())
+								throw new MissingTextFieldException("City is not present");
+							else if (phone.isEmpty())
+								throw new MissingTextFieldException("Phone is not present");
+							else if (addressLine1.isEmpty())
+								throw new MissingTextFieldException("Street address is not present");
+							else if (addressLine2.isEmpty())
+								throw new MissingTextFieldException("Apt number is not present");
+							else if (state.isEmpty())
+								throw new MissingTextFieldException("State is not present");
+							else if (country.isEmpty())
+								throw new MissingTextFieldException("Country is not present");
+							else if (postalCode.isEmpty())
+								throw new MissingTextFieldException("Postal Code is not present");
+							else if (territory.isEmpty())
+								throw new MissingTextFieldException("Territory is not present");
 
 							db.updateOffice(officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory);
 							officeConsoleTextArea.setText("Office updated: " + "the office with the office code: " + officeCode + "\nin the city: " + city + " is changed\n");
@@ -383,6 +423,9 @@ public class OfficesTab extends JPanel {
 
 						} catch(SQLException sqlErr) {
 							sqlErr.printStackTrace();
+						}		 	
+						catch (MissingTextFieldException exception) {
+						officeConsoleTextArea.append(exception.getMessage() + "\n");
 						}
 						catch (Exception exception) {
 							exception.printStackTrace();
@@ -391,7 +434,7 @@ public class OfficesTab extends JPanel {
 				});
 	}
 
-
+	//-------------------GETTERS------------------//
 
 public String getOfficeCode() {
     return updateOfficeCodeTextField.getText();
@@ -428,6 +471,18 @@ public String getPostalCode() {
 public String getTerritory() {
 	return updateTerritorytextField.getText();
 }
+//---------------ADDITIONAL METHODS-----------------//
 
+public void refreshDatabaseTextArea() {
+	try {
+	List<OfficesList> offices = db.showOffices();
+	databaseTextArea.setText("");
+		for (OfficesList officesList : offices) {
+			databaseTextArea.append(officesList.getOfficeCode() + ": " + officesList.getCity() + ", " + officesList.getPhone() + ", " + officesList.getAddressLine1() + ", " + officesList.getAddressLine2() + ", " + officesList.getState() + ", " + officesList.getCountry() +   "\n");
+		}
+	} catch (SQLException err) {
+		err.printStackTrace();
+	}
+}
 
 }

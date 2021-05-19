@@ -25,8 +25,7 @@ public class MainWindow {
         tabbedPane.add("OFFICES", officesTab);
         frame.setJMenuBar(menu.appMenu);
         frame.getContentPane().add(tabbedPane);
-        
-        
+        frame.setTitle("DB-ADMIN V3.0");
         
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(860, 550);

@@ -4,8 +4,6 @@ public class Employee {
     private int employeeNumber, reportsTo;
     private String lastName, firstName, extension, email, officeCode, jobTitle;
 
-
-
     public Employee(int employeeNumber, String firstName, String lastName,  String extension, String email, String officeCode, int reportsTo,  String jobTitle) {
         super();
         this.employeeNumber = employeeNumber;
@@ -58,9 +56,13 @@ public class Employee {
         this.email = email;
     }
 
-    public String getOfficeCode() { return officeCode;}
+    public String getOfficeCode() {
+    	return officeCode;
+    }
 
-    public void setOfficeCode(String officeCode) {this.officeCode = officeCode; }
+    public void setOfficeCode(String officeCode) {
+    	this.officeCode = officeCode;
+    }
 
     public int getReportsTo() {
         return reportsTo;
@@ -70,9 +72,13 @@ public class Employee {
         this.reportsTo = reportsTo;
     }
 
-    public String getJobTitle() { return jobTitle; }
+    public String getJobTitle() {
+    	return jobTitle;
+    }
 
-    public void setJobTitle(String jobTitle) { this.jobTitle = jobTitle;}
+    public void setJobTitle(String jobTitle) {
+    	this.jobTitle = jobTitle;
+    }
     
     
 }

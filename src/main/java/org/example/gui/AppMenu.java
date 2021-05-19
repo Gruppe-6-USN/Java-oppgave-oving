@@ -132,9 +132,7 @@ public class AppMenu extends JMenuBar {
 											}
 										}
 										db.addEmployee(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
-										System.out.println(employeeNumber + "\t" + lastName + "\t" + firstName + "\t" +
-												extension + "\t" + email + "\t" + officeCode + "\t" + reportsTo + "\t"
-												+ jobTitle + "ugga bugga");
+
 									}
 								}
 								else {

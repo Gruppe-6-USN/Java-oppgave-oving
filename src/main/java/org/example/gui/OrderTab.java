@@ -1,5 +1,7 @@
 package org.example.gui;
 
+import org.example.database.DatabaseConnection;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.TextArea;
@@ -87,7 +89,8 @@ public class OrderTab extends JPanel{
 	private JTextArea employeeConsoleTextArea;
 	private JButton clearEmployeeConsoleBtn;
 	
-	public OrderTab() { 
+	public OrderTab() {
+		final DatabaseConnection databaseConnection = new DatabaseConnection();
         
         GridBagLayout gbl_employeeTab = new GridBagLayout();
         gbl_employeeTab.columnWidths = new int[] {80, 80, 80, 80, 80, 80, 80, 80, 80, 80};
@@ -561,13 +564,15 @@ public class OrderTab extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int orderNumber = getOrderNumber();
-					int customerNumber = getCustomerNumber();
 					String orderDate = getOrderDate();
 					String requiredDate = getRequiredDate();
 					String shippedDate = getShippedDate();
 					String status = getStatus();
-					//String comment = getComment();
-					
+					String comments = getComment();
+					int customerNumber = getCustomerNumber();
+
+					databaseConnection.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
+					displayMessage("You added order: " + orderNumber);
 				} catch (Exception exception) {
 					exception.printStackTrace();
 				}
@@ -598,9 +603,13 @@ public class OrderTab extends JPanel{
 		return addStatusTextField.getText();
 	}
 
-	/*public String getComment() {
-		return
-	}*/
+	public String getComment() {
+		return addCommentsTextField.getText();
+	}
+
+	private void displayMessage(String message) {
+		JOptionPane.showMessageDialog(this, message);
+	}
 
 }
 

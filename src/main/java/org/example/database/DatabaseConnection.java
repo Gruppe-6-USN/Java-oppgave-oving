@@ -72,7 +72,6 @@ public class DatabaseConnection {
 		}
 	}
 
-<<<<<<< HEAD
 	public void addOrder(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) {
 		try {
 			open();
@@ -95,10 +94,8 @@ public class DatabaseConnection {
 	}
 
 		public void updateUser( String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
-=======
 
 		public void updateUser( String lastName, String firstName, String extension, String email, int officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
->>>>>>> 8964ac25a7c665c26b20a9358bcc812cba7a7c53
 			try {
 				open();
 				pStmt = conn.prepareStatement("UPDATE employees SET lastName = ?,  firstName = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ?,  WHERE employeeNumber = ?");

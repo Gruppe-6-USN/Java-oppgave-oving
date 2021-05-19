@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -163,4 +166,29 @@ public class AppMenu extends JMenuBar {
 	private void displayMessage(String message) {
 		JOptionPane.showMessageDialog(this, message);
 	}
+
+	/*public void saveData() throws SQLException {
+		final String database = "jdbc:mysql://itfag.usn.no/233574";
+		final String brukernavn = "233574";
+		final String pw = "JWeiMrF0";
+		Connection conn = DriverManager.getConnection(database, brukernavn, pw);
+		try {
+			Connection connection = conn;
+			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO employees VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+
+			preparedStatement.setInt(1, getEmployeeNumber());
+			preparedStatement.setString(2, getFirstName());
+			preparedStatement.setString(3, getLastName());
+			preparedStatement.setString(4, getExtension());
+			preparedStatement.setString(5, getEmail());
+			preparedStatement.setString(6, getOfficeCode());
+			preparedStatement.setInt(7, getReportsTo());
+			preparedStatement.setString(8, getJobTitle());
+
+			preparedStatement.execute();
+
+		}catch (SQLException e) {
+			System.out.println("Feil");
+		}
+	}*/
 }

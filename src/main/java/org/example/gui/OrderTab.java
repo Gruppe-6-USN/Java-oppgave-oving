@@ -552,9 +552,57 @@ public class OrderTab extends JPanel{
 		employeeTab.add(deleteBtn, gbc_deleteBtn);
 		deleteBtn.setToolTipText("Delete an employee from the database");
 		setVisible(true);
-		
-	
+
+		/////////////////Action listeners //////////
+
+		//ADD ORDER EVENT
+		addOrderBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int orderNumber = getOrderNumber();
+					int customerNumber = getCustomerNumber();
+					String orderDate = getOrderDate();
+					String requiredDate = getRequiredDate();
+					String shippedDate = getShippedDate();
+					String status = getStatus();
+					//String comment = getComment();
+					
+				} catch (Exception exception) {
+					exception.printStackTrace();
+				}
+			}
+		});
 	}
-	
+	public int getOrderNumber() {
+		return Integer.parseInt(addOrderNumberTextField.getText());
+	}
+
+	public int getCustomerNumber() {
+		return Integer.parseInt(addCustomerNumberTextField.getText());
+	}
+
+	public String getOrderDate() {
+		return addOrderDateTextField.getText();
+	}
+
+	public String getRequiredDate() {
+		return addOrderDateTextField.getText();
+	}
+
+	public String getShippedDate() {
+		return addShippedDateTextField.getText();
+	}
+
+	public String getStatus() {
+		return addStatusTextField.getText();
+	}
+
+	/*public String getComment() {
+		return
+	}*/
+
 }
+
+
 

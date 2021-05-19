@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -94,7 +95,9 @@ public class EmployeeTab extends JPanel{
 	private JButton clearConsoleBtn;
 	
 	public EmployeeTab() {
-		 
+		
+		//----------------CONTENT----------------//
+		
         GridBagLayout gbl_employeeTab = new GridBagLayout();
         gbl_employeeTab.columnWidths = new int[] {80, 80, 80, 80, 80, 80, 80, 80, 80, 80};
         gbl_employeeTab.rowHeights = new int[] {60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
@@ -495,6 +498,7 @@ public class EmployeeTab extends JPanel{
 		EmployeeDatabasePanel.add(chooseJobTitleComboBox, gbc_chooseJobTitleComboBox);
 		
 		databaseTextArea = new JTextArea();
+		databaseTextArea.setForeground(Color.WHITE);
 		databaseTextArea.setEditable(false);
 		databaseTextArea.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_databaseTextArea = new GridBagConstraints();
@@ -538,6 +542,7 @@ public class EmployeeTab extends JPanel{
 		EmployeeConsolePanel.setLayout(gbl_EmployeeConsolePanel);
 		
 		consoleTextArea = new JTextArea();
+		consoleTextArea.setForeground(Color.WHITE);
 		consoleTextArea.setEditable(false);
 		consoleTextArea.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_consoleTextArea = new GridBagConstraints();
@@ -562,6 +567,7 @@ public class EmployeeTab extends JPanel{
 		gbc_clearConsoleBtn.gridx = 0;
 		gbc_clearConsoleBtn.gridy = 1;
 		EmployeeConsolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);
+		
 		//DELETE BUTTON
 		JButton deleteBtn = new JButton("Delete");
 		GridBagConstraints gbc_deleteBtn = new GridBagConstraints();
@@ -571,6 +577,40 @@ public class EmployeeTab extends JPanel{
 		employeeTab.add(deleteBtn, gbc_deleteBtn);
 		deleteBtn.setToolTipText("Delete an employee from the database");
 		setVisible(true);
+		
+		
+		//----------------ACTION EVENT LISTENERS--------------------//
+		// + try catch blocks to fetch data without event listeners
+		
+		
+		//REFRESH DB BUTTON - shows updated count of all employees in database text area
+        refreshDatabaseTextAreaBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent refreshDb) {
+        		DatabaseConnection db = new DatabaseConnection();
+        		try {
+					List<Employee> employees = db.showEmployees();
+					databaseTextArea.setText("");
+	                for (Employee employee : employees) {
+	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+	                }
+				} catch (SQLException error) {
+					consoleTextArea.append("Problem fetching from database. Error: " + error);
+				}
+        	}
+        });
+        
+		//UPDATE BUTTON EVENT
+		updateEmployeeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
+					consoleTextArea.append("User with user-ID: " + getUpdateEmployeeNumber() + " has been updated. \n");
+				} catch(Exception err){
+					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
+					err.printStackTrace();
+				}
+			}
+		});
 		
 		//CLEAR CONSOLE BUTTON EVENT
 		clearConsoleBtn.addActionListener(new ActionListener() {
@@ -596,7 +636,6 @@ public class EmployeeTab extends JPanel{
 
 					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty())
 					{
-
 						throw new MissingTextFieldException("you must fill out all the fields");
 					}
 
@@ -631,7 +670,9 @@ public class EmployeeTab extends JPanel{
 			}
 		});
 	}
-
+	
+	//-------------------GETTERS------------------//
+	
 	public String getUpdateFirstName() {
 		return updateFirstNameTextField.getText();
 	}
@@ -679,7 +720,6 @@ public class EmployeeTab extends JPanel{
 	public String getExtension() {
 		return addExtensionTextField.getText();
 	}
-
 
 	public String getEmail() {
 		return addEmailTextField.getText();

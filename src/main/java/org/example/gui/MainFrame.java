@@ -817,33 +817,6 @@ private JTextField updateJobTitleTextField;
 		final Throwable throwableElement = new Throwable();
 		final JFileChooser fileChooser = new JFileChooser();
 
-		//REFRESH DB BUTTON - shows updated count of all employees in database text area
-        refreshDbBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent refreshDb) {
-        		DatabaseConnection db = new DatabaseConnection();
-        		try {
-					List<Employee> employees = db.showEmployees();
-					databaseTextArea.setText("");
-	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() +  ", " + employee.getOfficeCode() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
-	                }
-				} catch (SQLException error) {
-					consoleTextArea.append("Problem fetching from database. Error: " + error);
-					throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-					consoleTextArea.append("Connection failed. Error: " +
-											throwableElement.toString() + "\n"
-											+ stackTraceWriter.toString());
-				}
-        	}
-        });
-
-        //CLEAR DATABASE BUTTON
-        clearDbBtn.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-				databaseTextArea.setText("");
-				}
-        });
-
 		//CLEAR CONSOLE BUTTON EVENT
 		clearConsoleBtn.addActionListener(new ActionListener() {
 			@Override
@@ -886,57 +859,7 @@ private JTextField updateJobTitleTextField;
 			}
 		});
 
-		//APPLY BUTTON EVENT
-		applyBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
 
-					int employeeNumber = getEmployeeNumber();
-					String firstName = getFirstName();
-					String lastName = getLastName();
-					String extension = getExtension();
-					String email = getEmail();
-					String officeCode = getOfficeCode();
-					int reportsTo = getReportsTo();
-					String jobTitle = getJobTitle();
-
-					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty())
-					{
-
-						throw new MissingTextFieldException("you must fill out all the fields");
-					}
-
-					else if (firstName.isEmpty())
-						throw new MissingTextFieldException("firstName is not present");
-					else if (lastName.isEmpty())
-						throw new MissingTextFieldException("lastName is not present");
-					else if (email.isEmpty())
-						throw new MissingTextFieldException("email is not present");
-					else if (!email.contains("@"))
-						throw new Exception("Email must include @");
-					else if (jobTitle.isEmpty())
-						throw new MissingTextFieldException("Job title is not present");
-
-
-
-					databaseConnection.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
-					consoleTextArea.setText("Employee: " + " " +  firstName + " " + lastName + " is added\n");
-
-				}
-				catch (NumberFormatException exception)
-				{
-					consoleTextArea.append("salary must be a number: " + exception.getMessage() + "\n");
-				}
-				catch (MissingTextFieldException exception)
-				{
-				    consoleTextArea.append(exception.getMessage() + "\n");
-				}
-				catch (Exception exception) {
-					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage() + "\n");
-				}
-			}
-		});
 
 		//CLEAR BUTTON EVENT
 		clearBtn.addActionListener(new ActionListener() {
@@ -951,6 +874,96 @@ private JTextField updateJobTitleTextField;
 				consoleTextArea.append("All fields have been cleared. \n");
 				}
 			});
+
+		//TEST CONNECTION EVENT
+		dbTestConnectionItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					databaseConnection.open();
+					databaseConnection.close();
+					consoleTextArea.append("Connected to database. \n");
+					} catch (Exception err) {
+						throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+						consoleTextArea.append("Connection failed. Error: " +
+												throwableElement.toString() + "\n"
+												+ stackTraceWriter.toString());
+					}
+				}
+			});
+
+		//EXIT EVENT
+		exitItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+
+		//BULK IMPORT EVENT
+		bulkImportItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser jfc = new JFileChooser(".");
+				jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
+				int response = jfc.showSaveDialog(null);
+
+				if (response ==JFileChooser.APPROVE_OPTION) {
+					File file = jfc.getSelectedFile();
+
+					try {
+						Scanner fileIn = new Scanner(file);
+						if (file.isFile()) {
+
+							while(fileIn.hasNextLine()) {
+								String line = fileIn.nextLine();
+								saveData();
+								System.out.println(line);
+							}
+						}
+						else {
+							System.out.println("Not a file");
+						}
+						fileIn.close();
+					} catch (FileNotFoundException | SQLException fileNotFoundException) {
+						System.out.println("Filen eksisterer ikke");
+					}catch (NumberFormatException numberFormatException) {
+						numberFormatException.printStackTrace();
+					}
+				}
+			}
+		});
+
+		//SAVE TO FILE EVENT
+		saveToFileItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to save");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				//Just allow .txt
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+				fileChooser.setFileFilter(filter);
+
+				int returnVal = fileChooser.showSaveDialog(null);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+
+					try {
+						writeToFile(databaseTextArea.getText(), fileToSave);
+						consoleTextArea.setText("Succesfull when saving the Database");
+					}catch (IOException e1) {
+						consoleTextArea.setText("Error writing into file");
+					}
+				}
+			}
+		});
+
 	}
 
 //-------------------------ADDITIONAL METHODS-------------------------//
@@ -972,73 +985,29 @@ private JTextField updateJobTitleTextField;
 		});
 	}
 
-	public int getUpdateId() {
-		return Integer.parseInt(updateIdTextField.getText());
-	}
 
-	public String getUpdateFirstName() {
-		return updateFirstNameTextField.getText();
-	}
+	public void saveData() throws SQLException {
+		final String database = "jdbc:mysql://itfag.usn.no/233574";
+		final String brukernavn = "233574";
+		final String pw = "JWeiMrF0";
+		Connection conn = DriverManager.getConnection(database, brukernavn, pw);
+			try {
+				Connection connection = conn;
+				PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO employees VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
 
-	public String getUpdateLastName() {
-		return updateLastNameTextField.getText();
-	}
+				preparedStatement.setInt(1, getEmployeeNumber());
+				preparedStatement.setString(2, getFirstName());
+				preparedStatement.setString(3, getLastName());
+				preparedStatement.setString(4, getExtension());
+				preparedStatement.setString(5, getEmail());
+				preparedStatement.setString(6, getOfficeCode());
+				preparedStatement.setInt(7, getReportsTo());
+				preparedStatement.setString(8, getJobTitle());
 
-	public String getUpdateExtension() {
-		return updateExtensionTextField.getText();
-	}
+				preparedStatement.execute();
 
-	public String getUpdateOfficeCode() {
-		return updateOfficeCodeTextField.getText();
-	}
-
-	public String getUpdateEmail() {
-		return updateExtensionTextField.getText();
-	}
-
-	public int getUpdateReportsTo() {
-		return Integer.parseInt(updateEmployeeNumberTextField.getText());
-	}
-
-	public String getUpdateJobTitle() {
-		return updateJobTitleTextField.getText();
-	}
-
-	public int getUpdateEmployeeNumber() {
-		return Integer.parseInt(updateEmployeeNumberTextField.getText());
-	}
-
-
-	public int getEmployeeNumber() {
-		return Integer.parseInt(employeeNumberTextField.getText());
-	}
-
-	public String getLastName() {
-		return firstNameTextField.getText();
-	}
-
-	public String getFirstName() {
-		return employeeNumberTextField.getText();
-	}
-
-	public String getExtension() {
-		return extensionTextField.getText();
-	}
-
-
-	public String getEmail() {
-		return lastNameTextField.getText();
-	}
-
-	public String getOfficeCode() {
-		return officeCodeTextField.getText();
-	}
-
-	public int getReportsTo() {
-		return Integer.parseInt(reportsToTextField.getText());
-	}
-
-	public String getJobTitle() {
-		return jobTitleTextField.getText();
+			}catch (SQLException e) {
+				System.out.println("Feil");
+			}
 	}
 }

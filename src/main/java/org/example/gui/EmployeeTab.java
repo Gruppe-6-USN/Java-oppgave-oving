@@ -40,6 +40,7 @@ import javax.swing.JScrollPane;
 public class EmployeeTab extends JPanel{
 	
 	DatabaseConnection db = new DatabaseConnection();
+	java.util.HashSet unique = new HashSet();
 	
 	private final JPanel employeeTab = new JPanel();
 	private JPanel AddEmployeePanel;
@@ -90,6 +91,7 @@ public class EmployeeTab extends JPanel{
 	private JPanel EmployeeConsolePanel;
 	private JTextArea consoleTextArea;
 	private JButton clearConsoleBtn;
+	private JButton deleteBtn;
 	
 	public EmployeeTab() {
 		
@@ -566,7 +568,7 @@ public class EmployeeTab extends JPanel{
 		EmployeeConsolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);
 		
 		//DELETE BUTTON
-		JButton deleteBtn = new JButton("Delete");
+		deleteBtn = new JButton("Delete");
 		GridBagConstraints gbc_deleteBtn = new GridBagConstraints();
 		gbc_deleteBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_deleteBtn.gridx = 1;
@@ -579,8 +581,35 @@ public class EmployeeTab extends JPanel{
 		//----------------ACTION EVENT LISTENERS--------------------//
 		// + try catch blocks to fetch data without event listeners
 		
+		//DELETE EMPLOYEE BUTTON EVENT - deletes employee and refreshes jobtitle and employee number comboboxes
+		deleteBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				try{
+					db.deleteEmployee(getDeleteEmployeeNumber());
+					consoleTextArea.append("Employee with id: " + getDeleteEmployeeNumber() +  " has been deleted. \n");
+					deleteEmployeeNumberComboBox.setSelectedItem("");
+
+					//REFRESHING DATABASE TEXT AREA and jobtitle and employeenumber combobox
+					List<Employee> employees = db.showEmployees();
+					databaseTextArea.setText("");
+					for (Employee employee : employees) {
+						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+						if (unique.add(employee.getJobTitle())) {
+
+							chooseJobTitleComboBox.addItem(employee.getJobTitle());
+						}
+						if (unique.add(employee.getEmployeeNumber())) {
+							updateEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+							deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+						}
+					}
+				}catch (NumberFormatException | SQLException error) {
+					consoleTextArea.append("ID must be a valid ID\n");
+				}
+			}
+		});
 		
-		//REFRESH DB BUTTON - shows updated count of all employees in database text area
+		//REFRESH DB BUTTON - shows updated count of all employees in database text area and refreshes job title JComboBox
         refreshDatabaseTextAreaBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent refreshDb) {
 				DatabaseConnection db = new DatabaseConnection();
@@ -590,36 +619,36 @@ public class EmployeeTab extends JPanel{
 					chooseJobTitleComboBox.removeAllItems();
 					for (Employee employee : employees) {
 						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
-					}
-				} catch (SQLException error) {
-					consoleTextArea.append("Problem fetching from database. Error: " + error);
-				}
-
-				try {
-					List<Employee> employees = db.showEmployees();
-					java.util.HashSet unique = new HashSet();
-
-					for (Employee employee : employees) {
-
 						if (unique.add(employee.getJobTitle())) {
 							chooseJobTitleComboBox.addItem(employee.getJobTitle());
-
 						}
 					}
 				} catch (SQLException error) {
 					consoleTextArea.append("Problem fetching from database. Error: " + error);
-
 				}
-
 			}
         });
         
-		//UPDATE BUTTON EVENT
+		//UPDATE BUTTON EVENT 
 		updateEmployeeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
 					consoleTextArea.append("User with user-ID: " + getUpdateEmployeeNumber() + " has been updated. \n");
+					//updates comboboxes
+					List<Employee> employees = db.showEmployees();
+					databaseTextArea.setText("");
+					for (Employee employee : employees) {
+						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+						if (unique.add(employee.getJobTitle())) {
+
+							chooseJobTitleComboBox.addItem(employee.getJobTitle());
+						}
+						if (unique.add(employee.getEmployeeNumber())) {
+							updateEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+							deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+						}
+					}
 				} catch(Exception err){
 					consoleTextArea.append("Something went wrong. Error: " + err + "\n");
 					err.printStackTrace();
@@ -666,6 +695,20 @@ public class EmployeeTab extends JPanel{
 
 					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
 					consoleTextArea.setText("Employee: " + " " + firstName + " " + lastName + " is added\n");
+					//updates comboboxes
+					List<Employee> employees = db.showEmployees();
+					databaseTextArea.setText("");
+					for (Employee employee : employees) {
+						databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+						if (unique.add(employee.getJobTitle())) {
+
+							chooseJobTitleComboBox.addItem(employee.getJobTitle());
+						}
+						if (unique.add(employee.getEmployeeNumber())) {
+							updateEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+							deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+						}
+					}
 
 				} catch (NumberFormatException exception) {
 					consoleTextArea.append("salary must be a number: " + exception.getMessage() + "\n");
@@ -676,19 +719,23 @@ public class EmployeeTab extends JPanel{
 				}
 			}
 		});
+		
+		//FETCHING JOB TITLES AND EMPLOYEE NUMBER TO JCOMBOBOX WITHOUT ACTION EVENT
 		try {
 			List<Employee> employees = db.showEmployees();
-			java.util.HashSet unique = new HashSet();
 			for (Employee employee : employees) {
 
 				if (unique.add(employee.getJobTitle())) {
 
 					chooseJobTitleComboBox.addItem(employee.getJobTitle());
 				}
+				if (unique.add(employee.getEmployeeNumber())) {
+					updateEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+					deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
+				}
 			}
 		} catch (SQLException error) {
 			consoleTextArea.append("Problem fetching from database. Error: " + error);
-
 		}
 	}
 	
@@ -721,11 +768,15 @@ public class EmployeeTab extends JPanel{
 	public String getUpdateJobTitle() {
 		return updateJobTitleTextField.getText();
 	}
-
+	
 	public int getUpdateEmployeeNumber() {
 		return Integer.parseInt((String)updateEmployeeNumberComboBox.getSelectedItem());
 	}
-
+	
+	public int getDeleteEmployeeNumber() {
+		return Integer.parseInt((String)deleteEmployeeNumberComboBox.getSelectedItem());
+	}
+	
 	public int getEmployeeNumber() {
 		return Integer.parseInt(addEmployeeNumberTextField.getText());
 	}

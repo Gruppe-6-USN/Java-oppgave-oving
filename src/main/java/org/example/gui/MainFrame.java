@@ -817,34 +817,7 @@ private JTextField updateJobTitleTextField;
 		final Throwable throwableElement = new Throwable();
 		final JFileChooser fileChooser = new JFileChooser();
 
-		//CLEAR CONSOLE BUTTON EVENT
-		clearConsoleBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				consoleTextArea.setText("");
-				}
-			});
 
-		//DELETE BUTTON EVENT
-		deleteBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try{
-					databaseConnection.deleteEmployee(Integer.parseInt(employeeNumberTextField.getText()));
-					consoleTextArea.append("Employee with id: " + employeeNumberTextField.getText() +  " has been deleted. \n");
-					employeeNumberTextField.setText("");
-
-					//REFRESHING DATABASE
-					List<Employee> employees = databaseConnection.showEmployees();
-					databaseTextArea.setText("");
-	                for (Employee employee : employees) {
-	                    databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() + ", "  + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
-	                }
-				}catch (NumberFormatException | SQLException error) {
-					consoleTextArea.append("ID must be a valid ID\n");
-				}
-			}
-		});
 
 		//UPDATE BUTTON EVENT
 		updateBtn.addActionListener(new ActionListener() {

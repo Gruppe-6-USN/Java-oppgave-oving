@@ -13,6 +13,7 @@ public class MainWindow {
     JTabbedPane tabbedPane = new JTabbedPane();
     EmployeeTab employeeTab = new EmployeeTab();
     OrderTab orderTab = new OrderTab();
+    OfficesTab officesTab = new OfficesTab();
     
     //importing menu
     AppMenu menu = new AppMenu();
@@ -21,8 +22,11 @@ public class MainWindow {
     	//add content to main frame and tabbed pane
         tabbedPane.add("EMPLOYEES", employeeTab);
         tabbedPane.add("ORDERS", orderTab);
+        tabbedPane.add("OFFICES", officesTab);
         frame.setJMenuBar(menu.appMenu);
         frame.getContentPane().add(tabbedPane);
+        
+        
         
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(860, 550);

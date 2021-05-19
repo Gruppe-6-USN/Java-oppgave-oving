@@ -72,6 +72,7 @@ public class DatabaseConnection {
 		}
 	}
 
+<<<<<<< HEAD
 	public void addOrder(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) {
 		try {
 			open();
@@ -94,6 +95,10 @@ public class DatabaseConnection {
 	}
 
 		public void updateUser( String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
+=======
+
+		public void updateUser( String lastName, String firstName, String extension, String email, int officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
+>>>>>>> 8964ac25a7c665c26b20a9358bcc812cba7a7c53
 			try {
 				open();
 				pStmt = conn.prepareStatement("UPDATE employees SET lastName = ?,  firstName = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ?,  WHERE employeeNumber = ?");
@@ -103,8 +108,8 @@ public class DatabaseConnection {
 				pStmt.setString(2, firstName);
 				pStmt.setString(3, extension);
 				pStmt.setString(4, email);
-				pStmt.setString(5, officeCode);
-				pStmt.setInt(6,reportsTo);
+				pStmt.setInt(5, officeCode);
+				pStmt.setInt(6, reportsTo);
 				pStmt.setString(7, jobTitle);
 				pStmt.setInt(8, employeeNumber);
 				
@@ -114,6 +119,7 @@ public class DatabaseConnection {
 				e1.printStackTrace();
 			}
 		}
+		
 		public List<OrdersList> showOrders(String datestr1, String datestr2) throws SQLException{
 			ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
 			

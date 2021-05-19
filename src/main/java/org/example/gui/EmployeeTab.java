@@ -37,8 +37,8 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 public class EmployeeTab extends JPanel{
-	
-	
+
+
 	private final JPanel employeeTab = new JPanel();
 	private JPanel AddEmployeePanel;
 	private JPanel DeleteEmployeePanel;

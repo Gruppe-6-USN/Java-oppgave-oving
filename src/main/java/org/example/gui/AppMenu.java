@@ -31,11 +31,9 @@ public class AppMenu extends JMenuBar {
 	private Font primaryFont = new Font("Calibri", Font.PLAIN, 40);
 
 	JMenuBar appMenu = new JMenuBar();
-
 	
 	public AppMenu(){
 		//MENU BAR
-
 				
 				appMenu.setBorderPainted(false);
 
@@ -80,7 +78,7 @@ public class AppMenu extends JMenuBar {
 				JMenuItem bulkImportItem = new JMenuItem("Bulk import from file...");
 				bulkImportItem.setHorizontalAlignment(SwingConstants.LEFT);
 				fileMenu.add(bulkImportItem);
-				bulkImportItem.addActionListener(new ActionListener() {
+				/*bulkImportItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JFileChooser jfc = new JFileChooser(".");
@@ -141,7 +139,7 @@ public class AppMenu extends JMenuBar {
 									System.out.println("Not a file");
 								}
 								fileIn.close();
-							} catch (FileNotFoundException err1) {
+							} catch (FileNotFoundException | SQLException fileNotFoundException) {
 								System.out.println("Filen eksisterer ikke");
 							}catch (NumberFormatException numberFormatException) {
 								numberFormatException.printStackTrace();
@@ -150,7 +148,7 @@ public class AppMenu extends JMenuBar {
 							}
 						}
 					}
-				});
+				});*/
 
 				//DATABASE MENU
 				JMenu databaseMenu = new JMenu("Database");

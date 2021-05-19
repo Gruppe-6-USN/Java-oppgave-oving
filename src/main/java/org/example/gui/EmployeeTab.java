@@ -658,6 +658,8 @@ public class EmployeeTab extends JPanel{
 				}
 			}
 		});
+		
+		//GETS JOB TITLES AND ADDS THEM TO JCOMBOBOX
 		try {
 			List<Employee> employees = db.showEmployees();
 			java.util.HashSet unique = new HashSet();

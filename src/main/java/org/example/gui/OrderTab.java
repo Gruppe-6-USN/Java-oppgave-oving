@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -38,7 +39,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
-public class OrderTab extends JPanel{
+public class OrderTab extends JPanel {
 	
 	
 	private final JPanel employeeTab = new JPanel();
@@ -573,7 +574,8 @@ public class OrderTab extends JPanel{
 
 					databaseConnection.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
 					displayMessage("You added order: " + orderNumber);
-				} catch (Exception exception) {
+				}//Må ha en catch her for å gi tilbakemeldinger
+				catch (Exception exception) {
 					exception.printStackTrace();
 				}
 			}

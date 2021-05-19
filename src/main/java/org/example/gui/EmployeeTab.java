@@ -24,6 +24,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.example.gui.exceptions.MissingTextFieldException;
+import org.example.database.*;
+
 import javax.swing.JTabbedPane;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -38,6 +41,7 @@ import javax.swing.JScrollPane;
 
 public class EmployeeTab extends JPanel{
 	
+	DatabaseConnection db = new DatabaseConnection();
 	
 	private final JPanel employeeTab = new JPanel();
 	private JPanel AddEmployeePanel;
@@ -90,7 +94,7 @@ public class EmployeeTab extends JPanel{
 	private JButton clearConsoleBtn;
 	
 	public EmployeeTab() {
-        
+		 
         GridBagLayout gbl_employeeTab = new GridBagLayout();
         gbl_employeeTab.columnWidths = new int[] {80, 80, 80, 80, 80, 80, 80, 80, 80, 80};
         gbl_employeeTab.rowHeights = new int[] {60, 60, 60, 60, 60, 60, 60, 60, 60, 60};
@@ -572,7 +576,129 @@ public class EmployeeTab extends JPanel{
 		deleteBtn.setToolTipText("Delete an employee from the database");
 		setVisible(true);
 		
-	
+		//APPLY BUTTON EVENT
+		addEmployeeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+
+					int employeeNumber = getEmployeeNumber();
+					String firstName = getFirstName();
+					String lastName = getLastName();
+					String extension = getExtension();
+					String email = getEmail();
+					String officeCode = getOfficeCode();
+					int reportsTo = getReportsTo();
+					String jobTitle = getJobTitle();
+
+					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty())
+					{
+
+						throw new MissingTextFieldException("you must fill out all the fields");
+					}
+
+					else if (firstName.isEmpty())
+						throw new MissingTextFieldException("firstName is not present");
+					else if (lastName.isEmpty())
+						throw new MissingTextFieldException("lastName is not present");
+					else if (email.isEmpty())
+						throw new MissingTextFieldException("email is not present");
+					else if (!email.contains("@"))
+						throw new Exception("Email must include @");
+					else if (jobTitle.isEmpty())
+						throw new MissingTextFieldException("Job title is not present");
+
+
+
+					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
+					consoleTextArea.setText("Employee: " + " " +  firstName + " " + lastName + " is added\n");
+
+				}
+				catch (NumberFormatException exception)
+				{
+					consoleTextArea.append("salary must be a number: " + exception.getMessage() + "\n");
+				}
+				catch (MissingTextFieldException exception)
+				{
+				    consoleTextArea.append(exception.getMessage() + "\n");
+				}
+				catch (Exception exception) {
+					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage() + "\n");
+				}
+			}
+		});
+	}
+
+	public String getUpdateFirstName() {
+		return updateFirstNameTextField.getText();
+	}
+
+	public String getUpdateLastName() {
+		return updateLastNameTextField.getText();
+	}
+
+	public String getUpdateExtension() {
+		return updateExtensionTextField.getText();
+	}
+
+	public int getUpdateOfficeCode() {
+		return Integer.parseInt(updateOfficeCodeTextField.getText());
+	}
+
+	public String getUpdateEmail() {
+		return updateEmailTextField.getText();
+	}
+
+	public int getUpdateReportsTo() {
+		return Integer.parseInt(updateReportsToTextField.getText());
+	}
+
+	public String getUpdateJobTitle() {
+		return updateJobTitleTextField.getText();
+	}
+
+	public int getUpdateEmployeeNumber() {
+		return Integer.parseInt((String)updateEmployeeNumberComboBox.getSelectedItem());
+	}
+
+
+	public int getEmployeeNumber() {
+		return Integer.parseInt(addEmployeeNumberTextField.getText());
+	}
+
+	public String getLastName() {
+		return addLastNameTextField.getText();
+	}
+
+	public String getFirstName() {
+		return addFirstNameTextField.getText();
+	}
+
+	public String getExtension() {
+		return addExtensionTextField.getText();
+	}
+
+
+	public String getEmail() {
+		return addEmailTextField.getText();
+	}
+
+	public String getOfficeCode() {
+		return addOfficeCodeTextField.getText();
+	}
+
+	public int getReportsTo() {
+		return Integer.parseInt(addReportsToTextField.getText());
+	}
+
+	public String getJobTitle() {
+		return addJobTitleTextField.getText();
+	}
+
+	public void writeToFile(String text, File file) throws IOException {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		writer.write(text);
+		writer.close();
 	}
 	
 }

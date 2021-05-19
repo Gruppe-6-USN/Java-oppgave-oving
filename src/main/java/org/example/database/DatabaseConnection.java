@@ -1,6 +1,6 @@
 package org.example.database;
 
-import javax.swing.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +96,7 @@ public class DatabaseConnection {
 		public void updateUser( String lastName, String firstName, String extension, String email, int officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
 			try {
 				open();
-				pStmt = conn.prepareStatement("UPDATE employees SET lastName = ?,  firstName = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ?,  WHERE employeeNumber = ?");
+				pStmt = conn.prepareStatement("UPDATE employees SET lastName = ?,  firstName = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ? WHERE employeeNumber = ?");
 				
 				
 				pStmt.setString(1, lastName);

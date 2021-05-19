@@ -72,6 +72,7 @@ public class DatabaseConnection {
 		}
 	}
 
+
 		public void updateUser( String lastName, String firstName, String extension, String email, int officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
 			try {
 				open();

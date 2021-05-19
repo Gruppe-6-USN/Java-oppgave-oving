@@ -1,5 +1,7 @@
 package org.example.gui;
 
+import org.example.database.DatabaseConnection;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +21,11 @@ public class AppMenu extends JMenuBar {
 	private String firstName;
 	private String extension;
 	private String email;
-	private int officeCode;
+	private String officeCode;
 	private int reportsTo;
 	private String jobTitle;
+
+	DatabaseConnection db = new DatabaseConnection();
 
 	final JFileChooser fileChooser = new JFileChooser();
 	private Font primaryFont = new Font("Calibri", Font.PLAIN, 40);
@@ -117,8 +121,8 @@ public class AppMenu extends JMenuBar {
 											if(data.hasNextLine()) {
 												email = data.next();
 											}
-											if(data.hasNextInt()) {
-												officeCode = data.nextInt();
+											if(data.hasNextLine()) {
+												officeCode = data.next();
 											}
 											if(data.hasNextInt()) {
 												reportsTo = data.nextInt();
@@ -127,6 +131,7 @@ public class AppMenu extends JMenuBar {
 												jobTitle = data.next();
 											}
 										}
+										db.addEmployee(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
 										System.out.println(employeeNumber + "\t" + lastName + "\t" + firstName + "\t" +
 												extension + "\t" + email + "\t" + officeCode + "\t" + reportsTo + "\t"
 												+ jobTitle + "ugga bugga");
@@ -140,6 +145,8 @@ public class AppMenu extends JMenuBar {
 								System.out.println("Filen eksisterer ikke");
 							}catch (NumberFormatException numberFormatException) {
 								numberFormatException.printStackTrace();
+							} catch (SQLException throwables) {
+								throwables.printStackTrace();
 							}
 						}
 					}

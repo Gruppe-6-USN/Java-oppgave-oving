@@ -558,10 +558,6 @@ public class EmployeeTab extends JPanel{
 		EmployeeConsolePanel.add(consoleScroll, gbc_consoleScroll);
 		
 		clearConsoleBtn = new JButton("Clear console");
-		clearConsoleBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		GridBagConstraints gbc_clearConsoleBtn = new GridBagConstraints();
 		gbc_clearConsoleBtn.gridx = 0;
 		gbc_clearConsoleBtn.gridy = 1;
@@ -576,7 +572,14 @@ public class EmployeeTab extends JPanel{
 		deleteBtn.setToolTipText("Delete an employee from the database");
 		setVisible(true);
 		
-		//APPLY BUTTON EVENT
+		//CLEAR CONSOLE BUTTON EVENT
+		clearConsoleBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				consoleTextArea.setText("");
+			}
+		});
+		
+		//ADD EMPLOYEE BUTTON EVENT
 		addEmployeeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -660,7 +663,6 @@ public class EmployeeTab extends JPanel{
 	public int getUpdateEmployeeNumber() {
 		return Integer.parseInt((String)updateEmployeeNumberComboBox.getSelectedItem());
 	}
-
 
 	public int getEmployeeNumber() {
 		return Integer.parseInt(addEmployeeNumberTextField.getText());

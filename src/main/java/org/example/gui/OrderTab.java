@@ -7,10 +7,8 @@ import org.example.gui.exceptions.MissingTextFieldException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-=======
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,7 +23,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
->>>>>>> f3e8b9b66fcbadcf64229abeb0a5762f4f8e2622
 import java.util.List;
 
 import javax.swing.JButton;

@@ -80,8 +80,6 @@ public class OrderTab extends JPanel {
 	private JPanel OrderDbView;
 	private JTextArea databaseTextArea;
 	private JButton refreshOrderDbViewBtn;
-	private JComboBox chooseEmployeeJobTitleComboBox;
-	private JLabel chooseEmpJobTitleLabel;
 	private JPanel OrderConsolePanel;
 	private JTextArea orderConsoleTextArea;
 	private JButton clearOrderConsoleBtn;
@@ -491,22 +489,6 @@ public class OrderTab extends JPanel {
 		gbl_OrderDbView.columnWeights = new double[]{0.0, 1.0, 0.0};
 		gbl_OrderDbView.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		OrderDbView.setLayout(gbl_OrderDbView);
-
-		chooseEmpJobTitleLabel = new JLabel("Job title: ");
-		GridBagConstraints gbc_chooseEmpJobTitleLabel = new GridBagConstraints();
-		gbc_chooseEmpJobTitleLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_chooseEmpJobTitleLabel.anchor = GridBagConstraints.EAST;
-		gbc_chooseEmpJobTitleLabel.gridx = 0;
-		gbc_chooseEmpJobTitleLabel.gridy = 0;
-		OrderDbView.add(chooseEmpJobTitleLabel, gbc_chooseEmpJobTitleLabel);
-
-		chooseEmployeeJobTitleComboBox = new JComboBox();
-		GridBagConstraints gbc_chooseEmployeeJobTitleComboBox = new GridBagConstraints();
-		gbc_chooseEmployeeJobTitleComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_chooseEmployeeJobTitleComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chooseEmployeeJobTitleComboBox.gridx = 1;
-		gbc_chooseEmployeeJobTitleComboBox.gridy = 0;
-		OrderDbView.add(chooseEmployeeJobTitleComboBox, gbc_chooseEmployeeJobTitleComboBox);
 
 		databaseTextArea = new JTextArea();
 		databaseTextArea.setEditable(false);

@@ -6,9 +6,11 @@ public class Customer {
     country;
     private double creditLimit;
 
-    public Customer(int customerNumber, int salesRepEmployeeNumber, String customerName, String contactLastName,
-                    String contactFirstName, String phone, String addressLine1, String addressLine2, String city,
-                    String state, String postalCode, String country, double creditLimit) {
+
+
+	public Customer(int customerNumber, String country, String customerName, String contactLastName,
+			String contactFirstName, String phone, String addressLine1, String addressLine2, String city,
+			String state, String postalCode, int salesRepEmployeeNumber, double creditLimit) {
         this.customerNumber = customerNumber;
         this.salesRepEmployeeNumber = salesRepEmployeeNumber;
         this.customerName = customerName;
@@ -22,9 +24,9 @@ public class Customer {
         this.postalCode = postalCode;
         this.country = country;
         this.creditLimit = creditLimit;
-    }
+	}
 
-    public int getCustomerNumber() {
+	public int getCustomerNumber() {
         return customerNumber;
     }
 

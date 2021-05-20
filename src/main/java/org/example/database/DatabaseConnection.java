@@ -253,6 +253,38 @@ public class DatabaseConnection extends Component {
 			return null;	 
 		}
 		
+		public List<Customer> showCustomers() throws SQLException {
+			ArrayList<Customer> customers = new ArrayList<Customer>();
+			try{
+			open();
+		    pStmt = conn.prepareStatement("SELECT * FROM customers");
+		    resSet = pStmt.executeQuery();
+		    	while (resSet.next()) {
+		    		int customerNumber = resSet.getInt("customerNumber");
+		    		String customerName = resSet.getString("customerName");
+		    		String contactLastName = resSet.getString("contactLastName");
+		    		String contactFirstName = resSet.getString("contactFirstName");
+		    		String phone = resSet.getString("phone");
+		    		String addressLine1 = resSet.getString("addressLine1");
+		    		String addressLine2 = resSet.getString("addressLine2");
+		    		String city = resSet.getString("city");
+		    		String state = resSet.getString("state");
+		    		String postalCode = resSet.getString("postalCode");
+		    		String country = resSet.getString("country");
+		    		int salesRepEmployeeNumber = resSet.getInt("salesRepEmployeeNumber");
+		    		double creditLimit = resSet.getDouble("creditLimit");
+		    				    		
+		    		Customer current = new Customer(customerNumber, country, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, salesRepEmployeeNumber, creditLimit);
+		    		customers.add(current);
+		    	}
+		    	close();
+		    	return customers;
+		    }catch(SQLException e) {
+		      e.printStackTrace();
+		    }
+			return null;	 
+		}
+		
 		public List<Employee> sortEmployeesJobTitle(String chosenJobTitle) throws SQLException {
 			ArrayList<Employee> employees = new ArrayList<Employee>();
 			try{

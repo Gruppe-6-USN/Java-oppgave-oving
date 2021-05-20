@@ -1,6 +1,8 @@
 package org.example.gui;
 
 import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
+
+import org.example.database.Customer;
 import org.example.database.DatabaseConnection;
 import org.example.database.OfficesList;
 import org.example.database.OrdersList;
@@ -564,7 +566,7 @@ public class OrderTab extends JPanel {
 		//-------FUNCTIONS TO RUN AT STARTUP------//
 		refreshOrderNumberComboBox();
 		refreshDatabaseTextArea();
-
+		refreshCustomerNumberComboBox();
 
 		/////////////////Action listeners //////////
 
@@ -771,7 +773,8 @@ public class OrderTab extends JPanel {
 	}
 
 	public int getCustomerNumber() {
-		return Integer.parseInt(addCustomerNumberComboBox.getText());
+		int addCustomerNumber = (int) addCustomerNumberComboBox.getSelectedItem();
+		return addCustomerNumber;
 	}
 
 	public String getOrderDate() {
@@ -827,6 +830,20 @@ public class OrderTab extends JPanel {
 			err.printStackTrace();
 		}
 	}
+	
+	public void refreshCustomerNumberComboBox() {
+		try {
+			List<Customer> customers = db.showCustomers();
+		
+			addCustomerNumberComboBox.removeAllItems();
+			for (Customer customer : customers) {
+					addCustomerNumberComboBox.addItem(customer.getCustomerNumber());
+			}
+			orderConsoleTextArea.append("*refreshed OrderNumber comboBox. \n");
+		} catch (SQLException err) {
+			err.printStackTrace();
+		}
+	}
 
 	//METHODE TO CLEAR ALL THE ADD FIELDS
 	public void clearAddOrderFields() {
@@ -836,7 +853,6 @@ public class OrderTab extends JPanel {
 		addShippedDateTextField.setText("");
 		addStatusTextField.setText("");
 		addCommentsTextField.setText("");
-		addCustomerNumberComboBox.setText("");
 	}
 
 	//METHODE TO CLEAR ALL THE UPDATE FIELDS

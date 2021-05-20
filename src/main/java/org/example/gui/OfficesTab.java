@@ -72,6 +72,7 @@ public class OfficesTab extends JPanel {
 	private JTextField updateStreetAddressTextField;
 	private JTextField updatePhoneTextField;
 	private JTextField updateCityTextField;
+	private JButton saveBtn;
 	
 	public OfficesTab() {
 		
@@ -305,6 +306,13 @@ public class OfficesTab extends JPanel {
 		gbc_refreshDatabaseTextAreaBtn.gridx = 0;
 		gbc_refreshDatabaseTextAreaBtn.gridy = 2;
 		OfficeDbView.add(refreshDatabaseTextAreaBtn, gbc_refreshDatabaseTextAreaBtn);
+		
+		saveBtn = new JButton("Save to file");
+		GridBagConstraints gbc_saveBtn = new GridBagConstraints();
+		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_saveBtn.gridx = 1;
+		gbc_saveBtn.gridy = 2;
+		OfficeDbView.add(saveBtn, gbc_saveBtn);
 		
 		OfficeConsolePanel = new JPanel();
 		OfficeConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));

@@ -90,6 +90,7 @@ public class OrderTab extends JPanel {
 	private JTextField dateFromTextField;
 	private JTextField dateToTextField;
 	private JButton searchByDateBtn;
+	private JButton saveBtn;
 
 	public OrderTab() {
 
@@ -532,6 +533,13 @@ public class OrderTab extends JPanel {
 		gbc_refreshEmployeeDbViewBtn.gridx = 0;
 		gbc_refreshEmployeeDbViewBtn.gridy = 2;
 		OrderDbView.add(refreshOrderDbViewBtn, gbc_refreshEmployeeDbViewBtn);
+		
+		saveBtn = new JButton("Save to file");
+		GridBagConstraints gbc_saveBtn = new GridBagConstraints();
+		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_saveBtn.gridx = 1;
+		gbc_saveBtn.gridy = 2;
+		OrderDbView.add(saveBtn, gbc_saveBtn);
 
 		OrderConsolePanel = new JPanel();
 		OrderConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));

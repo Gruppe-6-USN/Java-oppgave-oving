@@ -532,7 +532,7 @@ public void refreshDatabaseTextArea() {
 	List<OfficesList> offices = db.showOffices();
 	databaseTextArea.setText("");
 		for (OfficesList officesList : offices) {
-			databaseTextArea.append(officesList.getOfficeCode() + ": " + officesList.getCity() + ", " + officesList.getPhone() + ", " + officesList.getAddressLine1() + ", " + officesList.getAddressLine2() + ", " + officesList.getState() + ", " + officesList.getCountry() +   "\n");
+			databaseTextArea.append(officesList.getOfficeCode() + ": " + officesList.getCity() + ", " + officesList.getPhone() + ", " + officesList.getAddressLine1() + ", " + officesList.getAddressLine2() + ", " + officesList.getState() + ", " + officesList.getCountry() + ", " + officesList.getPostalCode() + ", " + officesList.getTerritory() + "\n");
 		}
 	} catch (SQLException err) {
 		err.printStackTrace();

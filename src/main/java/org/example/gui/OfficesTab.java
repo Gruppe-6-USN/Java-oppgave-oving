@@ -315,6 +315,7 @@ public class OfficesTab extends JPanel {
 		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_saveBtn.gridx = 1;
 		gbc_saveBtn.gridy = 2;
+		saveOfficeBtn.setToolTipText("Save everything in the office database in a text file");
 		OfficeDbView.add(saveOfficeBtn, gbc_saveBtn);
 		
 		OfficeConsolePanel = new JPanel();

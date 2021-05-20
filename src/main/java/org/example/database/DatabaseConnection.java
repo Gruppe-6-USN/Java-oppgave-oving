@@ -90,11 +90,8 @@ public class DatabaseConnection extends Component {
 			pStmt.setString(8, jobTitle);
 			pStmt.execute();
 			close();
-		}catch(SQLIntegrityConstraintViolationException e) {
-			errorMessage("The employee you are going to report to does not exist");
-
-		} catch (SQLException addErr) {
-			addErr.printStackTrace();
+		} catch (SQLIntegrityConstraintViolationException addErr) {
+			errorMessage("Reports to does not exist");
 		}
 	}
 	public void updateOffice(String officeCode, String city, String phone, String addressLine1, String addressLine2, String state, String country, String postalCode, String territory) throws SQLException {

@@ -1,6 +1,7 @@
 package org.example.gui;
 
 import org.example.database.DatabaseConnection;
+import org.example.database.OfficesList;
 import org.example.database.OrdersList;
 import org.example.gui.exceptions.MissingTextFieldException;
 
@@ -79,8 +80,6 @@ public class OrderTab extends JPanel {
 	private JPanel OrderDbView;
 	private JTextArea databaseTextArea;
 	private JButton refreshOrderDbViewBtn;
-	private JComboBox chooseEmployeeJobTitleComboBox;
-	private JLabel chooseEmpJobTitleLabel;
 	private JPanel OrderConsolePanel;
 	private JTextArea orderConsoleTextArea;
 	private JButton clearOrderConsoleBtn;
@@ -491,22 +490,6 @@ public class OrderTab extends JPanel {
 		gbl_OrderDbView.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		OrderDbView.setLayout(gbl_OrderDbView);
 
-		chooseEmpJobTitleLabel = new JLabel("Job title: ");
-		GridBagConstraints gbc_chooseEmpJobTitleLabel = new GridBagConstraints();
-		gbc_chooseEmpJobTitleLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_chooseEmpJobTitleLabel.anchor = GridBagConstraints.EAST;
-		gbc_chooseEmpJobTitleLabel.gridx = 0;
-		gbc_chooseEmpJobTitleLabel.gridy = 0;
-		OrderDbView.add(chooseEmpJobTitleLabel, gbc_chooseEmpJobTitleLabel);
-
-		chooseEmployeeJobTitleComboBox = new JComboBox();
-		GridBagConstraints gbc_chooseEmployeeJobTitleComboBox = new GridBagConstraints();
-		gbc_chooseEmployeeJobTitleComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_chooseEmployeeJobTitleComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_chooseEmployeeJobTitleComboBox.gridx = 1;
-		gbc_chooseEmployeeJobTitleComboBox.gridy = 0;
-		OrderDbView.add(chooseEmployeeJobTitleComboBox, gbc_chooseEmployeeJobTitleComboBox);
-
 		databaseTextArea = new JTextArea();
 		databaseTextArea.setEditable(false);
 		databaseTextArea.setForeground(Color.WHITE);
@@ -600,10 +583,10 @@ public class OrderTab extends JPanel {
 
 		//-------FUNCTIONS TO RUN AT STARTUP------//
 		refreshOrderNumberComboBox();
+		refreshDatabaseTextArea();
 
 
 		/////////////////Action listeners //////////
-		refreshOrderNumberComboBox();
 
 		final StringWriter stackTraceWriter = new StringWriter();
 		final Throwable throwableElement = new Throwable();
@@ -684,23 +667,12 @@ public class OrderTab extends JPanel {
 			}
 		});
 
-		////REFRESH DB BUTTON - shows updated count of all orders in database text area
+		//REFRESH DB BUTTON - shows updated count of all employees in database text area and refreshes job title JComboBox
 		refreshOrderDbViewBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DatabaseConnection db = new DatabaseConnection();
-				try {
-					List<OrdersList> orders = db.showOrders();
-					databaseTextArea.setText("");
-					for (OrdersList ordersList : orders) {
-						databaseTextArea.append(ordersList.getOrderNumber() + ": " + ordersList.getOrderDate() + ", " + ordersList.getRequiredDate() + ", " +
-								ordersList.getShippedDate() + ", " + ordersList.getStatus() + ", " + ordersList.getComments() + ", " + ordersList.getCustomerNumber() + "\n");
-					}
-				} catch (SQLException error) {
-					databaseTextArea.append("Problem fetching from database. Error: " + error);
-				}
+        	public void actionPerformed(ActionEvent refreshDb) {
+					refreshDatabaseTextArea();
 			}
-		});
+        });
 
 		//UPDATE BUTTON EVENT
 		updateOrderBtn.addActionListener(new ActionListener() {
@@ -804,7 +776,20 @@ public class OrderTab extends JPanel {
 		return deleteOrderNumber;
 	}
 
-
+	public void refreshDatabaseTextArea() {
+		try {
+		List<OrdersList> orders = db.showOrders();
+		databaseTextArea.setText("");
+			for (OrdersList ordersList : orders) {
+				databaseTextArea.append(ordersList.getOrderNumber() + ": " + ordersList.getOrderDate() + ", " + ordersList.getRequiredDate() + ", " + ordersList.getShippedDate() + ", " + ordersList.getStatus() + ", " + ordersList.getComments() + ", " + ordersList.getCustomerNumber() +   "\n");
+			}
+			orderConsoleTextArea.append("*refreshed the database view. \n");
+		} catch (SQLException err) {
+			err.printStackTrace();
+		}
+	}
+	
+	
 	public void refreshOrderNumberComboBox() {
 		try {
 			List<OrdersList> orders = db.showOrders();
@@ -816,7 +801,7 @@ public class OrderTab extends JPanel {
 					deleteOrderNumberComboBox.addItem(order.getOrderNumber());
 				}
 			}
-			orderConsoleTextArea.append("*refreshed job title selection. \n");
+			orderConsoleTextArea.append("*refreshed OrderNumber comboBox. \n");
 		} catch (SQLException err) {
 			err.printStackTrace();
 		}

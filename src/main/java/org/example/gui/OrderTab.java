@@ -626,6 +626,19 @@ public class OrderTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if (getUpdateOrderDate().isEmpty() && getUpdateRequiredDate().isEmpty() && getUpdateShippingDate().isEmpty() && getUpdateStatus().isEmpty() && getUpdateComment().isEmpty()) {
+						throw new MissingTextFieldException("You must fill out all the fields");
+					} else if (getUpdateOrderDate().isEmpty())
+						throw new MissingTextFieldException("Order date is not present");
+					else if (getUpdateRequiredDate().isEmpty())
+						throw new MissingTextFieldException("Require date is not present");
+					else if (getUpdateShippingDate().isEmpty())
+						throw new MissingTextFieldException("Shipping date is not present");
+					else if (getUpdateStatus().isEmpty())
+						throw new MissingTextFieldException("Status is not present");
+					else if (getUpdateComment().isEmpty())
+						throw new MissingTextFieldException("Comments is not present");
+
 					int orderNumber = getOrderNumber();
 					String orderDate = getOrderDate();
 					String requiredDate = getRequiredDate();
@@ -637,8 +650,19 @@ public class OrderTab extends JPanel {
 					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
 					orderConsoleTextArea.setText("You added a order with order number" + orderNumber);
 				}//Må ha en catch her for å gi tilbakemeldinger
-				catch (Exception exception) {
-					exception.printStackTrace();
+				catch (MissingTextFieldException missingTextFieldException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
+				} catch (MysqlDataTruncation mysqlDataTruncation) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + mysqlDataTruncation.getMessage());
+				} catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
+				}
+				catch (SQLException sqlException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
+				}catch (NumberFormatException numberFormatException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number must be a number" + "\n");
+				}catch (Exception exception) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + exception.getMessage() + "\n");
 				}
 			}
 		});

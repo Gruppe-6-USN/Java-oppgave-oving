@@ -640,6 +640,8 @@ public class EmployeeTab extends JPanel{
 						throw new Exception("Email must include @");
 					else if (getUpdateJobTitle().isEmpty())
 						throw new MissingTextFieldException("Job title is not present");
+					else if(!getUpdateOfficeCode().matches("[1-7]"))
+						throw new MissingTextFieldException("Office code does not exist");
 					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber() );
 					consoleTextArea.append("Employee successfully updated! \n");
 					
@@ -696,7 +698,7 @@ public class EmployeeTab extends JPanel{
 						throw new MissingTextFieldException("Email must include @");
 					else if (jobTitle.isEmpty())
 						throw new MissingTextFieldException("Job title is not present");
-					else if(!officeCode.matches("[1-9]"))
+					else if(!officeCode.matches("[1-7]"))
 						throw new MissingTextFieldException("Office code does not exist");
 
 					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);

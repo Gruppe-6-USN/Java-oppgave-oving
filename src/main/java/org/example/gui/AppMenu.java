@@ -48,6 +48,7 @@ public class AppMenu extends JMenuBar {
 		JMenuItem bulkImportItem = new JMenuItem("Bulk import from file...");
 		bulkImportItem.setHorizontalAlignment(SwingConstants.LEFT);
 		fileMenu.add(bulkImportItem);
+		bulkImportItem.setToolTipText("Bulk import requires each insert to be on the same line with spaces between each value");
 		bulkImportItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -117,6 +118,9 @@ public class AppMenu extends JMenuBar {
 			}
 		});
 
+
+
+
 		//DATABASE MENU
 		JMenu databaseMenu = new JMenu("Database");
 		databaseMenu.setHorizontalAlignment(SwingConstants.LEFT);
@@ -170,11 +174,7 @@ public class AppMenu extends JMenuBar {
 		});
 	}
 
-	public void writeToFile(String text, File file) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-		writer.write(text);
-		writer.close();
-	}
+ 
 
 	private void displayMessage(String message) {
 		JOptionPane.showMessageDialog(this, message);

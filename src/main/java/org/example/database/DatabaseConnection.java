@@ -132,10 +132,10 @@ public class DatabaseConnection extends Component {
 			pStmt.execute();
 			close();
 		}catch(SQLIntegrityConstraintViolationException e) {
-			Errormessage("Customer does not exist");
+			errorMessage("Customer does not exist");
 
 		}catch(MysqlDataTruncation e) {
-			Errormessage("The date input has to be yyyy-mm-dd");
+			errorMessage("The date input has to be yyyy-mm-dd");
 
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
@@ -399,7 +399,7 @@ public class DatabaseConnection extends Component {
 		}
 
 	}
-		public void Errormessage(String errorMsg) {
+		public void errorMessage(String errorMsg) {
 			JOptionPane.showMessageDialog(this, errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}

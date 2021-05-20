@@ -649,6 +649,10 @@ public class OrderTab extends JPanel {
 
 					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
 					orderConsoleTextArea.setText("You added a order with order number" + orderNumber);
+
+					//function to clear fields after update order
+					clearAddOrderFields();
+
 				}//Må ha en catch her for å gi tilbakemeldinger
 				catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
@@ -720,8 +724,10 @@ public class OrderTab extends JPanel {
 
 					refreshDatabaseTextArea();
 					refreshOrderNumberComboBox();
-					//function to clear fields after update
-					//clearUpdateFields();*/
+
+					//function to clear fields after update order
+					clearUpdateOrderFields();
+
 				} catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
 				} catch (MysqlDataTruncation mysqlDataTruncation) {
@@ -859,6 +865,27 @@ public class OrderTab extends JPanel {
 		} catch (SQLException err) {
 			err.printStackTrace();
 		}
+	}
+
+	//METHODE TO CLEAR ALL THE ADD FIELDS
+	public void clearAddOrderFields() {
+		addOrderNumberTextField.setText("");
+		addOrderDateTextField.setText("");
+		addRequiredDateTextField.setText("");
+		addShippedDateTextField.setText("");
+		addStatusTextField.setText("");
+		addCommentsTextField.setText("");
+		addCustomerNumberTextField.setText("");
+	}
+
+	//METHODE TO CLEAR ALL THE UPDATE FIELDS
+	public void clearUpdateOrderFields() {
+		updateOrderDateTextField.setText("");
+		updateOrderRequiredTextField.setText("");
+		updateOrderShippedTextField.setText("");
+		updateOrderStatusTextField.setText("");
+		updateOrderCommentsTextField.setText("");
+		updateOrderCustomerNumberTextField.setText("");
 	}
 }
 

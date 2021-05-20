@@ -509,6 +509,7 @@ public class OrderTab extends JPanel {
 
 		databaseTextArea = new JTextArea();
 		databaseTextArea.setEditable(false);
+		databaseTextArea.setForeground(Color.WHITE);
 		databaseTextArea.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_databaseTextArea = new GridBagConstraints();
 		gbc_databaseTextArea.insets = new Insets(0, 0, 5, 0);
@@ -559,6 +560,7 @@ public class OrderTab extends JPanel {
 
 		orderConsoleTextArea = new JTextArea();
 		orderConsoleTextArea.setEditable(false);
+		orderConsoleTextArea.setForeground(Color.WHITE);
 		orderConsoleTextArea.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_employeeConsoleTextArea = new GridBagConstraints();
 		gbc_employeeConsoleTextArea.insets = new Insets(0, 0, 5, 0);

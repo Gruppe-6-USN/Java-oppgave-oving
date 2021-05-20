@@ -159,21 +159,18 @@ public class AppMenu extends JMenuBar {
 				JMenuItem dbTestConnectionItem = new JMenuItem("Test database connection");
 				dbTestConnectionItem.setHorizontalAlignment(SwingConstants.LEFT);
 				databaseMenu.add(dbTestConnectionItem);
-				/*dbTestConnectionItem.addActionListener(new ActionListener() {
+				dbTestConnectionItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						try {
-							databaseConnection.open();
-							databaseConnection.close();
-							consoleTextArea.append("Connected to database. \n");
+							db.open();
+							db.close();
+							displayMessage("You are connected to the database. \n");
 						} catch (Exception err) {
-							throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-							consoleTextArea.append("Connection failed. Error: " +
-									throwableElement.toString() + "\n"
-									+ stackTraceWriter.toString());
+							displayMessage("Connection failed. Error: " + err.getMessage());
 						}
 					}
-				});*/
+				});
 
 				//HELP MENU
 				JMenu helpMenu = new JMenu("Help");

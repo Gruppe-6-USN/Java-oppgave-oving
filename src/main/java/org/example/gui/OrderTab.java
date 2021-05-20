@@ -714,7 +714,6 @@ public class OrderTab extends JPanel {
 					orderConsoleTextArea.append("Order successfully updated! \n");
 
 					//functions that refreshes the combobox values and the database view
-
 					refreshDatabaseTextArea();
 					refreshOrderNumberComboBox();
 
@@ -782,7 +781,6 @@ public class OrderTab extends JPanel {
 	public String getUpdateComment() {
 		return updateOrderCommentsTextField.getText();
 	}
-	
 
 	public int getUpdateOrderNumber() {
 		int updateOrderNumber = (int) updateOrderNumberComboBox.getSelectedItem();

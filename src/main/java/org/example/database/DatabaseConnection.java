@@ -64,7 +64,7 @@ public class DatabaseConnection extends Component {
 			open();
 			updateCustomerAfterEmployeeDelete(employeeNumber);
 			updateReportsToAfterEmployeeDelete(employeeNumber);
-			pStmt = conn.prepareStatement("delete from employees where employeeNumber=?");
+			pStmt = conn.prepareStatement("DELETE FROM employees WHERE employeeNumber=?");
 			pStmt.setInt(1, employeeNumber);
 
 			pStmt.executeUpdate();
@@ -78,7 +78,7 @@ public class DatabaseConnection extends Component {
 	public void addEmployee(int employeeNumber, String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException {
 		try {
 			open();
-			pStmt = conn.prepareStatement("insert into employees (employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle)" +
+			pStmt = conn.prepareStatement("INSERT INTO employees(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle)" +
 					"values (?, ?, ?, ?, ?, ?, ?, ?)");
 			pStmt.setInt(1, employeeNumber);
 			pStmt.setString(2, lastName);

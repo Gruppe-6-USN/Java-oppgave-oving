@@ -68,7 +68,7 @@ public class DatabaseConnection extends Component {
 			pStmt.setInt(1, employeeNumber);
 
 			pStmt.executeUpdate();
-			
+			successMessage("Successfully deleted");
 			close();
 		} catch (SQLException deleteErr) {
 			deleteErr.printStackTrace();
@@ -111,6 +111,7 @@ public class DatabaseConnection extends Component {
 			pStmt.setString(8, territory);
 			pStmt.setString(9, officeCode);
 			pStmt.executeUpdate();
+			successMessage("Successfully updated");
 			close();
 		} catch (SQLException addErr) {
 			addErr.printStackTrace();
@@ -131,6 +132,7 @@ public class DatabaseConnection extends Component {
 			pStmt.setString(6, comments);
 			pStmt.setInt(7, customerNumber);
 			pStmt.execute();
+			successMessage("Successfully added");
 			close();
 		}catch(SQLIntegrityConstraintViolationException e) {
 			errorMessage("Customer does not exist");
@@ -159,6 +161,7 @@ public class DatabaseConnection extends Component {
 				pStmt.setInt(8, employeeNumber);
 				
 				pStmt.execute();
+				successMessage("Successfully updated");
 				close();
 			}catch(SQLIntegrityConstraintViolationException e) {
 				errorMessage("The employee you are going to report to does not exist");
@@ -180,6 +183,7 @@ public class DatabaseConnection extends Component {
 				pStmt.setInt(6, orderNumber);
 
 				pStmt.execute();
+				successMessage("Successfully updated");
 				close();
 			}catch (SQLException e) {
 				e.printStackTrace();
@@ -395,6 +399,7 @@ public class DatabaseConnection extends Component {
 			pStmt.setInt(1, orderNumber);
 
 			pStmt.executeUpdate();
+			successMessage("Successfully deleted");
 
 			close();
 		} catch (SQLException deleteErr) {

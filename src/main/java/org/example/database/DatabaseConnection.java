@@ -44,6 +44,9 @@ public class DatabaseConnection extends Component {
 		}
 	}
 
+
+	//----------UPDATES----------//
+
 	public void updateCustomerAfterEmployeeDelete(int employeeNumber) throws SQLException {
 		pStmt = conn.prepareStatement("update customers set salesRepEmployeeNumber = NULL WHERE salesRepEmployeeNumber = ?");
 		pStmt.setInt(1, employeeNumber);
@@ -57,21 +60,77 @@ public class DatabaseConnection extends Component {
 		pStmt.execute();
 	}
 
-	public void deleteEmployee(int employeeNumber) throws SQLException {
+	public void updateOffice(String officeCode, String city, String phone, String addressLine1, String addressLine2, String state, String country, String postalCode, String territory) throws SQLException {
 		try {
 			open();
-			updateCustomerAfterEmployeeDelete(employeeNumber);
-			updateReportsToAfterEmployeeDelete(employeeNumber);
-			pStmt = conn.prepareStatement("DELETE FROM employees WHERE employeeNumber=?");
-			pStmt.setInt(1, employeeNumber);
+			pStmt = conn.prepareStatement("UPDATE offices SET city = ?, phone = ?, addressLine1 = ?, addressLine2 = ?, state = ?, country = ?, postalCode = ?, territory = ? WHERE officeCode = ?");
 
+
+			pStmt.setString(1, city);
+			pStmt.setString(2, phone);
+			pStmt.setString(3, addressLine1);
+			pStmt.setString(4, addressLine2);
+			pStmt.setString(5, state);
+			pStmt.setString(6, country);
+			pStmt.setString(7, postalCode);
+			pStmt.setString(8, territory);
+			pStmt.setString(9, officeCode);
 			pStmt.executeUpdate();
-			successMessage("Successfully deleted");
+			successMessage("Successfully updated");
 			close();
-		} catch (SQLException deleteErr) {
-			deleteErr.printStackTrace();
+		} catch (SQLException addErr) {
+			addErr.printStackTrace();
 		}
 	}
+	public void updateUser( String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
+		try {
+			open();
+			pStmt = conn.prepareStatement("UPDATE employees SET lastName = ?,  firstName = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ? WHERE employeeNumber = ?");
+
+
+			pStmt.setString(1, lastName);
+			pStmt.setString(2, firstName);
+			pStmt.setString(3, extension);
+			pStmt.setString(4, email);
+			pStmt.setString(5, officeCode);
+			pStmt.setInt(6, reportsTo);
+			pStmt.setString(7, jobTitle);
+			pStmt.setInt(8, employeeNumber);
+
+			pStmt.execute();
+			successMessage("Successfully updated");
+			close();
+		}catch(SQLIntegrityConstraintViolationException e) {
+			errorMessage("The employee you are going to report to does not exist");
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	public void updateOrder(String orderDate, String requiredDate, String shippedDate, String status, String comments, int orderNumber) throws SQLException {
+		try {
+			open();
+			pStmt = conn.prepareStatement("UPDATE orders SET orderDate = ?, requiredDate = ?, shippedDate = ?, status = ?, comments = ? WHERE orderNumber = ?");
+
+			pStmt.setString(1, orderDate);
+			pStmt.setString(2, requiredDate);
+			pStmt.setString(3, shippedDate);
+			pStmt.setString(4, status);
+			pStmt.setString(5, comments);
+			pStmt.setInt(6, orderNumber);
+
+			pStmt.execute();
+			successMessage("Successfully updated");
+			close();
+		}catch(MysqlDataTruncation e) {
+			errorMessage("The date input has to be yyyy-mm-dd");
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//----------ADD----------//
+
 
 	public void addEmployee(int employeeNumber, String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException {
 		try {
@@ -93,28 +152,7 @@ public class DatabaseConnection extends Component {
 			errorMessage("Reports to does not exist");
 		}
 	}
-	public void updateOffice(String officeCode, String city, String phone, String addressLine1, String addressLine2, String state, String country, String postalCode, String territory) throws SQLException {
-		try {
-			open();
-			pStmt = conn.prepareStatement("UPDATE offices SET city = ?, phone = ?, addressLine1 = ?, addressLine2 = ?, state = ?, country = ?, postalCode = ?, territory = ? WHERE officeCode = ?");
-					
 
-			pStmt.setString(1, city);
-			pStmt.setString(2, phone);
-			pStmt.setString(3, addressLine1);
-			pStmt.setString(4, addressLine2);
-			pStmt.setString(5, state);
-			pStmt.setString(6, country);
-			pStmt.setString(7, postalCode);
-			pStmt.setString(8, territory);
-			pStmt.setString(9, officeCode);
-			pStmt.executeUpdate();
-			successMessage("Successfully updated");
-			close();
-		} catch (SQLException addErr) {
-			addErr.printStackTrace();
-		}
-	}
 
 	public void addOrder(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) throws SQLException {
 		try {
@@ -133,7 +171,7 @@ public class DatabaseConnection extends Component {
 			successMessage("Successfully added");
 			close();
 		}catch(SQLIntegrityConstraintViolationException e) {
-			errorMessage("Customer does not exist");
+			errorMessage("Order already exist");
 
 		}catch(MysqlDataTruncation e) {
 			errorMessage("The date input has to be yyyy-mm-dd");
@@ -143,87 +181,7 @@ public class DatabaseConnection extends Component {
 		}
 	}
 
-		public void updateUser( String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle, int employeeNumber) throws SQLException{
-			try {
-				open();
-				pStmt = conn.prepareStatement("UPDATE employees SET lastName = ?,  firstName = ?, extension = ?, email = ?, officeCode = ?, reportsTo = ?, jobTitle = ? WHERE employeeNumber = ?");
-				
-				
-				pStmt.setString(1, lastName);
-				pStmt.setString(2, firstName);
-				pStmt.setString(3, extension);
-				pStmt.setString(4, email);
-				pStmt.setString(5, officeCode);
-				pStmt.setInt(6, reportsTo);
-				pStmt.setString(7, jobTitle);
-				pStmt.setInt(8, employeeNumber);
-				
-				pStmt.execute();
-				successMessage("Successfully updated");
-				close();
-			}catch(SQLIntegrityConstraintViolationException e) {
-				errorMessage("The employee you are going to report to does not exist");
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}
-
-		public void updateOrder(String orderDate, String requiredDate, String shippedDate, String status, String comments, int orderNumber) throws SQLException {
-			try {
-				open();
-				pStmt = conn.prepareStatement("UPDATE orders SET orderDate = ?, requiredDate = ?, shippedDate = ?, status = ?, comments = ? WHERE orderNumber = ?");
-
-				pStmt.setString(1, orderDate);
-				pStmt.setString(2, requiredDate);
-				pStmt.setString(3, shippedDate);
-				pStmt.setString(4, status);
-				pStmt.setString(5, comments);
-				pStmt.setInt(6, orderNumber);
-
-				pStmt.execute();
-				successMessage("Successfully updated");
-				close();
-			}catch(MysqlDataTruncation e) {
-				errorMessage("The date input has to be yyyy-mm-dd");
-			}catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-
-		public List<OrdersList> searchByDate(String datestr1, String datestr2) throws SQLException{
-			ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
-			
-			try {
-				open();
-				pStmt = conn.prepareStatement("SELECT * FROM orders where orderDate >= ? and orderDate <= ?");
-				pStmt.setString(1, datestr1);
-				pStmt.setString(2, datestr2);
-				resSet = pStmt.executeQuery();
-				
-			    while (resSet.next()) {
-			    	int orderNumber = resSet.getInt("orderNumber");
-			    	int customerNumber = resSet.getInt("customerNumber");
-			    	String orderDate = resSet.getString("orderDate");
-			    	String requiredDate = resSet.getString("requiredDate");
-			    	String shippedDate = resSet.getString("shippeDdate");
-			    	String status = resSet.getString("status");
-			    	String comment = resSet.getString("comments");
-			    	
-
-			    	OrdersList current = new OrdersList(customerNumber, orderDate, requiredDate, shippedDate, status, comment, orderNumber);
-			    	orders.add(current);
-			    	
-			    	
-			    	
-			      }
-				close();
-				return orders;
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			return null;
-		}
+	//----------SHOW----------//
 		
 		public List<Employee> showEmployees() throws SQLException {
 			ArrayList<Employee> employees = new ArrayList<Employee>();
@@ -277,33 +235,6 @@ public class DatabaseConnection extends Component {
 		    	}
 		    	close();
 		    	return customers;
-		    }catch(SQLException e) {
-		      e.printStackTrace();
-		    }
-			return null;	 
-		}
-		
-		public List<Employee> sortEmployeesJobTitle(String chosenJobTitle) throws SQLException {
-			ArrayList<Employee> employees = new ArrayList<Employee>();
-			try{
-			open();
-		    pStmt = conn.prepareStatement("SELECT * FROM employees WHERE jobTitle = ?");
-		    pStmt.setString(1, chosenJobTitle);
-		    resSet = pStmt.executeQuery();
-		    	while (resSet.next()) {
-		    		int employeeNumber = resSet.getInt("employeeNumber");
-		    		String firstName = resSet.getString("firstName");
-		    		String lastName = resSet.getString("lastName");
-		    		String extension = resSet.getString("extension");
-		    		String email = resSet.getString("email");
-		    		String officeCode = resSet.getString("officeCode");
-		    		int reportsTo = resSet.getInt("reportsTo");
-		    		String jobTitle = resSet.getString("jobTitle");
-		    		Employee current = new Employee(employeeNumber, lastName, firstName,  extension, email, officeCode, reportsTo, jobTitle);
-		    		employees.add(current);
-		    	}
-		    	close();
-		    	return employees;
 		    }catch(SQLException e) {
 		      e.printStackTrace();
 		    }
@@ -378,43 +309,84 @@ public class DatabaseConnection extends Component {
 		return null;
 
 	}
-
-	public List<Employee> showEmployeesJobTitle(String jobTitle) throws SQLException {
+	//----------SORT/SEARCH----------//
+	public List<Employee> sortEmployeesJobTitle(String chosenJobTitle) throws SQLException {
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 		try{
 			open();
 			pStmt = conn.prepareStatement("SELECT * FROM employees WHERE jobTitle = ?");
-			pStmt.setString(1, jobTitle);
+			pStmt.setString(1, chosenJobTitle);
 			resSet = pStmt.executeQuery();
-
-
-
 			while (resSet.next()) {
 				int employeeNumber = resSet.getInt("employeeNumber");
-				String lastName = resSet.getString("lastName");
 				String firstName = resSet.getString("firstName");
+				String lastName = resSet.getString("lastName");
 				String extension = resSet.getString("extension");
 				String email = resSet.getString("email");
 				String officeCode = resSet.getString("officeCode");
 				int reportsTo = resSet.getInt("reportsTo");
-				resSet.getString("jobTitle");
-
-
-
-				Employee current = new Employee(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
+				String jobTitle = resSet.getString("jobTitle");
+				Employee current = new Employee(employeeNumber, lastName, firstName,  extension, email, officeCode, reportsTo, jobTitle);
 				employees.add(current);
-				/*employees = employees.toString();*/
-
-
 			}
-
 			close();
 			return employees;
-		} catch (SQLException e) {
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
 
+	public List<OrdersList> searchByDate(String datestr1, String datestr2) throws SQLException{
+		ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
+
+		try {
+			open();
+			pStmt = conn.prepareStatement("SELECT * FROM orders where orderDate >= ? and orderDate <= ?");
+			pStmt.setString(1, datestr1);
+			pStmt.setString(2, datestr2);
+			resSet = pStmt.executeQuery();
+
+			while (resSet.next()) {
+				int orderNumber = resSet.getInt("orderNumber");
+				int customerNumber = resSet.getInt("customerNumber");
+				String orderDate = resSet.getString("orderDate");
+				String requiredDate = resSet.getString("requiredDate");
+				String shippedDate = resSet.getString("shippeDdate");
+				String status = resSet.getString("status");
+				String comment = resSet.getString("comments");
+
+
+				OrdersList current = new OrdersList(customerNumber, orderDate, requiredDate, shippedDate, status, comment, orderNumber);
+				orders.add(current);
+
+
+
+			}
+			close();
+			return orders;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return null;
+	}
+
+	//----------DELETE----------//
+
+	public void deleteEmployee(int employeeNumber) throws SQLException {
+		try {
+			open();
+			updateCustomerAfterEmployeeDelete(employeeNumber);
+			updateReportsToAfterEmployeeDelete(employeeNumber);
+			pStmt = conn.prepareStatement("DELETE FROM employees WHERE employeeNumber=?");
+			pStmt.setInt(1, employeeNumber);
+
+			pStmt.executeUpdate();
+			successMessage("Successfully deleted");
+			close();
+		} catch (SQLException deleteErr) {
+			deleteErr.printStackTrace();
+		}
 	}
 
 	public void deleteOrderDetailsAfterDelete(int orderNumber) throws SQLException {
@@ -439,6 +411,8 @@ public class DatabaseConnection extends Component {
 		}
 
 	}
+
+	//----------Error/Success Messages----------//
 		public void errorMessage(String errorMsg) {
 			JOptionPane.showMessageDialog(this, errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
 		}

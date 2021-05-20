@@ -622,6 +622,11 @@ public class OrderTab extends JPanel {
 
 					//function to clear fields after update order
 					clearAddOrderFields();
+
+					//Refreshes combobox and TextArea
+					refreshDatabaseTextArea();
+					refreshOrderNumberComboBox();
+
 				}
 				catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");

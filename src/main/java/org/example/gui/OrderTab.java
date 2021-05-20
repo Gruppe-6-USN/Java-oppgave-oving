@@ -644,7 +644,7 @@ public class OrderTab extends JPanel {
 				}catch (SQLException sqlException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
 				}catch (NumberFormatException numberFormatException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number must be a number" + "\n");
+					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number and Order number must be a number" + "\n");
 				}catch (Exception exception) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + exception.getMessage() + "\n");
 				}

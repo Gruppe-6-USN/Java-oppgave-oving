@@ -170,11 +170,7 @@ public class AppMenu extends JMenuBar {
 		});
 	}
 
-	public void writeToFile(String text, File file) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-		writer.write(text);
-		writer.close();
-	}
+ 
 
 	private void displayMessage(String message) {
 		JOptionPane.showMessageDialog(this, message);

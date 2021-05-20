@@ -48,6 +48,7 @@ public class AppMenu extends JMenuBar {
 		JMenuItem bulkImportItem = new JMenuItem("Bulk import from file...");
 		bulkImportItem.setHorizontalAlignment(SwingConstants.LEFT);
 		fileMenu.add(bulkImportItem);
+		bulkImportItem.setToolTipText("Bulk import requires each insert to be on the same line with spaces between each value");
 		bulkImportItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -117,11 +118,7 @@ public class AppMenu extends JMenuBar {
 			}
 		});
 
-		//INFO MENU ITEM
-		JMenuItem infoItem = new JMenuItem("Info");
-		infoItem.setHorizontalAlignment(SwingConstants.LEFT);
-		infoItem.setToolTipText("hdjhjdhf");
-		fileMenu.add(infoItem);
+
 
 
 		//DATABASE MENU

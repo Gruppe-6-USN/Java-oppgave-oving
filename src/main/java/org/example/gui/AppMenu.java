@@ -183,7 +183,7 @@ public class AppMenu extends JMenuBar {
 				aboutItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						displayMessage("About the application");
+						displayMessage("In this application you can perform CRUD operations");
 					}
 				});
 
@@ -202,8 +202,6 @@ public class AppMenu extends JMenuBar {
 					}
 				});
 	}
-
-	
 
 	public void writeToFile(String text, File file) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));

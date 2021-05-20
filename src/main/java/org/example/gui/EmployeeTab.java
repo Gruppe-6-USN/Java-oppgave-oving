@@ -604,7 +604,7 @@ public class EmployeeTab extends JPanel{
 				if (option==0){
 					try{
 						db.deleteEmployee(getDeleteEmployeeNumber());
-						consoleTextArea.append("Employee successfully deleted! \n");
+						
 						refreshDatabaseTextArea();
 						refreshEmployeeNumberComboBox();
 						refreshJobTitleComboBox();
@@ -643,7 +643,7 @@ public class EmployeeTab extends JPanel{
 						throw new MissingTextFieldException("Office code does not exist");
 
 					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(), getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
-					consoleTextArea.append("Employee successfully updated! \n");
+
 
 					//functions that refreshes the combobox values and the database view
 					refreshDatabaseTextArea();

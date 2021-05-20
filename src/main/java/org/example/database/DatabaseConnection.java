@@ -181,6 +181,8 @@ public class DatabaseConnection extends Component {
 
 				pStmt.execute();
 				close();
+			}catch(MysqlDataTruncation e) {
+				errorMessage("The date input has to be yyyy-mm-dd");
 			}catch (SQLException e) {
 				e.printStackTrace();
 			}

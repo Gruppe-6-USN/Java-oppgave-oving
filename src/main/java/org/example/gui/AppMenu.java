@@ -117,6 +117,13 @@ public class AppMenu extends JMenuBar {
 			}
 		});
 
+		//INFO MENU ITEM
+		JMenuItem infoItem = new JMenuItem("Info");
+		infoItem.setHorizontalAlignment(SwingConstants.LEFT);
+		infoItem.setToolTipText("hdjhjdhf");
+		fileMenu.add(infoItem);
+
+
 		//DATABASE MENU
 		JMenu databaseMenu = new JMenu("Database");
 		databaseMenu.setHorizontalAlignment(SwingConstants.LEFT);

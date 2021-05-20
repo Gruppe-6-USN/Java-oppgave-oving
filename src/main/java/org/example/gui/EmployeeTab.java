@@ -604,14 +604,13 @@ public class EmployeeTab extends JPanel{
 				try{
 					db.deleteEmployee(getDeleteEmployeeNumber());
 					consoleTextArea.append("Employee successfully deleted! \n");
+					refreshDatabaseTextArea();
+					refreshEmployeeNumberComboBox();
+					refreshJobTitleComboBox();
 					//functions that refreshes the combobox values and the database view
 				}catch (NumberFormatException | SQLException error) {
 					consoleTextArea.append("ID must be a valid ID\n");
 				}
-				refreshDatabaseTextArea();
-				refreshEmployeeNumberComboBox();
-				refreshJobTitleComboBox();
-				consoleTextArea.append("after refresh");
 			}
 		});
 		
@@ -816,7 +815,7 @@ public class EmployeeTab extends JPanel{
 	public void refreshJobTitleComboBox() {
 		try {
 		List<Employee> employees = db.showEmployees();
-		chooseJobTitleComboBox.setSelectedItem("");
+		chooseJobTitleComboBox.removeAllItems();
 			for (Employee employee : employees) {
 				if (unique.add(employee.getJobTitle())) {
 					chooseJobTitleComboBox.addItem(employee.getJobTitle());

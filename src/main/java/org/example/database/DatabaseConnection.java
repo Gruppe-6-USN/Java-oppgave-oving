@@ -60,7 +60,7 @@ public class DatabaseConnection {
 			pStmt.setInt(1, employeeNumber);
 
 			pStmt.executeUpdate();
-
+			
 			close();
 		} catch (SQLException deleteErr) {
 			deleteErr.printStackTrace();

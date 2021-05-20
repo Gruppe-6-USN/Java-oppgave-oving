@@ -37,7 +37,7 @@ public class MainWindow {
         tabbedPane.add("OFFICES", officesTab);
         frame.getContentPane().add(tabbedPane, "cell 0 0,alignx left,aligny top");
         frame.setTitle("DB-ADMIN V3.0");
-      
+        frame.setResizable(false);
         
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(600, 750);

@@ -7,6 +7,8 @@ import org.example.gui.exceptions.MissingTextFieldException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -17,26 +19,21 @@ import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 
 public class OrderTab extends JPanel {
 
 	java.util.HashSet unique = new HashSet();
 	DatabaseConnection db = new DatabaseConnection();
+	JFileChooser fileChooser = new JFileChooser();
 
 	private final JPanel employeeTab = new JPanel();
 	private JPanel AddOrdPanel;
@@ -89,7 +86,7 @@ public class OrderTab extends JPanel {
 	private JTextField dateFromTextField;
 	private JTextField dateToTextField;
 	private JButton searchByDateBtn;
-	private JButton saveBtn;
+	private JButton saveOrderBtn;
 
 	public OrderTab() {
 
@@ -517,13 +514,13 @@ public class OrderTab extends JPanel {
 		gbc_refreshEmployeeDbViewBtn.gridx = 0;
 		gbc_refreshEmployeeDbViewBtn.gridy = 2;
 		OrderDbView.add(refreshOrderDbViewBtn, gbc_refreshEmployeeDbViewBtn);
-		
-		saveBtn = new JButton("Save to file");
-		GridBagConstraints gbc_saveBtn = new GridBagConstraints();
-		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
-		gbc_saveBtn.gridx = 1;
-		gbc_saveBtn.gridy = 2;
-		OrderDbView.add(saveBtn, gbc_saveBtn);
+
+		saveOrderBtn = new JButton("Save to file");
+		GridBagConstraints gbc_saveOrderBtn = new GridBagConstraints();
+		gbc_saveOrderBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_saveOrderBtn.gridx = 1;
+		gbc_saveOrderBtn.gridy = 2;
+		OrderDbView.add(saveOrderBtn, gbc_saveOrderBtn);
 
 		OrderConsolePanel = new JPanel();
 		OrderConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -711,6 +708,35 @@ public class OrderTab extends JPanel {
 				}
 			}
 		});
+
+		//SAVE ORDER BUTTON
+		saveOrderBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to save");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				//Just allow .txt file
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+				fileChooser.setFileFilter(filter);
+
+				int returnVal = fileChooser.showSaveDialog(null);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+
+					try {
+						EmployeeTab.writeToFile(databaseTextArea.getText(), fileToSave);
+						orderConsoleTextArea.setText("Succesfull when saving the Database");
+					}catch (IOException e1) {
+						orderConsoleTextArea.setText("Error writing into file");
+					}
+				}
+			}
+		});
 	}
 
 	//-----------------GETTERS----------------//
@@ -793,8 +819,8 @@ public class OrderTab extends JPanel {
 	public void refreshOrderNumberComboBox() {
 		try {
 			List<OrdersList> orders = db.showOrders();
-			updateOrderNumberComboBox.setSelectedItem("");
-			deleteOrderNumberComboBox.setSelectedItem("");
+			updateOrderNumberComboBox.removeAllItems();
+			deleteOrderNumberComboBox.removeAllItems();
 			for (OrdersList order : orders) {
 				if (unique.add(order.getOrderNumber())) {
 					updateOrderNumberComboBox.addItem(order.getOrderNumber());

@@ -44,6 +44,7 @@ public class OfficesTab extends JPanel {
 
 	DatabaseConnection db = new DatabaseConnection();
 	java.util.HashSet unique = new HashSet();
+	JFileChooser fileChooser = new JFileChooser();
 	
 	private final JPanel employeeTab = new JPanel();
 	private JPanel updateOfficePanel;
@@ -72,7 +73,7 @@ public class OfficesTab extends JPanel {
 	private JTextField updateStreetAddressTextField;
 	private JTextField updatePhoneTextField;
 	private JTextField updateCityTextField;
-	private JButton saveBtn;
+	private JButton saveOfficeBtn;
 	
 	public OfficesTab() {
 		
@@ -83,9 +84,9 @@ public class OfficesTab extends JPanel {
         gbl_employeeTab.rowWeights = new double[]{Double.MIN_VALUE};
         employeeTab.setLayout(gbl_employeeTab);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{266, 266, 266, 0};
+		gridBagLayout.columnWidths = new int[] {350, 266};
 		gridBagLayout.rowHeights = new int[] {130, 130, 228};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0};
 		setLayout(gridBagLayout);
 		
@@ -269,8 +270,8 @@ public class OfficesTab extends JPanel {
 		GridBagConstraints gbc_OfficeDbView = new GridBagConstraints();
 		gbc_OfficeDbView.gridheight = 2;
 		gbc_OfficeDbView.fill = GridBagConstraints.BOTH;
-		gbc_OfficeDbView.gridx = 2;
-		gbc_OfficeDbView.gridy = 1;
+		gbc_OfficeDbView.gridx = 1;
+		gbc_OfficeDbView.gridy = 0;
 		add(OfficeDbView, gbc_OfficeDbView);
 		GridBagLayout gbl_OfficeDbView = new GridBagLayout();
 		gbl_OfficeDbView.columnWidths = new int[] {41, 133, 0};
@@ -293,11 +294,12 @@ public class OfficesTab extends JPanel {
 		JScrollPane databaseScroll = new JScrollPane(databaseTextArea);
 		databaseScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_databaseScroll = new GridBagConstraints();
+		gbc_databaseScroll.gridheight = 2;
 		gbc_databaseScroll.gridwidth = 3;
 		gbc_databaseScroll.insets = new Insets(0, 0, 5, 0);
 		gbc_databaseScroll.fill = GridBagConstraints.BOTH;
 		gbc_databaseScroll.gridx = 0;
-		gbc_databaseScroll.gridy = 1;
+		gbc_databaseScroll.gridy = 0;
 		OfficeDbView.add(databaseScroll, gbc_databaseScroll);
 		
 		refreshDatabaseTextAreaBtn = new JButton("Refresh view");
@@ -306,13 +308,14 @@ public class OfficesTab extends JPanel {
 		gbc_refreshDatabaseTextAreaBtn.gridx = 0;
 		gbc_refreshDatabaseTextAreaBtn.gridy = 2;
 		OfficeDbView.add(refreshDatabaseTextAreaBtn, gbc_refreshDatabaseTextAreaBtn);
-		
-		saveBtn = new JButton("Save to file");
+
+		saveOfficeBtn = new JButton("Save to file");
 		GridBagConstraints gbc_saveBtn = new GridBagConstraints();
+		gbc_saveBtn.anchor = GridBagConstraints.WEST;
 		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_saveBtn.gridx = 1;
 		gbc_saveBtn.gridy = 2;
-		OfficeDbView.add(saveBtn, gbc_saveBtn);
+		OfficeDbView.add(saveOfficeBtn, gbc_saveBtn);
 		
 		OfficeConsolePanel = new JPanel();
 		OfficeConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -353,6 +356,7 @@ public class OfficesTab extends JPanel {
 		
 		clearConsoleBtn = new JButton("Clear console");
 		GridBagConstraints gbc_clearConsoleBtn = new GridBagConstraints();
+		gbc_clearConsoleBtn.anchor = GridBagConstraints.WEST;
 		gbc_clearConsoleBtn.gridx = 0;
 		gbc_clearConsoleBtn.gridy = 1;
 		OfficeConsolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);
@@ -431,7 +435,6 @@ public class OfficesTab extends JPanel {
 							officeConsoleTextArea.setText("Office updated: " + "the office with the office code: " + officeCode + "\nin the city: " + city + " is changed\n");
 							//functions that refreshes
 							refreshDatabaseTextArea();
-							refreshOfficeCodeComboBox();
 
 						} catch(SQLException sqlErr) {
 							sqlErr.printStackTrace();
@@ -444,6 +447,34 @@ public class OfficesTab extends JPanel {
 						}
 					}
 				});
+		//SAVE OFFICE BUTTON EVENT
+		saveOfficeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to save");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				//Just allow .txt file
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+				fileChooser.setFileFilter(filter);
+
+				int returnVal = fileChooser.showSaveDialog(null);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+
+					try {
+						EmployeeTab.writeToFile(databaseTextArea.getText(), fileToSave);
+						officeConsoleTextArea.setText("Succesfull when saving the Database");
+					}catch (IOException e1) {
+						officeConsoleTextArea.setText("Error writing into file");
+					}
+				}
+			}
+		});
 	}
 
 	//-------------------GETTERS------------------//
@@ -501,7 +532,7 @@ public void refreshDatabaseTextArea() {
 public void refreshOfficeCodeComboBox() {
 	try {
 	List<OfficesList> offices = db.showOffices();
-	officeCodeComboBox.setSelectedItem("");
+	officeCodeComboBox.removeAllItems();
 		for (OfficesList officesList : offices) {
 			if (unique.add(officesList.getOfficeCode())) {
 				officeCodeComboBox.addItem(officesList.getOfficeCode());

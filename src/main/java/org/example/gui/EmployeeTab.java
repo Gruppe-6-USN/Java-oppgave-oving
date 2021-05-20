@@ -8,11 +8,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import org.example.gui.exceptions.MissingTextFieldException;
 import org.example.database.*;
@@ -24,15 +20,14 @@ import java.awt.GridBagConstraints;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 
 public class EmployeeTab extends JPanel{
 	
 	DatabaseConnection db = new DatabaseConnection();
 	java.util.HashSet unique = new HashSet();
+	JFileChooser fileChooser = new JFileChooser();
 	
 	private final JPanel employeeTab = new JPanel();
 	private JPanel AddEmployeePanel;
@@ -717,6 +712,35 @@ public class EmployeeTab extends JPanel{
 				}
 			}
 		});
+
+		//SAVE TO FILE BUTTON
+		saveBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to save");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				//Just allow .txt file
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+				fileChooser.setFileFilter(filter);
+
+				int returnVal = fileChooser.showSaveDialog(null);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+
+					try {
+						writeToFile(databaseTextArea.getText(), fileToSave);
+						consoleTextArea.setText("Succesfull when saving the Database");
+					}catch (IOException e1) {
+						consoleTextArea.setText("Error writing into file");
+					}
+				}
+			}
+		});
 	}
 	
 	//-------------------GETTERS------------------//
@@ -795,7 +819,7 @@ public class EmployeeTab extends JPanel{
 		return chosenJobTitle;
 	}
 	//---------------ADDITIONAL METHODS-----------------//
-	public void writeToFile(String text, File file) throws IOException {
+	public static void writeToFile(String text, File file) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		writer.write(text);
 		writer.close();

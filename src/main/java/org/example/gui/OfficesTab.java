@@ -44,6 +44,7 @@ public class OfficesTab extends JPanel {
 
 	DatabaseConnection db = new DatabaseConnection();
 	java.util.HashSet unique = new HashSet();
+	JFileChooser fileChooser = new JFileChooser();
 	
 	private final JPanel employeeTab = new JPanel();
 	private JPanel updateOfficePanel;
@@ -72,7 +73,7 @@ public class OfficesTab extends JPanel {
 	private JTextField updateStreetAddressTextField;
 	private JTextField updatePhoneTextField;
 	private JTextField updateCityTextField;
-	private JButton saveBtn;
+	private JButton saveOfficeBtn;
 	
 	public OfficesTab() {
 		
@@ -307,14 +308,14 @@ public class OfficesTab extends JPanel {
 		gbc_refreshDatabaseTextAreaBtn.gridx = 0;
 		gbc_refreshDatabaseTextAreaBtn.gridy = 2;
 		OfficeDbView.add(refreshDatabaseTextAreaBtn, gbc_refreshDatabaseTextAreaBtn);
-		
-		saveBtn = new JButton("Save to file");
+
+		saveOfficeBtn = new JButton("Save to file");
 		GridBagConstraints gbc_saveBtn = new GridBagConstraints();
 		gbc_saveBtn.anchor = GridBagConstraints.WEST;
 		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_saveBtn.gridx = 1;
 		gbc_saveBtn.gridy = 2;
-		OfficeDbView.add(saveBtn, gbc_saveBtn);
+		OfficeDbView.add(saveOfficeBtn, gbc_saveBtn);
 		
 		OfficeConsolePanel = new JPanel();
 		OfficeConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -446,6 +447,34 @@ public class OfficesTab extends JPanel {
 						}
 					}
 				});
+		//SAVE OFFICE BUTTON EVENT
+		saveOfficeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setDialogTitle("Specify a file to save");
+
+				//Set default folder
+				fileChooser.setCurrentDirectory(new File("c:\\temp"));
+
+				//Just allow .txt file
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+				fileChooser.setFileFilter(filter);
+
+				int returnVal = fileChooser.showSaveDialog(null);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+
+					try {
+						EmployeeTab.writeToFile(databaseTextArea.getText(), fileToSave);
+						officeConsoleTextArea.setText("Succesfull when saving the Database");
+					}catch (IOException e1) {
+						officeConsoleTextArea.setText("Error writing into file");
+					}
+				}
+			}
+		});
 	}
 
 	//-------------------GETTERS------------------//

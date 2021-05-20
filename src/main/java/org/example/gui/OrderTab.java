@@ -783,6 +783,7 @@ public class OrderTab extends JPanel {
 			for (OrdersList ordersList : orders) {
 				databaseTextArea.append(ordersList.getOrderNumber() + ": " + ordersList.getOrderDate() + ", " + ordersList.getRequiredDate() + ", " + ordersList.getShippedDate() + ", " + ordersList.getStatus() + ", " + ordersList.getComments() + ", " + ordersList.getCustomerNumber() +   "\n");
 			}
+			orderConsoleTextArea.append("*refreshed the database view. \n");
 		} catch (SQLException err) {
 			err.printStackTrace();
 		}
@@ -800,7 +801,7 @@ public class OrderTab extends JPanel {
 					deleteOrderNumberComboBox.addItem(order.getOrderNumber());
 				}
 			}
-			orderConsoleTextArea.append("*refreshed job title selection. \n");
+			orderConsoleTextArea.append("*refreshed OrderNumber comboBox. \n");
 		} catch (SQLException err) {
 			err.printStackTrace();
 		}

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,13 +34,10 @@ import javax.swing.JScrollPane;
 
 public class OrderTab extends JPanel {
 
-<<<<<<< Updated upstream
 	java.util.HashSet unique = new HashSet();
 	final DatabaseConnection databaseConnection = new DatabaseConnection();
-=======
 	DatabaseConnection db = new DatabaseConnection();
 	java.util.HashSet unique = new HashSet();
->>>>>>> Stashed changes
 
 	private final JPanel employeeTab = new JPanel();
 	private JPanel AddOrdPanel;
@@ -96,10 +94,7 @@ public class OrderTab extends JPanel {
 	private JButton searchByDateBtn;
 	
 	public OrderTab() {
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         
         GridBagLayout gbl_employeeTab = new GridBagLayout();
         gbl_employeeTab.columnWidths = new int[] {80, 80, 80, 80, 80, 80, 80, 80, 80, 80};

@@ -276,7 +276,7 @@ public class OrderTab extends JPanel {
 		gbc_deleteOrderNumberComboBox.gridy = 0;
 		DelOrdPanel.add(deleteOrderNumberComboBox, gbc_deleteOrderNumberComboBox);
 
-		deleteOrderBtn = new JButton("Delete employee");
+		deleteOrderBtn = new JButton("Delete order");
 		GridBagConstraints gbc_deleteOrderBtn = new GridBagConstraints();
 		gbc_deleteOrderBtn.insets = new Insets(0, 0, 5, 5);
 		gbc_deleteOrderBtn.gridx = 2;
@@ -663,6 +663,7 @@ public class OrderTab extends JPanel {
 			}
 		});
 
+		//DELETE ORDER BUTTON EVENT
 		deleteOrderBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

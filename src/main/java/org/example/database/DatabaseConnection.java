@@ -71,21 +71,22 @@ public class DatabaseConnection {
 			addErr.printStackTrace();
 		}
 	}
-	public void addOffice(String officeCode, String city, String phone, String addressLine1, String addressLine2, String state, String country, String postalCode, String territory) throws SQLException {
+	public void updateOffice(String officeCode, String city, String phone, String addressLine1, String addressLine2, String state, String country, String postalCode, String territory) throws SQLException {
 		try {
 			open();
 			pStmt = conn.prepareStatement("UPDATE offices SET city = ?, phone = ?, addressLine1 = ?, addressLine2 = ?, state = ?, country = ?, postalCode = ?, territory = ? WHERE officeCode = ?");
 					
-			pStmt.setString(1, officeCode);
-			pStmt.setString(2, city);
-			pStmt.setString(3, phone);
-			pStmt.setString(4, addressLine1);
-			pStmt.setString(5, addressLine2);
-			pStmt.setString(6, state);
-			pStmt.setString(7, country);
-			pStmt.setString(8, postalCode);
-			pStmt.setString(9, territory);
-			pStmt.execute();
+
+			pStmt.setString(1, city);
+			pStmt.setString(2, phone);
+			pStmt.setString(3, addressLine1);
+			pStmt.setString(4, addressLine2);
+			pStmt.setString(5, state);
+			pStmt.setString(6, country);
+			pStmt.setString(7, postalCode);
+			pStmt.setString(8, territory);
+			pStmt.setString(9, officeCode);
+			pStmt.executeUpdate();
 			close();
 		} catch (SQLException addErr) {
 			addErr.printStackTrace();
@@ -196,28 +197,82 @@ public class DatabaseConnection {
 			open();
 		    pStmt = conn.prepareStatement("SELECT * FROM employees");
 		    resSet = pStmt.executeQuery();
+		    	while (resSet.next()) {
+		    		int employeeNumber = resSet.getInt("employeeNumber");
+		    		String firstName = resSet.getString("firstName");
+		    		String lastName = resSet.getString("lastName");
+		    		String extension = resSet.getString("extension");
+		    		String email = resSet.getString("email");
+		    		String officeCode = resSet.getString("officeCode");
+		    		int reportsTo = resSet.getInt("reportsTo");
+		    		String jobTitle = resSet.getString("jobTitle");
+		    		Employee current = new Employee(employeeNumber, lastName, firstName,  extension, email, officeCode, reportsTo, jobTitle);
+		    		employees.add(current);
+		    	}
+		    	close();
+		    	return employees;
+		    }catch(SQLException e) {
+		      e.printStackTrace();
+		    }
+			return null;	 
+		}
+		
+		public List<Employee> sortEmployeesJobTitle(String chosenJobTitle) throws SQLException {
+			ArrayList<Employee> employees = new ArrayList<Employee>();
+			try{
+			open();
+		    pStmt = conn.prepareStatement("SELECT * FROM employees WHERE jobTitle = ?");
+		    pStmt.setString(1, chosenJobTitle);
+		    resSet = pStmt.executeQuery();
+		    	while (resSet.next()) {
+		    		int employeeNumber = resSet.getInt("employeeNumber");
+		    		String firstName = resSet.getString("firstName");
+		    		String lastName = resSet.getString("lastName");
+		    		String extension = resSet.getString("extension");
+		    		String email = resSet.getString("email");
+		    		String officeCode = resSet.getString("officeCode");
+		    		int reportsTo = resSet.getInt("reportsTo");
+		    		String jobTitle = resSet.getString("jobTitle");
+		    		Employee current = new Employee(employeeNumber, lastName, firstName,  extension, email, officeCode, reportsTo, jobTitle);
+		    		employees.add(current);
+		    	}
+		    	close();
+		    	return employees;
+		    }catch(SQLException e) {
+		      e.printStackTrace();
+		    }
+			return null;	 
+		}
+		
+		public List<OfficesList> showOffices() throws SQLException {
+			ArrayList<OfficesList> offices = new ArrayList<OfficesList>();
+			try{
+			open();
+		    pStmt = conn.prepareStatement("SELECT * FROM offices");
+		    resSet = pStmt.executeQuery();
 		    
 		    while (resSet.next()) {
-		    	int employeeNumber = resSet.getInt("employeeNumber");
-		    	String firstName = resSet.getString("firstName");
-		    	String lastName = resSet.getString("lastName");
-				String extension = resSet.getString("extension");
-		    	String email = resSet.getString("email");
 		    	String officeCode = resSet.getString("officeCode");
-		    	int reportsTo = resSet.getInt("reportsTo");
-		    	String jobTitle = resSet.getString("jobTitle");
+		    	String city = resSet.getString("city");
+		    	String phone = resSet.getString("phone");
+				String addressLine1 = resSet.getString("addressLine1");
+		    	String addressLine2 = resSet.getString("addressLine2");
+		    	String state = resSet.getString("state");
+		    	String country = resSet.getString("country");
+		    	String postalCode = resSet.getString("postalCode");
+		    	String territory = resSet.getString("territory");
 
 
 
-		    	Employee current = new Employee(employeeNumber, lastName, firstName,  extension, email, officeCode, reportsTo, jobTitle);
-		    	employees.add(current);
-		    	/*employees = employees.toString();*/
+		    	OfficesList current = new OfficesList(officeCode, city, phone,  addressLine1, addressLine2, state, country, postalCode, territory);
+		    	offices.add(current);
+		    	
 		    	
 		    	
 		      }
 		    
 		    close();
-		    return employees;
+		    return offices;
 		    } catch (SQLException e) {
 		      e.printStackTrace();
 		 }

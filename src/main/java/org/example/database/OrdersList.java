@@ -18,7 +18,7 @@ public class OrdersList {
         return orderNumber;
     }
 
-    public void setId(int id) {
+    public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
     }
 

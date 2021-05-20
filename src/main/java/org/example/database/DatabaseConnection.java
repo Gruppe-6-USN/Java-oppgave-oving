@@ -154,18 +154,17 @@ public class DatabaseConnection {
 			}
 		}
 
-		public void updateOrder(String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber, int orderNumber) throws SQLException {
+		public void updateOrder(String orderDate, String requiredDate, String shippedDate, String status, String comments, int orderNumber) throws SQLException {
 			try {
 				open();
-				pStmt = conn.prepareStatement("UPDATE orders SET orderDate = ?, requiredDate = ?, shippedDate = ?, status = ?, comments = ?, customerNumber = ? WHERE orderNumber = ?");
+				pStmt = conn.prepareStatement("UPDATE orders SET orderDate = ?, requiredDate = ?, shippedDate = ?, status = ?, comments = ? WHERE orderNumber = ?");
 
 				pStmt.setString(1, orderDate);
 				pStmt.setString(2, requiredDate);
 				pStmt.setString(3, shippedDate);
 				pStmt.setString(4, status);
 				pStmt.setString(5, comments);
-				pStmt.setInt(6, customerNumber);
-				pStmt.setInt(7, orderNumber);
+				pStmt.setInt(6, orderNumber);
 
 				pStmt.execute();
 				close();

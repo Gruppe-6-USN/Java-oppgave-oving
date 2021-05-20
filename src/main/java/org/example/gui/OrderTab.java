@@ -61,7 +61,6 @@ public class OrderTab extends JPanel {
 	private JLabel updOrderShippedLabel;
 	private JLabel updOrderStatusLabel;
 	private JLabel updOrderCommentsLabel;
-	private JLabel updOrderCustomerNumberLabel;
 	private JLabel updEmpJobTitleLabel;
 	private JComboBox updateOrderNumberComboBox;
 	private JTextField updateOrderDateTextField;
@@ -69,7 +68,6 @@ public class OrderTab extends JPanel {
 	private JTextField updateOrderShippedTextField;
 	private JTextField updateOrderStatusTextField;
 	private JTextField updateOrderCommentsTextField;
-	private JTextField updateOrderCustomerNumberTextField;
 	private JTextField updateEmployeeJobTitleTextField;
 	private JButton updateOrderBtn;
 	private JLabel delEmpNumLabel;
@@ -449,22 +447,7 @@ public class OrderTab extends JPanel {
 		gbc_updateEmployeeOfficeCodeTextField.gridy = 5;
 		UpdateOrderPanel.add(updateOrderCommentsTextField, gbc_updateEmployeeOfficeCodeTextField);
 
-		updOrderCustomerNumberLabel = new JLabel("Customer number: ");
-		GridBagConstraints gbc_updEmpReportsToLabel = new GridBagConstraints();
-		gbc_updEmpReportsToLabel.anchor = GridBagConstraints.EAST;
-		gbc_updEmpReportsToLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_updEmpReportsToLabel.gridx = 0;
-		gbc_updEmpReportsToLabel.gridy = 6;
-		UpdateOrderPanel.add(updOrderCustomerNumberLabel, gbc_updEmpReportsToLabel);
 
-		updateOrderCustomerNumberTextField = new JTextField();
-		updateOrderCustomerNumberTextField.setColumns(10);
-		GridBagConstraints gbc_updateEmployeeReportsToTextField = new GridBagConstraints();
-		gbc_updateEmployeeReportsToTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_updateEmployeeReportsToTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_updateEmployeeReportsToTextField.gridx = 1;
-		gbc_updateEmployeeReportsToTextField.gridy = 6;
-		UpdateOrderPanel.add(updateOrderCustomerNumberTextField, gbc_updateEmployeeReportsToTextField);
 
 		updateOrderBtn = new JButton("Update order");
 		GridBagConstraints gbc_updateEmployeeBtn = new GridBagConstraints();
@@ -717,7 +700,7 @@ public class OrderTab extends JPanel {
 						throw new MissingTextFieldException("Status is not present");
 					else if (getUpdateComment().isEmpty())
 						throw new MissingTextFieldException("Comments is not present");
-					db.updateOrder(getUpdateOrderDate(), getUpdateRequiredDate(), getUpdateShippingDate(), getUpdateStatus(), getUpdateComment(), getUpdateCustomerNumber(), getUpdateOrderNumber());
+					db.updateOrder(getUpdateOrderDate(), getUpdateRequiredDate(), getUpdateShippingDate(), getUpdateStatus(), getUpdateComment(), getUpdateOrderNumber());
 					orderConsoleTextArea.append("Order successfully updated! \n");
 
 					//functions that refreshes the combobox values and the database view
@@ -795,10 +778,7 @@ public class OrderTab extends JPanel {
 	public String getUpdateComment() {
 		return updateOrderCommentsTextField.getText();
 	}
-
-	public int getUpdateCustomerNumber() {
-		return Integer.parseInt(updateOrderCustomerNumberTextField.getText());
-	}
+	
 
 	public int getUpdateOrderNumber() {
 		int updateOrderNumber = (int) updateOrderNumberComboBox.getSelectedItem();
@@ -885,7 +865,6 @@ public class OrderTab extends JPanel {
 		updateOrderShippedTextField.setText("");
 		updateOrderStatusTextField.setText("");
 		updateOrderCommentsTextField.setText("");
-		updateOrderCustomerNumberTextField.setText("");
 	}
 }
 

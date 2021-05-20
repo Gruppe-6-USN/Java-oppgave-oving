@@ -53,7 +53,7 @@ public class OrderTab extends JPanel {
 	private JTextField addShippedDateTextField;
 	private JTextField addStatusTextField;
 	private JTextField addCommentsTextField;
-	private JTextField addCustomerNumberTextField;
+	private JComboBox addCustomerNumberComboBox;
 	private JButton addOrderBtn;
 	private JLabel updOrdNumLabel;
 	private JLabel updateOrderDateLabel;
@@ -229,14 +229,13 @@ public class OrderTab extends JPanel {
 		gbc_addCustomerNumberLabel.gridy = 6;
 		AddOrdPanel.add(addCustomerNumberLabel, gbc_addCustomerNumberLabel);
 
-		addCustomerNumberTextField = new JTextField();
-		addCustomerNumberTextField.setColumns(10);
-		GridBagConstraints gbc_addCustomerNumberTextField = new GridBagConstraints();
-		gbc_addCustomerNumberTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_addCustomerNumberTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_addCustomerNumberTextField.gridx = 1;
-		gbc_addCustomerNumberTextField.gridy = 6;
-		AddOrdPanel.add(addCustomerNumberTextField, gbc_addCustomerNumberTextField);
+		addCustomerNumberComboBox = new JComboBox();
+		GridBagConstraints gbc_addCustomerNumberComboBox = new GridBagConstraints();
+		gbc_addCustomerNumberComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_addCustomerNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_addCustomerNumberComboBox.gridx = 1;
+		gbc_addCustomerNumberComboBox.gridy = 6;
+		AddOrdPanel.add(addCustomerNumberComboBox, gbc_addCustomerNumberComboBox);
 
 		addOrderBtn = new JButton("Add order");
 		GridBagConstraints gbc_addOrderBtn = new GridBagConstraints();
@@ -785,7 +784,7 @@ public class OrderTab extends JPanel {
 	}
 
 	public int getCustomerNumber() {
-		return Integer.parseInt(addCustomerNumberTextField.getText());
+		return Integer.parseInt(addCustomerNumberComboBox.getText());
 	}
 
 	public String getOrderDate() {
@@ -850,7 +849,7 @@ public class OrderTab extends JPanel {
 		addShippedDateTextField.setText("");
 		addStatusTextField.setText("");
 		addCommentsTextField.setText("");
-		addCustomerNumberTextField.setText("");
+		addCustomerNumberComboBox.setText("");
 	}
 
 	//METHODE TO CLEAR ALL THE UPDATE FIELDS

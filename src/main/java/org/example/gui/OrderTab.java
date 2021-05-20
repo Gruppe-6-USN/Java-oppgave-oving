@@ -5,6 +5,11 @@ import org.example.database.DatabaseConnection;
 import org.example.database.OrdersList;
 import org.example.gui.exceptions.MissingTextFieldException;
 
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +18,8 @@ import java.io.IOException;
 
 import java.sql.SQLException;
 
+import java.io.StringWriter;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

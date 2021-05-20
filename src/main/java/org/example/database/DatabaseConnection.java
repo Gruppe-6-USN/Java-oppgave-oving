@@ -1,15 +1,13 @@
 package org.example.database;
 
 
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
+
+import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-import org.example.gui.*;
-
-import javax.swing.*;
 
 public class DatabaseConnection extends Component {
 

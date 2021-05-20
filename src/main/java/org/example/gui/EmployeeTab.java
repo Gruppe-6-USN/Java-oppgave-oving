@@ -691,6 +691,8 @@ public class EmployeeTab extends JPanel{
 						throw new MissingTextFieldException("Email must include @");
 					else if (jobTitle.isEmpty())
 						throw new MissingTextFieldException("Job title is not present");
+					else if(!officeCode.matches("[1-9]"))
+						throw new MissingTextFieldException("Office code does not exist");
 
 					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
 					consoleTextArea.setText("New employee successfully added! \n");
@@ -711,6 +713,8 @@ public class EmployeeTab extends JPanel{
 					consoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
 				} catch (SQLException sqlException) {
 					consoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
+				} catch(Exception broadErr) {
+					consoleTextArea.append("Kukk i hode");
 				}
 			}
 		});

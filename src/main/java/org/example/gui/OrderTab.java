@@ -72,7 +72,7 @@ public class OrderTab extends JPanel {
 	private JTextField updateOrderCustomerNumberTextField;
 	private JTextField updateEmployeeJobTitleTextField;
 	private JButton updateOrderBtn;
-	private JLabel delEmpNumLabel;
+	private JLabel orderNumberLabel;
 	private JComboBox deleteOrderNumberComboBox;
 	private JButton deleteOrderBtn;
 	private JPanel OrderDbView;
@@ -262,13 +262,13 @@ public class OrderTab extends JPanel {
 		gbl_DelOrdPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		DelOrdPanel.setLayout(gbl_DelOrdPanel);
 
-		delEmpNumLabel = new JLabel("Employee number: ");
-		GridBagConstraints gbc_delEmpNumLabel = new GridBagConstraints();
-		gbc_delEmpNumLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_delEmpNumLabel.anchor = GridBagConstraints.EAST;
-		gbc_delEmpNumLabel.gridx = 0;
-		gbc_delEmpNumLabel.gridy = 0;
-		DelOrdPanel.add(delEmpNumLabel, gbc_delEmpNumLabel);
+		orderNumberLabel = new JLabel("Order Number: ");
+		GridBagConstraints gbc_orderNumberLabel = new GridBagConstraints();
+		gbc_orderNumberLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_orderNumberLabel.anchor = GridBagConstraints.EAST;
+		gbc_orderNumberLabel.gridx = 0;
+		gbc_orderNumberLabel.gridy = 0;
+		DelOrdPanel.add(orderNumberLabel, gbc_orderNumberLabel);
 
 		deleteOrderNumberComboBox = new JComboBox();
 		GridBagConstraints gbc_deleteOrderNumberComboBox = new GridBagConstraints();

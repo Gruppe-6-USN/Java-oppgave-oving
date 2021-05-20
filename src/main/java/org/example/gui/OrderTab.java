@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,24 +17,17 @@ import java.io.IOException;
 
 import java.sql.SQLException;
 
-import java.io.StringWriter;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.List;
 
-import javax.swing.*;
-
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.Color;
 
-import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class OrderTab extends JPanel {

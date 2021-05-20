@@ -136,18 +136,18 @@ public class DatabaseConnection {
 			}
 		}
 
-		public void updateOrder(String orderNumber, String orderDate, String requireDate, String shippedDate, String status, String comments, int customerNumber ) throws SQLException {
+		public void updateOrder(String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber, int orderNumber) throws SQLException {
 			try {
 				open();
-				pStmt = conn.prepareStatement("UPDATE orders SET orderNumber = ?, orderDate = ?, requireDate = ?, shippedDate = ?, status = ?, comments = ?, customerNumber = ?");
+				pStmt = conn.prepareStatement("UPDATE orders SET orderDate = ?, requiredDate = ?, shippedDate = ?, status = ?, comments = ?, customerNumber = ? WHERE orderNumber = ?");
 
-				pStmt.setString(1, orderNumber);
-				pStmt.setString(2, orderDate);
-				pStmt.setString(3, requireDate);
-				pStmt.setString(4, shippedDate);
-				pStmt.setString(5, status);
-				pStmt.setString(6, comments);
-				pStmt.setInt(7, customerNumber);
+				pStmt.setString(1, orderDate);
+				pStmt.setString(2, requiredDate);
+				pStmt.setString(3, shippedDate);
+				pStmt.setString(4, status);
+				pStmt.setString(5, comments);
+				pStmt.setInt(6, customerNumber);
+				pStmt.setInt(7, orderNumber);
 
 				pStmt.execute();
 				close();

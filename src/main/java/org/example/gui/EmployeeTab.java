@@ -657,8 +657,6 @@ public class EmployeeTab extends JPanel{
 				} catch(MissingTextFieldException err){
 					consoleTextArea.append("Something went wrong. Error: " + err.getMessage() + "\n");
 					err.printStackTrace();
-				} catch (SQLIntegrityConstraintViolationException errSql) {
-					consoleTextArea.append("Something went wrong. Error: " + errSql.getMessage() + "\n" );
 				} catch(Exception errEmail) {
 					consoleTextArea.append("Something went wrong. Error: " + errEmail.getMessage() + "\n");
 				}
@@ -718,12 +716,8 @@ public class EmployeeTab extends JPanel{
 					consoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
 				} catch(NumberFormatException numErr) {
 					consoleTextArea.append("Something went wrong. Error: " + "Employee number and reports to has to be a number \n");
-				}catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
-					consoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
-				} catch (SQLException sqlException) {
-					consoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
 				} catch(Exception broadErr) {
-					consoleTextArea.append("feil");
+					consoleTextArea.append("Something went wrong. Error" + broadErr.getMessage());
 				}
 			}
 		});

@@ -83,9 +83,9 @@ public class OfficesTab extends JPanel {
         gbl_employeeTab.rowWeights = new double[]{Double.MIN_VALUE};
         employeeTab.setLayout(gbl_employeeTab);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{266, 266, 266, 0};
+		gridBagLayout.columnWidths = new int[] {350, 266};
 		gridBagLayout.rowHeights = new int[] {130, 130, 228};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0};
 		setLayout(gridBagLayout);
 		
@@ -269,8 +269,8 @@ public class OfficesTab extends JPanel {
 		GridBagConstraints gbc_OfficeDbView = new GridBagConstraints();
 		gbc_OfficeDbView.gridheight = 2;
 		gbc_OfficeDbView.fill = GridBagConstraints.BOTH;
-		gbc_OfficeDbView.gridx = 2;
-		gbc_OfficeDbView.gridy = 1;
+		gbc_OfficeDbView.gridx = 1;
+		gbc_OfficeDbView.gridy = 0;
 		add(OfficeDbView, gbc_OfficeDbView);
 		GridBagLayout gbl_OfficeDbView = new GridBagLayout();
 		gbl_OfficeDbView.columnWidths = new int[] {41, 133, 0};
@@ -293,11 +293,12 @@ public class OfficesTab extends JPanel {
 		JScrollPane databaseScroll = new JScrollPane(databaseTextArea);
 		databaseScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		GridBagConstraints gbc_databaseScroll = new GridBagConstraints();
+		gbc_databaseScroll.gridheight = 2;
 		gbc_databaseScroll.gridwidth = 3;
 		gbc_databaseScroll.insets = new Insets(0, 0, 5, 0);
 		gbc_databaseScroll.fill = GridBagConstraints.BOTH;
 		gbc_databaseScroll.gridx = 0;
-		gbc_databaseScroll.gridy = 1;
+		gbc_databaseScroll.gridy = 0;
 		OfficeDbView.add(databaseScroll, gbc_databaseScroll);
 		
 		refreshDatabaseTextAreaBtn = new JButton("Refresh view");
@@ -309,6 +310,7 @@ public class OfficesTab extends JPanel {
 		
 		saveBtn = new JButton("Save to file");
 		GridBagConstraints gbc_saveBtn = new GridBagConstraints();
+		gbc_saveBtn.anchor = GridBagConstraints.WEST;
 		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_saveBtn.gridx = 1;
 		gbc_saveBtn.gridy = 2;
@@ -353,6 +355,7 @@ public class OfficesTab extends JPanel {
 		
 		clearConsoleBtn = new JButton("Clear console");
 		GridBagConstraints gbc_clearConsoleBtn = new GridBagConstraints();
+		gbc_clearConsoleBtn.anchor = GridBagConstraints.WEST;
 		gbc_clearConsoleBtn.gridx = 0;
 		gbc_clearConsoleBtn.gridy = 1;
 		OfficeConsolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);

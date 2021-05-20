@@ -7,8 +7,25 @@ import org.example.gui.exceptions.MissingTextFieldException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+=======
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
+>>>>>>> f3e8b9b66fcbadcf64229abeb0a5762f4f8e2622
 import java.util.List;
 
 import javax.swing.JButton;
@@ -77,6 +94,12 @@ public class OrderTab extends JPanel {
 	private JPanel OrderConsolePanel;
 	private JTextArea orderConsoleTextArea;
 	private JButton clearOrderConsoleBtn;
+	private JLabel searchByDateLabel;
+	private JLabel dateFromLabel;
+	private JLabel dateToLabel;
+	private JTextField dateFromTextField;
+	private JTextField dateToTextField;
+	private JButton searchByDateBtn;
 	
 	public OrderTab() {
 		final DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -245,10 +268,10 @@ public class OrderTab extends JPanel {
 		gbc_DelOrdPanel.gridy = 0;
 		add(DelOrdPanel, gbc_DelOrdPanel);
 		GridBagLayout gbl_DelOrdPanel = new GridBagLayout();
-		gbl_DelOrdPanel.columnWidths = new int[] {101, 133, 0};
-		gbl_DelOrdPanel.rowHeights = new int[]{0, 0, 0};
-		gbl_DelOrdPanel.columnWeights = new double[]{0.0, 1.0, 0.0};
-		gbl_DelOrdPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_DelOrdPanel.columnWidths = new int[] {101, 0, 133, 0};
+		gbl_DelOrdPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_DelOrdPanel.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0};
+		gbl_DelOrdPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		DelOrdPanel.setLayout(gbl_DelOrdPanel);
 		
 		delEmpNumLabel = new JLabel("Employee number: ");
@@ -263,16 +286,63 @@ public class OrderTab extends JPanel {
 		GridBagConstraints gbc_deleteEmployeeNumberComboBox = new GridBagConstraints();
 		gbc_deleteEmployeeNumberComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_deleteEmployeeNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_deleteEmployeeNumberComboBox.gridx = 1;
+		gbc_deleteEmployeeNumberComboBox.gridx = 2;
 		gbc_deleteEmployeeNumberComboBox.gridy = 0;
 		DelOrdPanel.add(deleteEmployeeNumberComboBox, gbc_deleteEmployeeNumberComboBox);
 		
 		deleteEmployeeBtn = new JButton("Delete employee");
 		GridBagConstraints gbc_deleteEmployeeBtn = new GridBagConstraints();
-		gbc_deleteEmployeeBtn.insets = new Insets(0, 0, 0, 5);
-		gbc_deleteEmployeeBtn.gridx = 1;
+		gbc_deleteEmployeeBtn.insets = new Insets(0, 0, 5, 5);
+		gbc_deleteEmployeeBtn.gridx = 2;
 		gbc_deleteEmployeeBtn.gridy = 1;
 		DelOrdPanel.add(deleteEmployeeBtn, gbc_deleteEmployeeBtn);
+		
+		searchByDateLabel = new JLabel("Search order by date:");
+		GridBagConstraints gbc_searchByDateLabel = new GridBagConstraints();
+		gbc_searchByDateLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_searchByDateLabel.gridx = 0;
+		gbc_searchByDateLabel.gridy = 2;
+		DelOrdPanel.add(searchByDateLabel, gbc_searchByDateLabel);
+		
+		dateFromLabel = new JLabel("Date from (format yyyy-mm-dd):");
+		GridBagConstraints gbc_dateFromLabel = new GridBagConstraints();
+		gbc_dateFromLabel.anchor = GridBagConstraints.EAST;
+		gbc_dateFromLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_dateFromLabel.gridx = 0;
+		gbc_dateFromLabel.gridy = 3;
+		DelOrdPanel.add(dateFromLabel, gbc_dateFromLabel);
+		
+		dateFromTextField = new JTextField();
+		GridBagConstraints gbc_dateFromTextField = new GridBagConstraints();
+		gbc_dateFromTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_dateFromTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_dateFromTextField.gridx = 2;
+		gbc_dateFromTextField.gridy = 3;
+		DelOrdPanel.add(dateFromTextField, gbc_dateFromTextField);
+		dateFromTextField.setColumns(10);
+		
+		dateToLabel = new JLabel("Date to (format yyyy-mm-dd):");
+		GridBagConstraints gbc_dateToLabel = new GridBagConstraints();
+		gbc_dateToLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_dateToLabel.gridx = 0;
+		gbc_dateToLabel.gridy = 4;
+		DelOrdPanel.add(dateToLabel, gbc_dateToLabel);
+		
+		dateToTextField = new JTextField();
+		GridBagConstraints gbc_dateToTextField = new GridBagConstraints();
+		gbc_dateToTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_dateToTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_dateToTextField.gridx = 2;
+		gbc_dateToTextField.gridy = 4;
+		DelOrdPanel.add(dateToTextField, gbc_dateToTextField);
+		dateToTextField.setColumns(10);
+		
+		searchByDateBtn = new JButton("Search order");
+		GridBagConstraints gbc_searchByDateBtn = new GridBagConstraints();
+		gbc_searchByDateBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_searchByDateBtn.gridx = 2;
+		gbc_searchByDateBtn.gridy = 5;
+		DelOrdPanel.add(searchByDateBtn, gbc_searchByDateBtn);
 		
 		UpdateOrderPanel = new JPanel();
 		UpdateOrderPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Update order", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -529,6 +599,44 @@ public class OrderTab extends JPanel {
 		setVisible(true);
 
 		/////////////////Action listeners //////////
+		
+		final StringWriter stackTraceWriter = new StringWriter();
+		final Throwable throwableElement = new Throwable();
+		
+	  	// SEARCH BY DATE
+        searchByDateBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent searchByDate) {
+        		
+        	try {
+        		
+        		if (dateFromTextField.getText().isEmpty() || dateToTextField.getText().isEmpty())
+				{
+					
+					throw new MissingTextFieldException("you must fill out all the dates in the Search order by date fields");
+				}
+        		
+        		String dateString1 =  dateFromTextField.getText() ;
+        		String dateString2 =  dateToTextField.getText() ;
+        		DateFormat d = new SimpleDateFormat("yyyy-mm-dd");
+        		d.parse(dateString1);
+        		d.parse(dateString2);
+        		List<OrdersList> orders = databaseConnection.showOrders(dateString1, dateString2);
+				databaseTextArea.setText("");
+                for (OrdersList order : orders) {
+                    databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() +  ", " + order.getStatus() + ", " + order.getComments() + "\n");
+        		
+                } 
+			} catch (SQLException | ParseException error) {
+				orderConsoleTextArea.append("Problem fetching from database. Error: " + error);
+				throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
+				orderConsoleTextArea.append("Connection failed. Error: " + throwableElement.toString() + "\n" + stackTraceWriter.toString());
+			}
+			catch (MissingTextFieldException exception)
+			{
+			    orderConsoleTextArea.append(exception.getMessage() + "\n");        
+			}
+    	} 
+    });
 
 		//ADD ORDER EVENT
 		addOrderBtn.addActionListener(new ActionListener() {

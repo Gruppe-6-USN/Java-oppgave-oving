@@ -520,6 +520,7 @@ public String getTerritory() {
 }
 //---------------ADDITIONAL METHODS-----------------//
 
+// method for refreshing the databaseTextArea
 public void refreshDatabaseTextArea() {
 	try {
 	List<OfficesList> offices = db.showOffices();
@@ -531,7 +532,7 @@ public void refreshDatabaseTextArea() {
 		err.printStackTrace();
 	}
 }
-
+// method for the officeCode ComboBox
 public void refreshOfficeCodeComboBox() {
 	try {
 	List<OfficesList> offices = db.showOffices();
@@ -545,7 +546,7 @@ public void refreshOfficeCodeComboBox() {
 		err.printStackTrace();
 	}
 }
-
+// method for clearing the text fields
 public void clearUpdateFields() {
 	updateCityTextField.setText("");
 	updatePhoneTextField.setText("");

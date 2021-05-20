@@ -636,7 +636,7 @@ public class OrderTab extends JPanel {
 
 
 					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
-					orderConsoleTextArea.setText("You added a order with order number" + orderNumber);
+					
 
 					//function to clear fields after update order
 					clearAddOrderFields();
@@ -644,12 +644,7 @@ public class OrderTab extends JPanel {
 				}//Må ha en catch her for å gi tilbakemeldinger
 				catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
-				} catch (MysqlDataTruncation mysqlDataTruncation) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + mysqlDataTruncation.getMessage());
-				} catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
-				}
-				catch (SQLException sqlException) {
+				}catch (SQLException sqlException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
 				}catch (NumberFormatException numberFormatException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number must be a number" + "\n");
@@ -676,7 +671,7 @@ public class OrderTab extends JPanel {
 				if (option==0) {
 					try {
 						db.deleteOrder(getDeleteOrderNumber());
-						orderConsoleTextArea.append("Order successfully deleted! \n");
+
 						//functions that refreshes the combobox values and the database view
 						refreshOrderNumberComboBox();
 					} catch (SQLException exception) {
@@ -711,7 +706,7 @@ public class OrderTab extends JPanel {
 					else if (getUpdateComment().isEmpty())
 						throw new MissingTextFieldException("Comments is not present");
 					db.updateOrder(getUpdateOrderDate(), getUpdateRequiredDate(), getUpdateShippingDate(), getUpdateStatus(), getUpdateComment(), getUpdateOrderNumber());
-					orderConsoleTextArea.append("Order successfully updated! \n");
+
 
 					//functions that refreshes the combobox values and the database view
 

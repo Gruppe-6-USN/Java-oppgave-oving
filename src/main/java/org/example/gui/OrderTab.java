@@ -667,13 +667,17 @@ public class OrderTab extends JPanel {
 		deleteOrderBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					db.deleteOrder(getDeleteOrderNumber());
-					orderConsoleTextArea.append("Order successfully deleted! \n");
-					//functions that refreshes the combobox values and the database view
-					refreshOrderNumberComboBox();
-				} catch (SQLException exception) {
-					exception.printStackTrace();
+				int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the order? ", "Delete", JOptionPane.YES_NO_OPTION);
+
+				if (option==0) {
+					try {
+						db.deleteOrder(getDeleteOrderNumber());
+						orderConsoleTextArea.append("Order successfully deleted! \n");
+						//functions that refreshes the combobox values and the database view
+						refreshOrderNumberComboBox();
+					} catch (SQLException exception) {
+						exception.printStackTrace();
+					}
 				}
 			}
 		});

@@ -26,7 +26,6 @@ import java.awt.Color;
 public class EmployeeTab extends JPanel{
 	
 	DatabaseConnection db = new DatabaseConnection();
-	java.util.HashSet unique = new HashSet();
 	JFileChooser fileChooser = new JFileChooser();
 	
 	private final JPanel employeeTab = new JPanel();
@@ -58,7 +57,7 @@ public class EmployeeTab extends JPanel{
 	private JLabel updateOfficeCodeLabel;
 	private JLabel updateReportsToLabel;
 	private JLabel updateJobTitleLabel;
-	private JComboBox updateEmployeeNumberComboBox;
+	private JComboBox<Integer> updateEmployeeNumberComboBox;
 	private JTextField updateFirstNameTextField;
 	private JTextField updateLastNameTextField;
 	private JTextField updateExtensionTextField;
@@ -68,12 +67,12 @@ public class EmployeeTab extends JPanel{
 	private JTextField updateJobTitleTextField;
 	private JButton updateEmployeeBtn;
 	private JLabel deleteEmployeeNumberLabel;
-	private JComboBox deleteEmployeeNumberComboBox;
+	private JComboBox<Integer> deleteEmployeeNumberComboBox;
 	private JButton deleteEmployeeBtn;
 	private JPanel EmployeeDatabasePanel;
 	private JTextArea databaseTextArea;
 	private JButton refreshDatabaseTextAreaBtn;
-	private JComboBox chooseJobTitleComboBox;
+	private JComboBox<String> chooseJobTitleComboBox;
 	private JLabel chooseJobTitleLabel;
 	private JPanel EmployeeConsolePanel;
 	private JTextArea consoleTextArea;
@@ -853,8 +852,9 @@ public class EmployeeTab extends JPanel{
 	
 	public void refreshJobTitleComboBox() {
 		try {
+			chooseJobTitleComboBox.removeAllItems();
 		List<Employee> employees = db.showEmployees();
-		chooseJobTitleComboBox.removeAllItems();
+		HashSet<String> unique = new HashSet<String>();
 			for (Employee employee : employees) {
 				if (unique.add(employee.getJobTitle())) {
 					chooseJobTitleComboBox.addItem(employee.getJobTitle());
@@ -865,6 +865,7 @@ public class EmployeeTab extends JPanel{
 			err.printStackTrace();
 		}
 	}
+	
 	
 	public void refreshDatabaseTextArea() {
 		try {

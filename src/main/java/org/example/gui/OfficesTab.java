@@ -435,7 +435,10 @@ public class OfficesTab extends JPanel {
 							officeConsoleTextArea.setText("Office updated: " + "the office with the office code: " + officeCode + "\nin the city: " + city + " is changed\n");
 							//functions that refreshes
 							refreshDatabaseTextArea();
-
+							
+							//function to clear fields after update
+							clearUpdateFields();
+							
 						} catch(SQLException sqlErr) {
 							sqlErr.printStackTrace();
 						}		 	
@@ -543,5 +546,16 @@ public void refreshOfficeCodeComboBox() {
 	}
 }
 
+public void clearUpdateFields() {
+	updateCityTextField.setText("");
+	updatePhoneTextField.setText("");
+	updateStreetAddressTextField.setText("");
+	updateAptTextField.setText("");
+	updateStateTextField.setText("");
+	updateCountryTextField.setText("");
+	updatePostalCodeTextField.setText("");
+	updateTerritorytextField.setText("");
+	officeConsoleTextArea.append("*cleared text fields for update employee. \n");
+}
 
 }

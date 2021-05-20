@@ -1,45 +1,22 @@
 package org.example.gui;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.TextArea;
+import org.example.database.DatabaseConnection;
+import org.example.database.OfficesList;
+import org.example.gui.exceptions.MissingTextFieldException;
+
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.example.gui.exceptions.MissingTextFieldException;
-import org.example.database.*;
-
-import javax.swing.JTabbedPane;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
-import java.awt.Color;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 
 public class OfficesTab extends JPanel {
 

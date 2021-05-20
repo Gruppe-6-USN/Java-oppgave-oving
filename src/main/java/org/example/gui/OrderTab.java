@@ -1,36 +1,26 @@
 package org.example.gui;
 
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-
 import org.example.database.Customer;
 import org.example.database.DatabaseConnection;
-import org.example.database.OfficesList;
 import org.example.database.OrdersList;
 import org.example.gui.exceptions.MissingTextFieldException;
 
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
-
-import javax.swing.*;
-
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.GridBagConstraints;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Color;
 
 public class OrderTab extends JPanel {
 

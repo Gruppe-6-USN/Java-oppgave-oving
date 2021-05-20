@@ -1,27 +1,23 @@
 package org.example.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.*;
+import org.example.database.DatabaseConnection;
+import org.example.database.Employee;
+import org.example.gui.exceptions.MissingTextFieldException;
 
 import javax.swing.*;
-
-import org.example.gui.exceptions.MissingTextFieldException;
-import org.example.database.*;
-
-
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.GridBagConstraints;
-
-import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Color;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.List;
 
 public class EmployeeTab extends JPanel{
 	

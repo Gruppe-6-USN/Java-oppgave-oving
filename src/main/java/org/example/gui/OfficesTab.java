@@ -419,6 +419,8 @@ public class OfficesTab extends JPanel {
 								throw new MissingTextFieldException("City is not present");
 							else if (phone.isEmpty())
 								throw new MissingTextFieldException("Phone is not present");
+							else if (phone.length() > 11 || phone.length() < 11)
+								throw new MissingTextFieldException("Phone number must contain one + and 10 integers  ");
 							else if (addressLine1.isEmpty())
 								throw new MissingTextFieldException("Street address is not present");
 							else if (addressLine2.isEmpty())

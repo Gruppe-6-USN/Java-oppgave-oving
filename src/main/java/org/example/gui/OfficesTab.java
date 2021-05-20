@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.List;
 
@@ -410,11 +411,10 @@ public class OfficesTab extends JPanel {
 							String postalCode = getPostalCode();
 							String territory = getTerritory();
 							
-							if (officeCode.isEmpty() && city.isEmpty() && phone.isEmpty() && addressLine1.isEmpty() && addressLine2.isEmpty() && state.isEmpty() && country.isEmpty() && postalCode.isEmpty() && territory.isEmpty())
+							if (city.isEmpty() && phone.isEmpty() && addressLine1.isEmpty() && addressLine2.isEmpty() && state.isEmpty() && country.isEmpty() && postalCode.isEmpty() && territory.isEmpty())
 							{
 								throw new MissingTextFieldException("you must fill out all the fields");
-							} else if (officeCode.isEmpty())
-								throw new MissingTextFieldException("OfficeCode must be a number");
+							}
 							else if (city.isEmpty())
 								throw new MissingTextFieldException("City is not present");
 							else if (phone.isEmpty())
@@ -439,13 +439,14 @@ public class OfficesTab extends JPanel {
 							
 							//function to clear fields after update
 							clearUpdateFields();
-							
-						} catch(SQLException sqlErr) {
-							sqlErr.printStackTrace();
-						}		 	
+						
+						}	
 						catch (MissingTextFieldException exception) {
-						officeConsoleTextArea.append(exception.getMessage() + "\n");
-						}
+								officeConsoleTextArea.append(exception.getMessage() + "\n");
+								}
+					    catch (SQLIntegrityConstraintViolationException errSql) {
+						officeConsoleTextArea.append("Something went wrong. Error: " + errSql.getMessage() + "\n" );
+					     }
 						catch (Exception exception) {
 							exception.printStackTrace();
 						}

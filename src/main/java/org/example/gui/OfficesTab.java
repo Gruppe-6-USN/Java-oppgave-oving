@@ -21,7 +21,6 @@ import java.util.List;
 public class OfficesTab extends JPanel {
 
 	DatabaseConnection db = new DatabaseConnection();
-	java.util.HashSet unique = new HashSet();
 	JFileChooser fileChooser = new JFileChooser();
 	
 	private final JPanel employeeTab = new JPanel();
@@ -41,7 +40,7 @@ public class OfficesTab extends JPanel {
 	private JTextField updateTerritorytextField;
 	private JLabel updateOfficeCodeLabel_1;
 	private JLabel updateStateLabel_1;
-	private JComboBox officeCodeComboBox;
+	private JComboBox<String> officeCodeComboBox;
 	private JLabel updateAptNumberLabel_1;
 	private JLabel updateStreetAdressLabel_1;
 	private JLabel updatePhoneLabel_1;
@@ -92,7 +91,7 @@ public class OfficesTab extends JPanel {
 		gbc_updateOfficeCodeLabel_1.gridy = 0;
 		updateOfficePanel.add(updateOfficeCodeLabel_1, gbc_updateOfficeCodeLabel_1);
 		
-		officeCodeComboBox = new JComboBox();
+		officeCodeComboBox = new JComboBox<String>();
 		GridBagConstraints gbc_officeCodeComboBox = new GridBagConstraints();
 		gbc_officeCodeComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_officeCodeComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -519,6 +518,7 @@ public void refreshDatabaseTextArea() {
 public void refreshOfficeCodeComboBox() {
 	try {
 	List<OfficesList> offices = db.showOffices();
+	HashSet<String> unique = new HashSet<String>();
 	officeCodeComboBox.removeAllItems();
 		for (OfficesList officesList : offices) {
 			if (unique.add(officesList.getOfficeCode())) {

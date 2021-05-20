@@ -1,24 +1,14 @@
 package org.example.gui;
 
 import org.example.database.DatabaseConnection;
-import org.example.database.Employee;
 import org.example.database.OrdersList;
 import org.example.gui.exceptions.MissingTextFieldException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,8 +32,10 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 public class OrderTab extends JPanel {
-	
-	
+
+	java.util.HashSet unique = new HashSet();
+	final DatabaseConnection databaseConnection = new DatabaseConnection();
+
 	private final JPanel employeeTab = new JPanel();
 	private JPanel AddOrdPanel;
 	private JPanel DelOrdPanel;
@@ -81,8 +73,8 @@ public class OrderTab extends JPanel {
 	private JTextField updateEmployeeJobTitleTextField;
 	private JButton updateOrderBtn;
 	private JLabel delEmpNumLabel;
-	private JComboBox deleteEmployeeNumberComboBox;
-	private JButton deleteEmployeeBtn;
+	private JComboBox deleteOrderNumberComboBox;
+	private JButton deleteOrderBtn;
 	private JPanel OrderDbView;
 	private JTextArea databaseTextArea;
 	private JButton refreshOrderDbViewBtn;
@@ -99,7 +91,7 @@ public class OrderTab extends JPanel {
 	private JButton searchByDateBtn;
 	
 	public OrderTab() {
-		final DatabaseConnection databaseConnection = new DatabaseConnection();
+
         
         GridBagLayout gbl_employeeTab = new GridBagLayout();
         gbl_employeeTab.columnWidths = new int[] {80, 80, 80, 80, 80, 80, 80, 80, 80, 80};
@@ -279,20 +271,20 @@ public class OrderTab extends JPanel {
 		gbc_delEmpNumLabel.gridy = 0;
 		DelOrdPanel.add(delEmpNumLabel, gbc_delEmpNumLabel);
 		
-		deleteEmployeeNumberComboBox = new JComboBox();
-		GridBagConstraints gbc_deleteEmployeeNumberComboBox = new GridBagConstraints();
-		gbc_deleteEmployeeNumberComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_deleteEmployeeNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_deleteEmployeeNumberComboBox.gridx = 2;
-		gbc_deleteEmployeeNumberComboBox.gridy = 0;
-		DelOrdPanel.add(deleteEmployeeNumberComboBox, gbc_deleteEmployeeNumberComboBox);
+		deleteOrderNumberComboBox = new JComboBox();
+		GridBagConstraints gbc_deleteOrderNumberComboBox = new GridBagConstraints();
+		gbc_deleteOrderNumberComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_deleteOrderNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_deleteOrderNumberComboBox.gridx = 2;
+		gbc_deleteOrderNumberComboBox.gridy = 0;
+		DelOrdPanel.add(deleteOrderNumberComboBox, gbc_deleteOrderNumberComboBox);
 		
-		deleteEmployeeBtn = new JButton("Delete employee");
-		GridBagConstraints gbc_deleteEmployeeBtn = new GridBagConstraints();
-		gbc_deleteEmployeeBtn.insets = new Insets(0, 0, 5, 5);
-		gbc_deleteEmployeeBtn.gridx = 2;
-		gbc_deleteEmployeeBtn.gridy = 1;
-		DelOrdPanel.add(deleteEmployeeBtn, gbc_deleteEmployeeBtn);
+		deleteOrderBtn = new JButton("Delete employee");
+		GridBagConstraints gbc_deleteOrderBtn = new GridBagConstraints();
+		gbc_deleteOrderBtn.insets = new Insets(0, 0, 5, 5);
+		gbc_deleteOrderBtn.gridx = 2;
+		gbc_deleteOrderBtn.gridy = 1;
+		DelOrdPanel.add(deleteOrderBtn, gbc_deleteOrderBtn);
 		
 		searchByDateLabel = new JLabel("Search order by date:");
 		GridBagConstraints gbc_searchByDateLabel = new GridBagConstraints();
@@ -595,6 +587,10 @@ public class OrderTab extends JPanel {
 		deleteBtn.setToolTipText("Delete an employee from the database");
 		setVisible(true);
 
+		//-------FUNCTIONS TO RUN AT STARTUP------//
+		refreshOrderNumberComboBox();
+
+
 		/////////////////Action listeners //////////
 		
 		final StringWriter stackTraceWriter = new StringWriter();
@@ -662,6 +658,20 @@ public class OrderTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				orderConsoleTextArea.setText("");
+			}
+		});
+
+		deleteOrderBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					databaseConnection.deleteOrder(getDeleteOrderNumber());
+					orderConsoleTextArea.append("Order successfully deleted! \n");
+					//functions that refreshes the combobox values and the database view
+						refreshOrderNumberComboBox();
+				} catch (SQLException exception) {
+					exception.printStackTrace();
+				}
 			}
 		});
 
@@ -738,6 +748,28 @@ public class OrderTab extends JPanel {
 
 	public String getComment() {
 		return addCommentsTextField.getText();
+	}
+	public int getDeleteOrderNumber() {
+		int deleteOrderNumber = (int)deleteOrderNumberComboBox.getSelectedItem();
+		return deleteOrderNumber;
+	}
+
+
+
+	public void refreshOrderNumberComboBox() {
+		try {
+			List<OrdersList> orders = databaseConnection.showOrders();
+			deleteOrderNumberComboBox.setSelectedItem("");
+			for (OrdersList order : orders) {
+				if (unique.add(order.getOrderNumber())){
+					deleteOrderNumberComboBox.addItem(order.getOrderNumber());
+				}
+			}
+			orderConsoleTextArea.append("*refreshed job title selection. \n");
+		} catch (SQLException err) {
+			err.printStackTrace();
+
+		}
 	}
 }
 

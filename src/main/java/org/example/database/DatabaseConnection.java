@@ -4,9 +4,12 @@ package org.example.database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.example.gui.*;
 
 public class DatabaseConnection {
 
+	
+	
 	private static final String database = "jdbc:mysql://itfag.usn.no/233574";
 
 	private static final String brukernavn = "233574";

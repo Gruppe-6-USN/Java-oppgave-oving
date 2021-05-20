@@ -693,7 +693,7 @@ public class OrderTab extends JPanel {
 
 					//functions that refreshes the combobox values and the database view
 
-					//refreshDatabaseTextArea();
+					refreshDatabaseTextArea();
 					refreshOrderNumberComboBox();
 					//function to clear fields after update
 					//clearUpdateFields();*/
@@ -822,10 +822,10 @@ public class OrderTab extends JPanel {
 			updateOrderNumberComboBox.removeAllItems();
 			deleteOrderNumberComboBox.removeAllItems();
 			for (OrdersList order : orders) {
-				if (unique.add(order.getOrderNumber())) {
+
 					updateOrderNumberComboBox.addItem(order.getOrderNumber());
 					deleteOrderNumberComboBox.addItem(order.getOrderNumber());
-				}
+				
 			}
 			orderConsoleTextArea.append("*refreshed OrderNumber comboBox. \n");
 		} catch (SQLException err) {

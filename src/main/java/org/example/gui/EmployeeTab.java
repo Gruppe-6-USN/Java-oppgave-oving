@@ -259,7 +259,7 @@ public class EmployeeTab extends JPanel{
 		AddEmployeePanel.add(addEmployeeBtn, gbc_addEmployeeBtn);
 
 		DeleteEmployeePanel = new JPanel();
-		DeleteEmployeePanel.setBorder(new TitledBorder(null, "Delete employee", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		DeleteEmployeePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Delete employee", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_DeleteEmployeePanel = new GridBagConstraints();
 		gbc_DeleteEmployeePanel.insets = new Insets(0, 0, 5, 0);
 		gbc_DeleteEmployeePanel.fill = GridBagConstraints.BOTH;
@@ -297,7 +297,7 @@ public class EmployeeTab extends JPanel{
 		DeleteEmployeePanel.add(deleteEmployeeBtn, gbc_deleteEmployeeBtn);
 
 		UpdateEmployeePanel = new JPanel();
-		UpdateEmployeePanel.setBorder(new TitledBorder(null, "Update employee", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		UpdateEmployeePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Update employee", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_UpdateEmployeePanel = new GridBagConstraints();
 		gbc_UpdateEmployeePanel.gridheight = 2;
 		gbc_UpdateEmployeePanel.insets = new Insets(0, 0, 5, 5);
@@ -455,7 +455,7 @@ public class EmployeeTab extends JPanel{
 		UpdateEmployeePanel.add(updateEmployeeBtn, gbc_updateEmployeeBtn);
 
 		EmployeeDatabasePanel = new JPanel();
-		EmployeeDatabasePanel.setBorder(new TitledBorder(null, "Employee table view", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		EmployeeDatabasePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Employee table view", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_EmployeeDatabasePanel = new GridBagConstraints();
 		gbc_EmployeeDatabasePanel.gridheight = 2;
 		gbc_EmployeeDatabasePanel.fill = GridBagConstraints.BOTH;
@@ -528,7 +528,7 @@ public class EmployeeTab extends JPanel{
 		EmployeeDatabasePanel.add(saveBtn, gbc_saveBtn);
 
 		EmployeeConsolePanel = new JPanel();
-		EmployeeConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		EmployeeConsolePanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Console", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_EmployeeConsolePanel = new GridBagConstraints();
 		gbc_EmployeeConsolePanel.gridwidth = 2;
 		gbc_EmployeeConsolePanel.insets = new Insets(0, 0, 0, 5);
@@ -566,6 +566,7 @@ public class EmployeeTab extends JPanel{
 
 		clearConsoleBtn = new JButton("Clear console");
 		GridBagConstraints gbc_clearConsoleBtn = new GridBagConstraints();
+		gbc_clearConsoleBtn.anchor = GridBagConstraints.WEST;
 		gbc_clearConsoleBtn.gridx = 0;
 		gbc_clearConsoleBtn.gridy = 1;
 		EmployeeConsolePanel.add(clearConsoleBtn, gbc_clearConsoleBtn);

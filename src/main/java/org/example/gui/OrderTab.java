@@ -33,8 +33,13 @@ import javax.swing.JScrollPane;
 
 public class OrderTab extends JPanel {
 
+<<<<<<< Updated upstream
 	java.util.HashSet unique = new HashSet();
 	final DatabaseConnection databaseConnection = new DatabaseConnection();
+=======
+	DatabaseConnection db = new DatabaseConnection();
+	java.util.HashSet unique = new HashSet();
+>>>>>>> Stashed changes
 
 	private final JPanel employeeTab = new JPanel();
 	private JPanel AddOrdPanel;
@@ -91,7 +96,10 @@ public class OrderTab extends JPanel {
 	private JButton searchByDateBtn;
 	
 	public OrderTab() {
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         
         GridBagLayout gbl_employeeTab = new GridBagLayout();
         gbl_employeeTab.columnWidths = new int[] {80, 80, 80, 80, 80, 80, 80, 80, 80, 80};
@@ -592,6 +600,7 @@ public class OrderTab extends JPanel {
 
 
 		/////////////////Action listeners //////////
+		refreshOrderNumberComboBox();
 		
 		final StringWriter stackTraceWriter = new StringWriter();
 		final Throwable throwableElement = new Throwable();
@@ -613,7 +622,11 @@ public class OrderTab extends JPanel {
         		DateFormat d = new SimpleDateFormat("yyyy-mm-dd");
         		d.parse(dateString1);
         		d.parse(dateString2);
+<<<<<<< Updated upstream
         		List<OrdersList> orders = databaseConnection.searchByDate(dateString1, dateString2);
+=======
+        		List<OrdersList> orders = db.showOrders(dateString1, dateString2);
+>>>>>>> Stashed changes
 				databaseTextArea.setText("");
                 for (OrdersList order : orders) {
                     databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() +  ", " + order.getStatus() + ", " + order.getComments() + "\n");
@@ -644,7 +657,7 @@ public class OrderTab extends JPanel {
 					String comments = getComment();
 					int customerNumber = getCustomerNumber();
 
-					databaseConnection.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
+					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
 					orderConsoleTextArea.setText("You added a order with order number" + orderNumber);
 				}//Må ha en catch her for å gi tilbakemeldinger
 				catch (Exception exception) {
@@ -697,16 +710,49 @@ public class OrderTab extends JPanel {
 		updateOrderBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					if (getUpdateOrderDate().isEmpty() && getUpdateRequiredDate().isEmpty() && getUpdateShippingDate().isEmpty() && getUpdateStatus().isEmpty() && getUpdateComment().isEmpty()) {
+						throw new MissingTextFieldException("You must fill out all the fields");
+					}else if (getUpdateOrderDate().isEmpty())
+						throw new MissingTextFieldException("Order date is not present");
+					else if (getUpdateRequiredDate().isEmpty())
+						throw new MissingTextFieldException("Require date is not present");
+					else if (getUpdateShippingDate().isEmpty())
+						throw new MissingTextFieldException("Shipping date is not present");
+					else if (getUpdateStatus().isEmpty())
+						throw new MissingTextFieldException("Status is not present");
+					else if (getUpdateComment().isEmpty())
+						throw new MissingTextFieldException("Comments is not present");
+					db.updateOrder(getUpdateOrderDate(), getUpdateRequiredDate(), getUpdateShippingDate(), getUpdateStatus(), getUpdateComment(), getUpdateCustomerNumber(), getUpdateOrderNumber());
+					orderConsoleTextArea.append("Order successfully updated! \n");
 
+					//functions that refreshes the combobox values and the database view
+
+					//refreshDatabaseTextArea();
+					refreshOrderNumberComboBox();
+					//function to clear fields after update
+					//clearUpdateFields();*/
+				} catch (MissingTextFieldException missingTextFieldException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
+				}catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
+				}
+				catch (SQLException sqlException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
+				}
+				catch (Exception exception) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + exception.getMessage() + "\n");
+				}
 			}
 		});
-
 	}
+
+	//-----------------GETTERS----------------//
 	public String getUpdateOrderDate() {
 		return updateOrderDateTextField.getText();
 	}
 
-	public String getUpdateRequireDate() {
+	public String getUpdateRequiredDate() {
 		return updateOrderRequiredTextField.getText();
 	}
 	public String getUpdateShippingDate() {
@@ -720,6 +766,11 @@ public class OrderTab extends JPanel {
 	}
 	public int getUpdateCustomerNumber() {
 		return Integer.parseInt(updateOrderCustomerNumberTextField.getText());
+	}
+
+	public int getUpdateOrderNumber() {
+		int updateOrderNumber = (int) updateOrderNumberComboBox.getSelectedItem();
+		return updateOrderNumber;
 	}
 
 	public int getOrderNumber() {
@@ -749,6 +800,7 @@ public class OrderTab extends JPanel {
 	public String getComment() {
 		return addCommentsTextField.getText();
 	}
+<<<<<<< Updated upstream
 	public int getDeleteOrderNumber() {
 		int deleteOrderNumber = (int)deleteOrderNumberComboBox.getSelectedItem();
 		return deleteOrderNumber;
@@ -769,6 +821,22 @@ public class OrderTab extends JPanel {
 		} catch (SQLException err) {
 			err.printStackTrace();
 
+=======
+
+	public void refreshOrderNumberComboBox() {
+		try {
+			List<OrdersList> orders = db.showOrders();
+			updateOrderNumberComboBox.setSelectedItem("");
+			deleteEmployeeNumberComboBox.setSelectedItem("");
+			for (OrdersList ordersList : orders) {
+				if (unique.add(ordersList.getOrderNumber())) {
+					updateOrderNumberComboBox.addItem(ordersList.getOrderNumber());
+				}
+			}
+			orderConsoleTextArea.append("*refreshed employee number selection. \n");
+		}catch(SQLException err) {
+			err.printStackTrace();
+>>>>>>> Stashed changes
 		}
 	}
 }

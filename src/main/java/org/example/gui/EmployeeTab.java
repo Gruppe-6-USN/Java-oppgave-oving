@@ -707,9 +707,7 @@ public class EmployeeTab extends JPanel{
 					//function to clear textfields
 					clearAddFields();
 
-				} catch (NumberFormatException exception) {
-					consoleTextArea.append("salary must be a number: " + exception.getMessage() + "\n");
-				} catch (MissingTextFieldException exception) {
+				}  catch (MissingTextFieldException exception) {
 					consoleTextArea.append(exception.getMessage() + "\n");
 				} catch (Exception exception) {
 					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage() + "\n");

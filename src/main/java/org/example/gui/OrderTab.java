@@ -617,11 +617,8 @@ public class OrderTab extends JPanel {
         		DateFormat d = new SimpleDateFormat("yyyy-mm-dd");
         		d.parse(dateString1);
         		d.parse(dateString2);
-<<<<<<< Updated upstream
         		List<OrdersList> orders = databaseConnection.searchByDate(dateString1, dateString2);
-=======
         		List<OrdersList> orders = db.showOrders(dateString1, dateString2);
->>>>>>> Stashed changes
 				databaseTextArea.setText("");
                 for (OrdersList order : orders) {
                     databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() +  ", " + order.getStatus() + ", " + order.getComments() + "\n");
@@ -795,7 +792,6 @@ public class OrderTab extends JPanel {
 	public String getComment() {
 		return addCommentsTextField.getText();
 	}
-<<<<<<< Updated upstream
 	public int getDeleteOrderNumber() {
 		int deleteOrderNumber = (int)deleteOrderNumberComboBox.getSelectedItem();
 		return deleteOrderNumber;
@@ -816,7 +812,6 @@ public class OrderTab extends JPanel {
 		} catch (SQLException err) {
 			err.printStackTrace();
 
-=======
 
 	public void refreshOrderNumberComboBox() {
 		try {
@@ -831,7 +826,6 @@ public class OrderTab extends JPanel {
 			orderConsoleTextArea.append("*refreshed employee number selection. \n");
 		}catch(SQLException err) {
 			err.printStackTrace();
->>>>>>> Stashed changes
 		}
 	}
 }

@@ -38,9 +38,24 @@ public class DatabaseConnection {
 		}
 	}
 
+	public void updateCustomerAfterEmployeeDelete(int employeeNumber) throws SQLException {
+		pStmt = conn.prepareStatement("update customers set salesRepEmployeeNumber = NULL WHERE salesRepEmployeeNumber = ?");
+		pStmt.setInt(1, employeeNumber);
+		pStmt.execute();
+
+	}
+
+	public void updateReportsToAfterEmployeeDelete(int employeeNumber) throws SQLException {
+		pStmt = conn.prepareStatement("update employees set reportsTo = NULL WHERE reportsTo = ?");
+		pStmt.setInt(1, employeeNumber);
+		pStmt.execute();
+	}
+
 	public void deleteEmployee(int employeeNumber) throws SQLException {
 		try {
 			open();
+			updateCustomerAfterEmployeeDelete(employeeNumber);
+			updateReportsToAfterEmployeeDelete(employeeNumber);
 			pStmt = conn.prepareStatement("delete from employees where employeeNumber=?");
 			pStmt.setInt(1, employeeNumber);
 

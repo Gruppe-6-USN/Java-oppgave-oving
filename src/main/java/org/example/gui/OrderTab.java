@@ -447,8 +447,6 @@ public class OrderTab extends JPanel {
 		gbc_updateEmployeeOfficeCodeTextField.gridy = 5;
 		UpdateOrderPanel.add(updateOrderCommentsTextField, gbc_updateEmployeeOfficeCodeTextField);
 
-
-
 		updateOrderBtn = new JButton("Update order");
 		GridBagConstraints gbc_updateEmployeeBtn = new GridBagConstraints();
 		gbc_updateEmployeeBtn.insets = new Insets(0, 0, 0, 5);
@@ -573,14 +571,11 @@ public class OrderTab extends JPanel {
 		final StringWriter stackTraceWriter = new StringWriter();
 		final Throwable throwableElement = new Throwable();
 
-		// SEARCH BY DATE
+		// SEARCH BY DATE EVENT
 		searchByDateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent searchByDate) {
-
 				try {
-
 					if (dateFromTextField.getText().isEmpty() || dateToTextField.getText().isEmpty()) {
-
 						throw new MissingTextFieldException("you must fill out all the dates in the Search order by date fields");
 					}
 
@@ -608,8 +603,6 @@ public class OrderTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-
-
 					if(getOrderDate().equals("") && getRequiredDate().equals("") && getShippedDate().equals("") && getStatus().equals("") && getComment().equals("")) {
 						throw new MissingTextFieldException("You must fill out all the fields");
 					} else if (getOrderDate().isEmpty())
@@ -631,14 +624,11 @@ public class OrderTab extends JPanel {
 					String comments = getComment();
 					int customerNumber = getCustomerNumber();
 
-
 					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
-
 
 					//function to clear fields after update order
 					clearAddOrderFields();
-
-				}//Må ha en catch her for å gi tilbakemeldinger
+				}
 				catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
 				}catch (SQLException sqlException) {
@@ -704,7 +694,6 @@ public class OrderTab extends JPanel {
 						throw new MissingTextFieldException("Comments is not present");
 					db.updateOrder(getUpdateOrderDate(), getUpdateRequiredDate(), getUpdateShippingDate(), getUpdateStatus(), getUpdateComment(), getUpdateOrderNumber());
 
-
 					//functions that refreshes the combobox values and the database view
 					refreshDatabaseTextArea();
 					refreshOrderNumberComboBox();
@@ -723,14 +712,12 @@ public class OrderTab extends JPanel {
 			}
 		});
 
-		//SAVE ORDER BUTTON
+		//SAVE ORDER BUTTON EVENT
 		saveOrderBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fileChooser.setDialogTitle("Specify a file to save");
-
-				//Set default folder
 				fileChooser.setCurrentDirectory(new File("c:\\temp"));
 
 				//Just allow .txt file

@@ -328,6 +328,7 @@ public class OrderTab extends JPanel {
 		gbc_searchByDateBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_searchByDateBtn.gridx = 2;
 		gbc_searchByDateBtn.gridy = 5;
+		searchByDateBtn.setToolTipText("Search to find a specific order");
 		DelOrdPanel.add(searchByDateBtn, gbc_searchByDateBtn);
 
 		UpdateOrderPanel = new JPanel();
@@ -596,9 +597,7 @@ public class OrderTab extends JPanel {
 
 					}
 				} catch (SQLException | ParseException error) {
-					orderConsoleTextArea.append("Problem fetching from database. Error: " + error);
-					throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-					orderConsoleTextArea.append("Connection failed. Error: " + throwableElement.toString() + "\n" + stackTraceWriter.toString());
+					orderConsoleTextArea.append("Problem fetching from database. Error: " + " " + "Date input should be yyyy-mm-dd");
 				} catch (MissingTextFieldException exception) {
 					orderConsoleTextArea.append(exception.getMessage() + "\n");
 				}
@@ -635,7 +634,7 @@ public class OrderTab extends JPanel {
 
 
 					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
-					orderConsoleTextArea.setText("You added a order with order number" + orderNumber);
+
 
 					//function to clear fields after update order
 					clearAddOrderFields();
@@ -643,12 +642,7 @@ public class OrderTab extends JPanel {
 				}//Må ha en catch her for å gi tilbakemeldinger
 				catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
-				} catch (MysqlDataTruncation mysqlDataTruncation) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + mysqlDataTruncation.getMessage());
-				} catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
-				}
-				catch (SQLException sqlException) {
+				}catch (SQLException sqlException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
 				}catch (NumberFormatException numberFormatException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number must be a number" + "\n");
@@ -675,7 +669,7 @@ public class OrderTab extends JPanel {
 				if (option==0) {
 					try {
 						db.deleteOrder(getDeleteOrderNumber());
-						orderConsoleTextArea.append("Order successfully deleted! \n");
+
 						//functions that refreshes the combobox values and the database view
 						refreshOrderNumberComboBox();
 					} catch (SQLException exception) {
@@ -710,10 +704,9 @@ public class OrderTab extends JPanel {
 					else if (getUpdateComment().isEmpty())
 						throw new MissingTextFieldException("Comments is not present");
 					db.updateOrder(getUpdateOrderDate(), getUpdateRequiredDate(), getUpdateShippingDate(), getUpdateStatus(), getUpdateComment(), getUpdateOrderNumber());
-					orderConsoleTextArea.append("Order successfully updated! \n");
+
 
 					//functions that refreshes the combobox values and the database view
-
 					refreshDatabaseTextArea();
 					refreshOrderNumberComboBox();
 
@@ -722,15 +715,9 @@ public class OrderTab extends JPanel {
 
 				} catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
-				} catch (MysqlDataTruncation mysqlDataTruncation) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + mysqlDataTruncation.getMessage());
-				} catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
-				}
-				catch (SQLException sqlException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
+
 				}catch (NumberFormatException numberFormatException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number must be a number" + "\n");
+					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number and Order number must be a number" + "\n");
 				}catch (Exception exception) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + exception.getMessage() + "\n");
 				}
@@ -787,7 +774,6 @@ public class OrderTab extends JPanel {
 	public String getUpdateComment() {
 		return updateOrderCommentsTextField.getText();
 	}
-	
 
 	public int getUpdateOrderNumber() {
 		int updateOrderNumber = (int) updateOrderNumberComboBox.getSelectedItem();

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.List;
 
@@ -410,15 +411,18 @@ public class OfficesTab extends JPanel {
 							String postalCode = getPostalCode();
 							String territory = getTerritory();
 							
-							if (officeCode.isEmpty() && city.isEmpty() && phone.isEmpty() && addressLine1.isEmpty() && addressLine2.isEmpty() && state.isEmpty() && country.isEmpty() && postalCode.isEmpty() && territory.isEmpty())
+							if (city.isEmpty() && phone.isEmpty() && addressLine1.isEmpty() && addressLine2.isEmpty() && state.isEmpty() && country.isEmpty() && postalCode.isEmpty() && territory.isEmpty())
 							{
 								throw new MissingTextFieldException("you must fill out all the fields");
-							} else if (officeCode.isEmpty())
-								throw new MissingTextFieldException("OfficeCode must be a number");
+							}
 							else if (city.isEmpty())
 								throw new MissingTextFieldException("City is not present");
 							else if (phone.isEmpty())
 								throw new MissingTextFieldException("Phone is not present");
+							else if (!phone.startsWith("+"))
+								throw new MissingTextFieldException("Phone number must start with +");
+							else if (phone.length() > 11 || phone.length() < 11 )
+								throw new MissingTextFieldException("Phone number must contain one + and 10 integers  ");
 							else if (addressLine1.isEmpty())
 								throw new MissingTextFieldException("Street address is not present");
 							else if (addressLine2.isEmpty())
@@ -439,13 +443,14 @@ public class OfficesTab extends JPanel {
 							
 							//function to clear fields after update
 							clearUpdateFields();
-							
-						} catch(SQLException sqlErr) {
-							sqlErr.printStackTrace();
-						}		 	
+						
+						}	
 						catch (MissingTextFieldException exception) {
-						officeConsoleTextArea.append(exception.getMessage() + "\n");
-						}
+								officeConsoleTextArea.append(exception.getMessage() + "\n");
+								}
+					    catch (SQLIntegrityConstraintViolationException errSql) {
+						officeConsoleTextArea.append("Something went wrong. Error: " + errSql.getMessage() + "\n" );
+					     }
 						catch (Exception exception) {
 							exception.printStackTrace();
 						}

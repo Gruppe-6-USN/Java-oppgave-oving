@@ -490,6 +490,7 @@ public class EmployeeTab extends JPanel{
 		gbc_sortDatabaseViewBtn.insets = new Insets(0, 0, 5, 0);
 		gbc_sortDatabaseViewBtn.gridx = 2;
 		gbc_sortDatabaseViewBtn.gridy = 0;
+		sortDatabaseViewBtn.setToolTipText("Sort to find everything in a specific job title");
 		EmployeeDatabasePanel.add(sortDatabaseViewBtn, gbc_sortDatabaseViewBtn);
 
 		databaseTextArea = new JTextArea();
@@ -603,7 +604,7 @@ public class EmployeeTab extends JPanel{
 				if (option==0){
 					try{
 						db.deleteEmployee(getDeleteEmployeeNumber());
-						consoleTextArea.append("Employee successfully deleted! \n");
+						
 						refreshDatabaseTextArea();
 						refreshEmployeeNumberComboBox();
 						refreshJobTitleComboBox();
@@ -626,8 +627,7 @@ public class EmployeeTab extends JPanel{
 		updateEmployeeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (getUpdateFirstName().isEmpty() && getUpdateLastName().isEmpty() && getUpdateExtension().isEmpty() && getUpdateEmail().isEmpty() && getUpdateOfficeCode().isEmpty() && getUpdateJobTitle().isEmpty())
-					{
+					if (getUpdateFirstName().isEmpty() && getUpdateLastName().isEmpty() && getUpdateExtension().isEmpty() && getUpdateEmail().isEmpty() && getUpdateOfficeCode().isEmpty() && getUpdateJobTitle().isEmpty()) {
 						throw new MissingTextFieldException("you must fill out all the fields");
 					} else if (getUpdateFirstName().isEmpty())
 						throw new MissingTextFieldException("firstName is not present");
@@ -639,21 +639,24 @@ public class EmployeeTab extends JPanel{
 						throw new Exception("Email must include @");
 					else if (getUpdateJobTitle().isEmpty())
 						throw new MissingTextFieldException("Job title is not present");
-					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(),  getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber() );
-					consoleTextArea.append("Employee successfully updated! \n");
-					
+					else if (!getUpdateOfficeCode().matches("[1-7]"))
+						throw new MissingTextFieldException("Office code does not exist");
+
+					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(), getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
+
+
 					//functions that refreshes the combobox values and the database view
 					refreshDatabaseTextArea();
 					refreshEmployeeNumberComboBox();
 					refreshJobTitleComboBox();
-					
+
 					//function to clear fields after update
 					clearUpdateFields();
+				}catch(NumberFormatException err) {
+					consoleTextArea.append("Something went wrong. Error" + " " + "Report to must be a number  " + "\n");
 				} catch(MissingTextFieldException err){
 					consoleTextArea.append("Something went wrong. Error: " + err.getMessage() + "\n");
 					err.printStackTrace();
-				} catch (SQLIntegrityConstraintViolationException errSql) {
-					consoleTextArea.append("Something went wrong. Error: " + errSql.getMessage() + "\n" );
 				} catch(Exception errEmail) {
 					consoleTextArea.append("Something went wrong. Error: " + errEmail.getMessage() + "\n");
 				}
@@ -695,11 +698,11 @@ public class EmployeeTab extends JPanel{
 						throw new MissingTextFieldException("Email must include @");
 					else if (jobTitle.isEmpty())
 						throw new MissingTextFieldException("Job title is not present");
-					else if(!officeCode.matches("[1-9]"))
+					else if(!officeCode.matches("[1-7]"))
 						throw new MissingTextFieldException("Office code does not exist");
 
 					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
-					consoleTextArea.setText("New employee successfully added! \n");
+					
 					
 					//functions that refreshes the combobox values and the database view
 					refreshDatabaseTextArea();
@@ -713,12 +716,8 @@ public class EmployeeTab extends JPanel{
 					consoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
 				} catch(NumberFormatException numErr) {
 					consoleTextArea.append("Something went wrong. Error: " + "Employee number and reports to has to be a number \n");
-				}catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
-					consoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
-				} catch (SQLException sqlException) {
-					consoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
 				} catch(Exception broadErr) {
-					consoleTextArea.append("Kukk i hode");
+					consoleTextArea.append("Something went wrong. Error" + broadErr.getMessage());
 				}
 			}
 		});
@@ -870,7 +869,7 @@ public class EmployeeTab extends JPanel{
 		List<Employee> employees = db.showEmployees();
 		databaseTextArea.setText("");
 			for (Employee employee : employees) {
-				databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+				databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
 			}
 		consoleTextArea.append("*refreshed the database view. \n");
 		} catch (SQLException err) {

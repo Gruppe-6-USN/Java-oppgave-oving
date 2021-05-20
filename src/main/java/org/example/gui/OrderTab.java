@@ -3,38 +3,23 @@ package org.example.gui;
 import org.example.database.DatabaseConnection;
 import org.example.database.Employee;
 import org.example.database.OrdersList;
+import org.example.gui.exceptions.MissingTextFieldException;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-import javax.swing.JTabbedPane;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
@@ -72,7 +57,7 @@ public class OrderTab extends JPanel {
 	private JLabel updOrderCommentsLabel;
 	private JLabel updOrderCustomerNumberLabel;
 	private JLabel updEmpJobTitleLabel;
-	private JComboBox updateEmployeeNumberComboBox;
+	private JComboBox updateOrderNumberComboBox;
 	private JTextField updateOrderDateTextField;
 	private JTextField updateOrderRequiredTextField;
 	private JTextField updateOrderShippedTextField;
@@ -313,13 +298,13 @@ public class OrderTab extends JPanel {
 		gbc_updOrdNumLabel.gridy = 0;
 		UpdateOrderPanel.add(updOrdNumLabel, gbc_updOrdNumLabel);
 		
-		updateEmployeeNumberComboBox = new JComboBox();
+		updateOrderNumberComboBox = new JComboBox();
 		GridBagConstraints gbc_updateEmployeeNumberComboBox = new GridBagConstraints();
 		gbc_updateEmployeeNumberComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_updateEmployeeNumberComboBox.gridx = 1;
 		gbc_updateEmployeeNumberComboBox.gridy = 0;
-		UpdateOrderPanel.add(updateEmployeeNumberComboBox, gbc_updateEmployeeNumberComboBox);
+		UpdateOrderPanel.add(updateOrderNumberComboBox, gbc_updateEmployeeNumberComboBox);
 		
 		updateOrderDateLabel = new JLabel("Order date: ");
 		GridBagConstraints gbc_updateOrderDateLabel = new GridBagConstraints();
@@ -592,7 +577,36 @@ public class OrderTab extends JPanel {
 				}
 			}
 		});
+
+		//UPDATE BUTTON EVENT
+		updateOrderBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
 	}
+	public String getUpdateOrderDate() {
+		return updateOrderDateTextField.getText();
+	}
+
+	public String getUpdateRequireDate() {
+		return updateOrderRequiredTextField.getText();
+	}
+	public String getUpdateShippingDate() {
+		return updateOrderShippedTextField.getText();
+	}
+	public String getUpdateStatus() {
+		return updateOrderStatusTextField.getText();
+	}
+	public String getUpdateComment() {
+		return updateOrderCommentsTextField.getText();
+	}
+	public int getUpdateCustomerNumber() {
+		return Integer.parseInt(updateOrderCustomerNumberTextField.getText());
+	}
+
 	public int getOrderNumber() {
 		return Integer.parseInt(addOrderNumberTextField.getText());
 	}

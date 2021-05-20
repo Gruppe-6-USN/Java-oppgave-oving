@@ -704,7 +704,7 @@ public class EmployeeTab extends JPanel{
 						throw new MissingTextFieldException("Office code does not exist");
 
 					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
-					consoleTextArea.setText("New employee successfully added! \n");
+					
 					
 					//functions that refreshes the combobox values and the database view
 					refreshDatabaseTextArea();

@@ -89,7 +89,7 @@ public class DatabaseConnection extends Component {
 			pStmt.setInt(7, reportsTo);
 			pStmt.setString(8, jobTitle);
 			pStmt.execute();
-			errorMessage("Successfully added");
+			successMessage("Successfully added");
 			close();
 		} catch (SQLIntegrityConstraintViolationException addErr) {
 			errorMessage("Reports to does not exist");
@@ -404,6 +404,10 @@ public class DatabaseConnection extends Component {
 	}
 		public void errorMessage(String errorMsg) {
 			JOptionPane.showMessageDialog(this, errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
+		}
+
+		public void successMessage(String succMsg) {
+		JOptionPane.showMessageDialog(this,succMsg, "Success", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

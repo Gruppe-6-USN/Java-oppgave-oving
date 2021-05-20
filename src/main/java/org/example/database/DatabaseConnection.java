@@ -1,12 +1,17 @@
 package org.example.database;
 
 
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 import org.example.gui.*;
 
-public class DatabaseConnection {
+import javax.swing.*;
+
+public class DatabaseConnection extends Component {
 
 	
 	
@@ -126,6 +131,11 @@ public class DatabaseConnection {
 			pStmt.setInt(7, customerNumber);
 			pStmt.execute();
 			close();
+		}catch(SQLIntegrityConstraintViolationException e) {
+			Errormessage("Customer does not exist");
+
+		}catch(MysqlDataTruncation e) {
+			Errormessage("The date input has to be yyyy-mm-dd");
 
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
@@ -387,9 +397,14 @@ public class DatabaseConnection {
 		} catch (SQLException deleteErr) {
 			deleteErr.printStackTrace();
 		}
+
+	}
+		public void Errormessage(String errorMsg) {
+			JOptionPane.showMessageDialog(this, errorMsg, "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 
-}
+
 
 

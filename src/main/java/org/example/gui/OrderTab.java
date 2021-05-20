@@ -610,17 +610,19 @@ public class OrderTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (getUpdateOrderDate().isEmpty() && getUpdateRequiredDate().isEmpty() && getUpdateShippingDate().isEmpty() && getUpdateStatus().isEmpty() && getUpdateComment().isEmpty()) {
+
+
+					if(getOrderDate().equals("") && getRequiredDate().equals("") && getShippedDate().equals("") && getStatus().equals("") && getComment().equals("")) {
 						throw new MissingTextFieldException("You must fill out all the fields");
-					} else if (getUpdateOrderDate().isEmpty())
+					} else if (getOrderDate().isEmpty())
 						throw new MissingTextFieldException("Order date is not present");
-					else if (getUpdateRequiredDate().isEmpty())
+					else if (getRequiredDate().isEmpty())
 						throw new MissingTextFieldException("Require date is not present");
-					else if (getUpdateShippingDate().isEmpty())
+					else if (getShippedDate().isEmpty())
 						throw new MissingTextFieldException("Shipping date is not present");
-					else if (getUpdateStatus().isEmpty())
+					else if (getStatus().isEmpty())
 						throw new MissingTextFieldException("Status is not present");
-					else if (getUpdateComment().isEmpty())
+					else if (getComment().isEmpty())
 						throw new MissingTextFieldException("Comments is not present");
 
 					int orderNumber = getOrderNumber();
@@ -630,6 +632,7 @@ public class OrderTab extends JPanel {
 					String status = getStatus();
 					String comments = getComment();
 					int customerNumber = getCustomerNumber();
+
 
 					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
 					orderConsoleTextArea.setText("You added a order with order number" + orderNumber);

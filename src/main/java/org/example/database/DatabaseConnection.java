@@ -368,9 +368,17 @@ public class DatabaseConnection {
 		return null;
 
 	}
+
+	public void deleteOrderDetailsAfterDelete(int orderNumber) throws SQLException {
+		pStmt = conn.prepareStatement("delete from orderdetails where orderNumber=?");
+		pStmt.setInt(1, orderNumber);
+		pStmt.executeUpdate();
+	}
+
 	public void deleteOrder(int orderNumber) throws SQLException {
 		try {
 			open();
+			deleteOrderDetailsAfterDelete(orderNumber);
 			pStmt = conn.prepareStatement("delete from orders where orderNumber=?");
 			pStmt.setInt(1, orderNumber);
 

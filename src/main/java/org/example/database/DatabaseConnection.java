@@ -89,6 +89,7 @@ public class DatabaseConnection extends Component {
 			pStmt.setInt(7, reportsTo);
 			pStmt.setString(8, jobTitle);
 			pStmt.execute();
+			errorMessage("Successfully added");
 			close();
 		} catch (SQLIntegrityConstraintViolationException addErr) {
 			errorMessage("Reports to does not exist");

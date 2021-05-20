@@ -525,6 +525,7 @@ public class EmployeeTab extends JPanel{
 		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_saveBtn.gridx = 1;
 		gbc_saveBtn.gridy = 2;
+		saveBtn.setToolTipText("Save everything in the employee database in a text file");
 		EmployeeDatabasePanel.add(saveBtn, gbc_saveBtn);
 
 		EmployeeConsolePanel = new JPanel();

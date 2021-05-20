@@ -521,6 +521,7 @@ public class OrderTab extends JPanel {
 		gbc_saveOrderBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_saveOrderBtn.gridx = 1;
 		gbc_saveOrderBtn.gridy = 2;
+		saveOrderBtn.setToolTipText("Save everything in the order database in a text file");
 		OrderDbView.add(saveOrderBtn, gbc_saveOrderBtn);
 
 		OrderConsolePanel = new JPanel();

@@ -875,7 +875,7 @@ public class EmployeeTab extends JPanel{
 		List<Employee> employees = db.showEmployees();
 		databaseTextArea.setText("");
 			for (Employee employee : employees) {
-				databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getJobTitle() + "\n");
+				databaseTextArea.append(employee.getEmployeeNumber() + ": " + employee.getLastName() + ", " + employee.getFirstName() + ", " + employee.getExtension() + ", " + employee.getEmail() + ", " + employee.getReportsTo() + ", " + employee.getJobTitle() + "\n");
 			}
 		consoleTextArea.append("*refreshed the database view. \n");
 		} catch (SQLException err) {

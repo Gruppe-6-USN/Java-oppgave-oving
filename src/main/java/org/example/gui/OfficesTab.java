@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -42,6 +43,7 @@ import javax.swing.JScrollPane;
 public class OfficesTab extends JPanel {
 
 	DatabaseConnection db = new DatabaseConnection();
+	java.util.HashSet unique = new HashSet();
 	
 	private final JPanel employeeTab = new JPanel();
 	private JPanel updateOfficePanel;
@@ -60,7 +62,7 @@ public class OfficesTab extends JPanel {
 	private JTextField updateTerritorytextField;
 	private JLabel updateOfficeCodeLabel_1;
 	private JLabel updateStateLabel_1;
-	private JTextField updateOfficeCodeTextField;
+	private JComboBox officeCodeComboBox;
 	private JLabel updateAptNumberLabel_1;
 	private JLabel updateStreetAdressLabel_1;
 	private JLabel updatePhoneLabel_1;
@@ -110,14 +112,13 @@ public class OfficesTab extends JPanel {
 		gbc_updateOfficeCodeLabel_1.gridy = 0;
 		updateOfficePanel.add(updateOfficeCodeLabel_1, gbc_updateOfficeCodeLabel_1);
 		
-		updateOfficeCodeTextField = new JTextField();
-		updateOfficeCodeTextField.setColumns(10);
-		GridBagConstraints gbc_updateOfficeCodeTextField = new GridBagConstraints();
-		gbc_updateOfficeCodeTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_updateOfficeCodeTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_updateOfficeCodeTextField.gridx = 1;
-		gbc_updateOfficeCodeTextField.gridy = 0;
-		updateOfficePanel.add(updateOfficeCodeTextField, gbc_updateOfficeCodeTextField);
+		officeCodeComboBox = new JComboBox();
+		GridBagConstraints gbc_officeCodeComboBox = new GridBagConstraints();
+		gbc_officeCodeComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_officeCodeComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_officeCodeComboBox.gridx = 1;
+		gbc_officeCodeComboBox.gridy = 0;
+		updateOfficePanel.add(officeCodeComboBox, gbc_officeCodeComboBox);
 		
 		updateCityLabel = new JLabel("City:");
 		GridBagConstraints gbc_updateCityLabel = new GridBagConstraints();
@@ -361,6 +362,7 @@ public class OfficesTab extends JPanel {
 		
 		//functions that refreshes the combobox values and the database view
 		refreshDatabaseTextArea();
+		refreshOfficeCodeComboBox();
 		
 		//----------------ACTION EVENT LISTENERS--------------------//
 		// + try catch blocks to fetch data without event listeners
@@ -419,7 +421,9 @@ public class OfficesTab extends JPanel {
 
 							db.updateOffice(officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory);
 							officeConsoleTextArea.setText("Office updated: " + "the office with the office code: " + officeCode + "\nin the city: " + city + " is changed\n");
-
+							//functions that refreshes
+							refreshDatabaseTextArea();
+							refreshOfficeCodeComboBox();
 
 						} catch(SQLException sqlErr) {
 							sqlErr.printStackTrace();
@@ -436,9 +440,10 @@ public class OfficesTab extends JPanel {
 
 	//-------------------GETTERS------------------//
 
-public String getOfficeCode() {
-    return updateOfficeCodeTextField.getText();
-}
+	public String getOfficeCode() {
+		String officeCode = (String) officeCodeComboBox.getSelectedItem();
+		return officeCode;
+	}
 
 public String getCity() {
 	return updateCityTextField.getText();
@@ -484,5 +489,20 @@ public void refreshDatabaseTextArea() {
 		err.printStackTrace();
 	}
 }
+
+public void refreshOfficeCodeComboBox() {
+	try {
+	List<OfficesList> offices = db.showOffices();
+	officeCodeComboBox.setSelectedItem("");
+		for (OfficesList officesList : offices) {
+			if (unique.add(officesList.getOfficeCode())) {
+				officeCodeComboBox.addItem(officesList.getOfficeCode());
+			}
+		}
+	}catch(SQLException err) {
+		err.printStackTrace();
+	}
+}
+
 
 }

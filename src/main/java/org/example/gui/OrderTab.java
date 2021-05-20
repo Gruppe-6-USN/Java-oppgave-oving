@@ -613,7 +613,7 @@ public class OrderTab extends JPanel {
         		DateFormat d = new SimpleDateFormat("yyyy-mm-dd");
         		d.parse(dateString1);
         		d.parse(dateString2);
-        		List<OrdersList> orders = databaseConnection.showOrders(dateString1, dateString2);
+        		List<OrdersList> orders = databaseConnection.searchByDate(dateString1, dateString2);
 				databaseTextArea.setText("");
                 for (OrdersList order : orders) {
                     databaseTextArea.append(order.getOrderNumber() + ": " + order.getCustomerNumber() + ", " + order.getOrderDate() + ", " + order.getRequiredDate() + ", " + order.getShippedDate() +  ", " + order.getStatus() + ", " + order.getComments() + "\n");

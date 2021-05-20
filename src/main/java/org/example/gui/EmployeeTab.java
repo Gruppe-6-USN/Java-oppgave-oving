@@ -490,6 +490,7 @@ public class EmployeeTab extends JPanel{
 		gbc_sortDatabaseViewBtn.insets = new Insets(0, 0, 5, 0);
 		gbc_sortDatabaseViewBtn.gridx = 2;
 		gbc_sortDatabaseViewBtn.gridy = 0;
+		sortDatabaseViewBtn.setToolTipText("Sort to find everything in a specific job title");
 		EmployeeDatabasePanel.add(sortDatabaseViewBtn, gbc_sortDatabaseViewBtn);
 
 		databaseTextArea = new JTextArea();

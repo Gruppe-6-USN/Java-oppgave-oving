@@ -822,10 +822,8 @@ public class OrderTab extends JPanel {
 			updateOrderNumberComboBox.removeAllItems();
 			deleteOrderNumberComboBox.removeAllItems();
 			for (OrdersList order : orders) {
-
 					updateOrderNumberComboBox.addItem(order.getOrderNumber());
 					deleteOrderNumberComboBox.addItem(order.getOrderNumber());
-				
 			}
 			orderConsoleTextArea.append("*refreshed OrderNumber comboBox. \n");
 		} catch (SQLException err) {

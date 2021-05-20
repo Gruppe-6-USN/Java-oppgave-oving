@@ -90,6 +90,9 @@ public class DatabaseConnection extends Component {
 			pStmt.setString(8, jobTitle);
 			pStmt.execute();
 			close();
+		}catch(SQLIntegrityConstraintViolationException e) {
+			errorMessage("The employee you are going to report to does not exist");
+
 		} catch (SQLException addErr) {
 			addErr.printStackTrace();
 		}
@@ -159,6 +162,8 @@ public class DatabaseConnection extends Component {
 				
 				pStmt.execute();
 				close();
+			}catch(SQLIntegrityConstraintViolationException e) {
+				errorMessage("The employee you are going to report to does not exist");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

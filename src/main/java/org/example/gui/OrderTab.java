@@ -793,8 +793,8 @@ public class OrderTab extends JPanel {
 	public void refreshOrderNumberComboBox() {
 		try {
 			List<OrdersList> orders = db.showOrders();
-			updateOrderNumberComboBox.setSelectedItem("");
-			deleteOrderNumberComboBox.setSelectedItem("");
+			updateOrderNumberComboBox.removeAllItems();
+			deleteOrderNumberComboBox.removeAllItems();
 			for (OrdersList order : orders) {
 				if (unique.add(order.getOrderNumber())) {
 					updateOrderNumberComboBox.addItem(order.getOrderNumber());

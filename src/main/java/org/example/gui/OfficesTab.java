@@ -431,7 +431,6 @@ public class OfficesTab extends JPanel {
 							officeConsoleTextArea.setText("Office updated: " + "the office with the office code: " + officeCode + "\nin the city: " + city + " is changed\n");
 							//functions that refreshes
 							refreshDatabaseTextArea();
-							refreshOfficeCodeComboBox();
 
 						} catch(SQLException sqlErr) {
 							sqlErr.printStackTrace();
@@ -501,7 +500,7 @@ public void refreshDatabaseTextArea() {
 public void refreshOfficeCodeComboBox() {
 	try {
 	List<OfficesList> offices = db.showOffices();
-	officeCodeComboBox.setSelectedItem("");
+	officeCodeComboBox.removeAllItems();
 		for (OfficesList officesList : offices) {
 			if (unique.add(officesList.getOfficeCode())) {
 				officeCodeComboBox.addItem(officesList.getOfficeCode());

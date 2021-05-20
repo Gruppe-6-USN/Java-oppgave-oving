@@ -597,16 +597,20 @@ public class EmployeeTab extends JPanel{
 		
 		//DELETE EMPLOYEE BUTTON EVENT - deletes employee and refreshes jobtitle and employee number comboboxes
 		deleteEmployeeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				try{
-					db.deleteEmployee(getDeleteEmployeeNumber());
-					consoleTextArea.append("Employee successfully deleted! \n");
-					refreshDatabaseTextArea();
-					refreshEmployeeNumberComboBox();
-					refreshJobTitleComboBox();
-					//functions that refreshes the combobox values and the database view
-				}catch (NumberFormatException | SQLException error) {
-					consoleTextArea.append("ID must be a valid ID\n");
+			public void actionPerformed(ActionEvent e) {
+				int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the employee? ", "Delete", JOptionPane.YES_NO_OPTION);
+
+				if (option==0){
+					try{
+						db.deleteEmployee(getDeleteEmployeeNumber());
+						consoleTextArea.append("Employee successfully deleted! \n");
+						refreshDatabaseTextArea();
+						refreshEmployeeNumberComboBox();
+						refreshJobTitleComboBox();
+						//functions that refreshes the combobox values and the database view
+					}catch (NumberFormatException | SQLException error) {
+						consoleTextArea.append("ID must be a valid ID\n");
+					}
 				}
 			}
 		});

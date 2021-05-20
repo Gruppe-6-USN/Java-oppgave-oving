@@ -159,8 +159,10 @@ public class DatabaseConnection extends Component {
 				
 				pStmt.execute();
 				close();
-			} catch (SQLIntegrityConstraintViolationException e1) {
-				errorMessage("Reports to does not exist");
+			}catch(SQLIntegrityConstraintViolationException e) {
+				errorMessage("The employee you are going to report to does not exist");
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
 		}
 

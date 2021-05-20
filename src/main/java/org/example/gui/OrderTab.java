@@ -723,15 +723,9 @@ public class OrderTab extends JPanel {
 
 				} catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
-				} catch (MysqlDataTruncation mysqlDataTruncation) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + mysqlDataTruncation.getMessage());
-				} catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
-				}
-				catch (SQLException sqlException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
+
 				}catch (NumberFormatException numberFormatException) {
-					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number must be a number" + "\n");
+					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number and Order number must be a number" + "\n");
 				}catch (Exception exception) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + exception.getMessage() + "\n");
 				}

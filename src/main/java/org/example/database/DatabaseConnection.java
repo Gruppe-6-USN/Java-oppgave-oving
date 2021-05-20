@@ -157,7 +157,7 @@ public class DatabaseConnection {
 		}
 
 
-		public List<OrdersList> showOrders(String datestr1, String datestr2) throws SQLException{
+		public List<OrdersList> searchByDate(String datestr1, String datestr2) throws SQLException{
 			ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
 			
 			try {

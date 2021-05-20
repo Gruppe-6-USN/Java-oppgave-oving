@@ -691,7 +691,7 @@ public class EmployeeTab extends JPanel{
 					else if (email.isEmpty())
 						throw new MissingTextFieldException("email is not present");
 					else if (!email.contains("@"))
-						throw new Exception("Email must include @");
+						throw new MissingTextFieldException("Email must include @");
 					else if (jobTitle.isEmpty())
 						throw new MissingTextFieldException("Job title is not present");
 
@@ -706,10 +706,14 @@ public class EmployeeTab extends JPanel{
 					//function to clear textfields
 					clearAddFields();
 
-				}  catch (MissingTextFieldException exception) {
-					consoleTextArea.append(exception.getMessage() + "\n");
-				} catch (Exception exception) {
-					consoleTextArea.append("Something went wrong when adding new Employee : " + exception.getMessage() + "\n");
+				}  catch (MissingTextFieldException missingTextFieldException) {
+					consoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
+				} catch(NumberFormatException numErr) {
+					consoleTextArea.append("Something went wrong. Error: " + "Employee number and reports to has to be a number \n");
+				}catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
+					consoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
+				} catch (SQLException sqlException) {
+					consoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
 				}
 			}
 		});

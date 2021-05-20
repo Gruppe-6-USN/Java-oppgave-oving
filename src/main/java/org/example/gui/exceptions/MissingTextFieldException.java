@@ -12,10 +12,6 @@ public class MissingTextFieldException extends RuntimeException {
 	public MissingTextFieldException(String message) {
 		super(message);
 	}
-	
-	
-	public MissingTextFieldException(String message, Throwable t) {
-		super(message, t);
-	}
-	
+
+
 }

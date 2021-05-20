@@ -134,7 +134,28 @@ public class DatabaseConnection {
 				e1.printStackTrace();
 			}
 		}
-		
+
+		public void updateOrder(String orderNumber, String orderDate, String requireDate, String shippedDate, String status, String comments, int customerNumber ) throws SQLException {
+			try {
+				open();
+				pStmt = conn.prepareStatement("UPDATE orders SET orderNumber = ?, orderDate = ?, requireDate = ?, shippedDate = ?, status = ?, comments = ?, customerNumber = ?");
+
+				pStmt.setString(1, orderNumber);
+				pStmt.setString(2, orderDate);
+				pStmt.setString(3, requireDate);
+				pStmt.setString(4, shippedDate);
+				pStmt.setString(5, status);
+				pStmt.setString(6, comments);
+				pStmt.setInt(7, customerNumber);
+
+				pStmt.execute();
+				close();
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+
 		public List<OrdersList> showOrders(String datestr1, String datestr2) throws SQLException{
 			ArrayList<OrdersList> orders = new ArrayList<OrdersList>();
 			
@@ -274,9 +295,6 @@ public class DatabaseConnection {
 		return null;
 
 	}
-
-
-
 }
 
 

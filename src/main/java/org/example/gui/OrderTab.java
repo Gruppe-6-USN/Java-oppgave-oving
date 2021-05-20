@@ -1,25 +1,22 @@
 package org.example.gui;
 
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
-
 import org.example.database.Customer;
 import org.example.database.DatabaseConnection;
-import org.example.database.OfficesList;
 import org.example.database.OrdersList;
 import org.example.gui.exceptions.MissingTextFieldException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.sql.SQLException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.sql.SQLIntegrityConstraintViolationException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
+
 import java.util.List;
 
 import javax.swing.*;
@@ -27,14 +24,15 @@ import javax.swing.*;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
+import java.awt.Color;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Color;
+
 
 public class OrderTab extends JPanel {
 
-	java.util.HashSet unique = new HashSet();
 	DatabaseConnection db = new DatabaseConnection();
 	JFileChooser fileChooser = new JFileChooser();
 
@@ -55,7 +53,7 @@ public class OrderTab extends JPanel {
 	private JTextField addShippedDateTextField;
 	private JTextField addStatusTextField;
 	private JTextField addCommentsTextField;
-	private JComboBox addCustomerNumberComboBox;
+	private JComboBox<Integer> addCustomerNumberComboBox;
 	private JButton addOrderBtn;
 	private JLabel updOrdNumLabel;
 	private JLabel updateOrderDateLabel;
@@ -63,17 +61,15 @@ public class OrderTab extends JPanel {
 	private JLabel updOrderShippedLabel;
 	private JLabel updOrderStatusLabel;
 	private JLabel updOrderCommentsLabel;
-	private JLabel updEmpJobTitleLabel;
-	private JComboBox updateOrderNumberComboBox;
+	private JComboBox<Integer> updateOrderNumberComboBox;
 	private JTextField updateOrderDateTextField;
 	private JTextField updateOrderRequiredTextField;
 	private JTextField updateOrderShippedTextField;
 	private JTextField updateOrderStatusTextField;
 	private JTextField updateOrderCommentsTextField;
-	private JTextField updateEmployeeJobTitleTextField;
 	private JButton updateOrderBtn;
 	private JLabel orderNumberLabel;
-	private JComboBox deleteOrderNumberComboBox;
+	private JComboBox<Integer> deleteOrderNumberComboBox;
 	private JButton deleteOrderBtn;
 	private JPanel OrderDbView;
 	private JTextArea databaseTextArea;
@@ -231,7 +227,7 @@ public class OrderTab extends JPanel {
 		gbc_addCustomerNumberLabel.gridy = 6;
 		AddOrdPanel.add(addCustomerNumberLabel, gbc_addCustomerNumberLabel);
 
-		addCustomerNumberComboBox = new JComboBox();
+		addCustomerNumberComboBox = new JComboBox<Integer>();
 		GridBagConstraints gbc_addCustomerNumberComboBox = new GridBagConstraints();
 		gbc_addCustomerNumberComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_addCustomerNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -269,7 +265,7 @@ public class OrderTab extends JPanel {
 		gbc_orderNumberLabel.gridy = 0;
 		DelOrdPanel.add(orderNumberLabel, gbc_orderNumberLabel);
 
-		deleteOrderNumberComboBox = new JComboBox();
+		deleteOrderNumberComboBox = new JComboBox<Integer>();
 		GridBagConstraints gbc_deleteOrderNumberComboBox = new GridBagConstraints();
 		gbc_deleteOrderNumberComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_deleteOrderNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -356,7 +352,7 @@ public class OrderTab extends JPanel {
 		gbc_updOrdNumLabel.gridy = 0;
 		UpdateOrderPanel.add(updOrdNumLabel, gbc_updOrdNumLabel);
 
-		updateOrderNumberComboBox = new JComboBox();
+		updateOrderNumberComboBox = new JComboBox<Integer>();
 		GridBagConstraints gbc_updateEmployeeNumberComboBox = new GridBagConstraints();
 		gbc_updateEmployeeNumberComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -569,9 +565,6 @@ public class OrderTab extends JPanel {
 		refreshCustomerNumberComboBox();
 
 		/////////////////Action listeners //////////
-
-		final StringWriter stackTraceWriter = new StringWriter();
-		final Throwable throwableElement = new Throwable();
 
 		// SEARCH BY DATE EVENT
 		searchByDateBtn.addActionListener(new ActionListener() {
@@ -814,7 +807,6 @@ public class OrderTab extends JPanel {
 			err.printStackTrace();
 		}
 	}
-	
 	
 	public void refreshOrderNumberComboBox() {
 		try {

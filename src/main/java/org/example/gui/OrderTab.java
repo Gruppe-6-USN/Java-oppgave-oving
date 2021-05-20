@@ -597,9 +597,7 @@ public class OrderTab extends JPanel {
 
 					}
 				} catch (SQLException | ParseException error) {
-					orderConsoleTextArea.append("Problem fetching from database. Error: " + error);
-					throwableElement.printStackTrace(new PrintWriter(stackTraceWriter));
-					orderConsoleTextArea.append("Connection failed. Error: " + throwableElement.toString() + "\n" + stackTraceWriter.toString());
+					orderConsoleTextArea.append("Problem fetching from database. Error: " + " " + "Date input should be yyyy-mm-dd");
 				} catch (MissingTextFieldException exception) {
 					orderConsoleTextArea.append(exception.getMessage() + "\n");
 				}
@@ -636,7 +634,7 @@ public class OrderTab extends JPanel {
 
 
 					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
-					
+
 
 					//function to clear fields after update order
 					clearAddOrderFields();

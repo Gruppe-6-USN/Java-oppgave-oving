@@ -328,6 +328,7 @@ public class OrderTab extends JPanel {
 		gbc_searchByDateBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_searchByDateBtn.gridx = 2;
 		gbc_searchByDateBtn.gridy = 5;
+		searchByDateBtn.setToolTipText("Search to find a specific order");
 		DelOrdPanel.add(searchByDateBtn, gbc_searchByDateBtn);
 
 		UpdateOrderPanel = new JPanel();

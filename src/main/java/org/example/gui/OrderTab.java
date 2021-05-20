@@ -626,6 +626,19 @@ public class OrderTab extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if (getUpdateOrderDate().isEmpty() && getUpdateRequiredDate().isEmpty() && getUpdateShippingDate().isEmpty() && getUpdateStatus().isEmpty() && getUpdateComment().isEmpty()) {
+						throw new MissingTextFieldException("You must fill out all the fields");
+					} else if (getUpdateOrderDate().isEmpty())
+						throw new MissingTextFieldException("Order date is not present");
+					else if (getUpdateRequiredDate().isEmpty())
+						throw new MissingTextFieldException("Require date is not present");
+					else if (getUpdateShippingDate().isEmpty())
+						throw new MissingTextFieldException("Shipping date is not present");
+					else if (getUpdateStatus().isEmpty())
+						throw new MissingTextFieldException("Status is not present");
+					else if (getUpdateComment().isEmpty())
+						throw new MissingTextFieldException("Comments is not present");
+
 					int orderNumber = getOrderNumber();
 					String orderDate = getOrderDate();
 					String requiredDate = getRequiredDate();
@@ -636,9 +649,24 @@ public class OrderTab extends JPanel {
 
 					db.addOrder(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber);
 					orderConsoleTextArea.setText("You added a order with order number" + orderNumber);
+
+					//function to clear fields after update order
+					clearAddOrderFields();
+
 				}//Må ha en catch her for å gi tilbakemeldinger
-				catch (Exception exception) {
-					exception.printStackTrace();
+				catch (MissingTextFieldException missingTextFieldException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
+				} catch (MysqlDataTruncation mysqlDataTruncation) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + mysqlDataTruncation.getMessage());
+				} catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
+				}
+				catch (SQLException sqlException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
+				}catch (NumberFormatException numberFormatException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number must be a number" + "\n");
+				}catch (Exception exception) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + exception.getMessage() + "\n");
 				}
 			}
 		});
@@ -696,8 +724,10 @@ public class OrderTab extends JPanel {
 
 					refreshDatabaseTextArea();
 					refreshOrderNumberComboBox();
-					//function to clear fields after update
-					//clearUpdateFields();*/
+
+					//function to clear fields after update order
+					clearUpdateOrderFields();
+
 				} catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
 				} catch (MysqlDataTruncation mysqlDataTruncation) {
@@ -835,6 +865,27 @@ public class OrderTab extends JPanel {
 		} catch (SQLException err) {
 			err.printStackTrace();
 		}
+	}
+
+	//METHODE TO CLEAR ALL THE ADD FIELDS
+	public void clearAddOrderFields() {
+		addOrderNumberTextField.setText("");
+		addOrderDateTextField.setText("");
+		addRequiredDateTextField.setText("");
+		addShippedDateTextField.setText("");
+		addStatusTextField.setText("");
+		addCommentsTextField.setText("");
+		addCustomerNumberTextField.setText("");
+	}
+
+	//METHODE TO CLEAR ALL THE UPDATE FIELDS
+	public void clearUpdateOrderFields() {
+		updateOrderDateTextField.setText("");
+		updateOrderRequiredTextField.setText("");
+		updateOrderShippedTextField.setText("");
+		updateOrderStatusTextField.setText("");
+		updateOrderCommentsTextField.setText("");
+		updateOrderCustomerNumberTextField.setText("");
 	}
 }
 

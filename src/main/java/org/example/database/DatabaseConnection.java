@@ -111,7 +111,7 @@ public class DatabaseConnection {
 		}
 	}
 
-	public void addOrder(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) {
+	public void addOrder(int orderNumber, String orderDate, String requiredDate, String shippedDate, String status, String comments, int customerNumber) throws SQLException {
 		try {
 			open();
 			pStmt = conn.prepareStatement("insert into orders (orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber)" +

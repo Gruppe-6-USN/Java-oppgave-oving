@@ -435,7 +435,10 @@ public class OfficesTab extends JPanel {
 							officeConsoleTextArea.setText("Office updated: " + "the office with the office code: " + officeCode + "\nin the city: " + city + " is changed\n");
 							//functions that refreshes
 							refreshDatabaseTextArea();
-
+							
+							//function to clear fields after update
+							clearUpdateFields();
+							
 						} catch(SQLException sqlErr) {
 							sqlErr.printStackTrace();
 						}		 	
@@ -517,6 +520,7 @@ public String getTerritory() {
 }
 //---------------ADDITIONAL METHODS-----------------//
 
+// method for refreshing the databaseTextArea
 public void refreshDatabaseTextArea() {
 	try {
 	List<OfficesList> offices = db.showOffices();
@@ -528,7 +532,7 @@ public void refreshDatabaseTextArea() {
 		err.printStackTrace();
 	}
 }
-
+// method for the officeCode ComboBox
 public void refreshOfficeCodeComboBox() {
 	try {
 	List<OfficesList> offices = db.showOffices();
@@ -542,6 +546,17 @@ public void refreshOfficeCodeComboBox() {
 		err.printStackTrace();
 	}
 }
-
+// method for clearing the text fields
+public void clearUpdateFields() {
+	updateCityTextField.setText("");
+	updatePhoneTextField.setText("");
+	updateStreetAddressTextField.setText("");
+	updateAptTextField.setText("");
+	updateStateTextField.setText("");
+	updateCountryTextField.setText("");
+	updatePostalCodeTextField.setText("");
+	updateTerritorytextField.setText("");
+	officeConsoleTextArea.append("*cleared text fields for update employee. \n");
+}
 
 }

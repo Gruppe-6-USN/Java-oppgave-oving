@@ -1,5 +1,6 @@
 package org.example.gui;
 
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 import org.example.database.DatabaseConnection;
 import org.example.database.OfficesList;
 import org.example.database.OrdersList;
@@ -699,11 +700,16 @@ public class OrderTab extends JPanel {
 					//clearUpdateFields();*/
 				} catch (MissingTextFieldException missingTextFieldException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + missingTextFieldException.getMessage() + "\n");
+				} catch (MysqlDataTruncation mysqlDataTruncation) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + mysqlDataTruncation.getMessage());
 				} catch (SQLIntegrityConstraintViolationException sqlIntegrityConstraintViolationException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + sqlIntegrityConstraintViolationException.getMessage() + "\n");
-				} catch (SQLException sqlException) {
+				}
+				catch (SQLException sqlException) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + sqlException.getMessage() + "\n");
-				} catch (Exception exception) {
+				}catch (NumberFormatException numberFormatException) {
+					orderConsoleTextArea.append("Something went wrong. Error: " + "Customer number must be a number" + "\n");
+				}catch (Exception exception) {
 					orderConsoleTextArea.append("Something went wrong. Error: " + exception.getMessage() + "\n");
 				}
 			}

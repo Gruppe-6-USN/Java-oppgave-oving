@@ -1,36 +1,27 @@
 package org.example.gui;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.example.gui.exceptions.MissingTextFieldException;
 import org.example.database.*;
 
-import javax.swing.JTabbedPane;
+
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
@@ -93,6 +84,7 @@ public class EmployeeTab extends JPanel{
 	private JTextArea consoleTextArea;
 	private JButton clearConsoleBtn;
 	private JButton sortDatabaseViewBtn;
+	private JButton saveBtn;
 	
 	//-------------------MAIN CONTENT------------------//
 	public EmployeeTab() {
@@ -294,7 +286,7 @@ public class EmployeeTab extends JPanel{
 		gbc_deleteEmployeeNumberLabel.gridy = 0;
 		DeleteEmployeePanel.add(deleteEmployeeNumberLabel, gbc_deleteEmployeeNumberLabel);
 
-		deleteEmployeeNumberComboBox = new JComboBox();
+		deleteEmployeeNumberComboBox = new JComboBox<Integer>();
 		GridBagConstraints gbc_deleteEmployeeNumberComboBox = new GridBagConstraints();
 		gbc_deleteEmployeeNumberComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_deleteEmployeeNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -333,7 +325,7 @@ public class EmployeeTab extends JPanel{
 		gbc_updateEmployeeNumberLabel.gridy = 0;
 		UpdateEmployeePanel.add(updateEmployeeNumberLabel, gbc_updateEmployeeNumberLabel);
 
-		updateEmployeeNumberComboBox = new JComboBox();
+		updateEmployeeNumberComboBox = new JComboBox<Integer>();
 		GridBagConstraints gbc_updateEmployeeNumberComboBox = new GridBagConstraints();
 		gbc_updateEmployeeNumberComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_updateEmployeeNumberComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -490,7 +482,7 @@ public class EmployeeTab extends JPanel{
 		gbc_chooseJobTitleLabel.gridy = 0;
 		EmployeeDatabasePanel.add(chooseJobTitleLabel, gbc_chooseJobTitleLabel);
 
-		chooseJobTitleComboBox = new JComboBox();
+		chooseJobTitleComboBox = new JComboBox<String>();
 		GridBagConstraints gbc_chooseJobTitleComboBox = new GridBagConstraints();
 		gbc_chooseJobTitleComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_chooseJobTitleComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -532,6 +524,13 @@ public class EmployeeTab extends JPanel{
 		gbc_refreshDatabaseTextAreaBtn.gridx = 0;
 		gbc_refreshDatabaseTextAreaBtn.gridy = 2;
 		EmployeeDatabasePanel.add(refreshDatabaseTextAreaBtn, gbc_refreshDatabaseTextAreaBtn);
+		
+		saveBtn = new JButton("Save to file");
+		GridBagConstraints gbc_saveBtn = new GridBagConstraints();
+		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_saveBtn.gridx = 1;
+		gbc_saveBtn.gridy = 2;
+		EmployeeDatabasePanel.add(saveBtn, gbc_saveBtn);
 
 		EmployeeConsolePanel = new JPanel();
 		EmployeeConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -606,12 +605,13 @@ public class EmployeeTab extends JPanel{
 					db.deleteEmployee(getDeleteEmployeeNumber());
 					consoleTextArea.append("Employee successfully deleted! \n");
 					//functions that refreshes the combobox values and the database view
-					refreshDatabaseTextArea();
-					refreshEmployeeNumberComboBox();
-					refreshJobTitleComboBox();
 				}catch (NumberFormatException | SQLException error) {
 					consoleTextArea.append("ID must be a valid ID\n");
 				}
+				refreshDatabaseTextArea();
+				refreshEmployeeNumberComboBox();
+				refreshJobTitleComboBox();
+				consoleTextArea.append("after refresh");
 			}
 		});
 		
@@ -801,13 +801,11 @@ public class EmployeeTab extends JPanel{
 	public void refreshEmployeeNumberComboBox() {
 		try {
 		List<Employee> employees = db.showEmployees();
-		updateEmployeeNumberComboBox.setSelectedItem("");
-		deleteEmployeeNumberComboBox.setSelectedItem("");
+		updateEmployeeNumberComboBox.removeAllItems();
+		deleteEmployeeNumberComboBox.removeAllItems();
 			for (Employee employee : employees) {
-				if (unique.add(employee.getEmployeeNumber())) {
 					updateEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
 					deleteEmployeeNumberComboBox.addItem(employee.getEmployeeNumber());
-				}
 			}
 		consoleTextArea.append("*refreshed employee number selection. \n");
 		}catch(SQLException err) {

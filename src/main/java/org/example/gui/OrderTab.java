@@ -1,6 +1,7 @@
 package org.example.gui;
 
 import org.example.database.DatabaseConnection;
+import org.example.database.OfficesList;
 import org.example.database.OrdersList;
 import org.example.gui.exceptions.MissingTextFieldException;
 
@@ -90,6 +91,7 @@ public class OrderTab extends JPanel {
 	private JTextField dateFromTextField;
 	private JTextField dateToTextField;
 	private JButton searchByDateBtn;
+	private JButton saveBtn;
 
 	public OrderTab() {
 
@@ -533,6 +535,13 @@ public class OrderTab extends JPanel {
 		gbc_refreshEmployeeDbViewBtn.gridx = 0;
 		gbc_refreshEmployeeDbViewBtn.gridy = 2;
 		OrderDbView.add(refreshOrderDbViewBtn, gbc_refreshEmployeeDbViewBtn);
+		
+		saveBtn = new JButton("Save to file");
+		GridBagConstraints gbc_saveBtn = new GridBagConstraints();
+		gbc_saveBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_saveBtn.gridx = 1;
+		gbc_saveBtn.gridy = 2;
+		OrderDbView.add(saveBtn, gbc_saveBtn);
 
 		OrderConsolePanel = new JPanel();
 		OrderConsolePanel.setBorder(new TitledBorder(null, "Console", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -592,10 +601,10 @@ public class OrderTab extends JPanel {
 
 		//-------FUNCTIONS TO RUN AT STARTUP------//
 		refreshOrderNumberComboBox();
+		refreshDatabaseTextArea();
 
 
 		/////////////////Action listeners //////////
-		refreshOrderNumberComboBox();
 
 		final StringWriter stackTraceWriter = new StringWriter();
 		final Throwable throwableElement = new Throwable();
@@ -676,23 +685,12 @@ public class OrderTab extends JPanel {
 			}
 		});
 
-		////REFRESH DB BUTTON - shows updated count of all orders in database text area
+		//REFRESH DB BUTTON - shows updated count of all employees in database text area and refreshes job title JComboBox
 		refreshOrderDbViewBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DatabaseConnection db = new DatabaseConnection();
-				try {
-					List<OrdersList> orders = db.showOrders();
-					databaseTextArea.setText("");
-					for (OrdersList ordersList : orders) {
-						databaseTextArea.append(ordersList.getOrderNumber() + ": " + ordersList.getOrderDate() + ", " + ordersList.getRequiredDate() + ", " +
-								ordersList.getShippedDate() + ", " + ordersList.getStatus() + ", " + ordersList.getComments() + ", " + ordersList.getCustomerNumber() + "\n");
-					}
-				} catch (SQLException error) {
-					databaseTextArea.append("Problem fetching from database. Error: " + error);
-				}
+        	public void actionPerformed(ActionEvent refreshDb) {
+					refreshDatabaseTextArea();
 			}
-		});
+        });
 
 		//UPDATE BUTTON EVENT
 		updateOrderBtn.addActionListener(new ActionListener() {
@@ -796,7 +794,19 @@ public class OrderTab extends JPanel {
 		return deleteOrderNumber;
 	}
 
-
+	public void refreshDatabaseTextArea() {
+		try {
+		List<OrdersList> orders = db.showOrders();
+		databaseTextArea.setText("");
+			for (OrdersList ordersList : orders) {
+				databaseTextArea.append(ordersList.getOrderNumber() + ": " + ordersList.getOrderDate() + ", " + ordersList.getRequiredDate() + ", " + ordersList.getShippedDate() + ", " + ordersList.getStatus() + ", " + ordersList.getComments() + ", " + ordersList.getCustomerNumber() +   "\n");
+			}
+		} catch (SQLException err) {
+			err.printStackTrace();
+		}
+	}
+	
+	
 	public void refreshOrderNumberComboBox() {
 		try {
 			List<OrdersList> orders = db.showOrders();

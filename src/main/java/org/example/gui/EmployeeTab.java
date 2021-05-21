@@ -736,7 +736,7 @@ public class EmployeeTab extends JPanel{
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fileChooser.setDialogTitle("Specify a file to save");
 				fileChooser.setCurrentDirectory(new File("c:\\temp"));
-				
+
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
 				fileChooser.setFileFilter(filter);
 
@@ -747,7 +747,7 @@ public class EmployeeTab extends JPanel{
 
 					try {
 						writeToFile(databaseTextArea.getText(), fileToSave);
-						consoleTextArea.setText("Succesfull when saving the Database");
+						consoleTextArea.setText("Successfully when saving the Database");
 					}catch (IOException e1) {
 						consoleTextArea.setText("Error writing into file");
 					}

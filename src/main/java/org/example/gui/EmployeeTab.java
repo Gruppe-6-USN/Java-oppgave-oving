@@ -670,6 +670,26 @@ public class EmployeeTab extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if (getFirstName().equals("") && getLastName().equals("") && getExtension().equals("") && getEmail().equals("") && getOfficeCode().equals("") && getJobTitle().equals(""))
+					{
+						throw new MissingTextFieldException("you must fill out all the fields");
+					} else if (getFirstName().isEmpty())
+						throw new MissingTextFieldException("Firstname is not present");
+					else if (getLastName().isEmpty())
+						throw new MissingTextFieldException("Lastname is not present");
+					else if(getExtension().isEmpty())
+							throw new MissingTextFieldException("Extension is not present");
+					else if (getEmail().isEmpty())
+						throw new MissingTextFieldException("Email is not present");
+					else if (!getEmail().contains("@"))
+						throw new MissingTextFieldException("Email must include @");
+					else if(getOfficeCode().isEmpty())
+						throw new MissingTextFieldException("Officecode is not present");
+					else if(!getOfficeCode().matches("[1-7]"))
+						throw new MissingTextFieldException("Office code does not exist");
+					else if (getJobTitle().isEmpty())
+						throw new MissingTextFieldException("Job title is not present");
+
 
 					int employeeNumber = getEmployeeNumber();
 					String firstName = getFirstName();
@@ -680,21 +700,6 @@ public class EmployeeTab extends JPanel{
 					int reportsTo = getReportsTo();
 					String jobTitle = getJobTitle();
 
-					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty())
-					{
-						throw new MissingTextFieldException("you must fill out all the fields");
-					} else if (firstName.isEmpty())
-						throw new MissingTextFieldException("firstName is not present");
-					else if (lastName.isEmpty())
-						throw new MissingTextFieldException("lastName is not present");
-					else if (email.isEmpty())
-						throw new MissingTextFieldException("email is not present");
-					else if (!email.contains("@"))
-						throw new MissingTextFieldException("Email must include @");
-					else if (jobTitle.isEmpty())
-						throw new MissingTextFieldException("Job title is not present");
-					else if(!officeCode.matches("[1-7]"))
-						throw new MissingTextFieldException("Office code does not exist");
 
 					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
 					

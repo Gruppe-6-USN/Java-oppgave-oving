@@ -840,7 +840,8 @@ public class EmployeeTab extends JPanel{
 		writer.write(text);
 		writer.close();
 	}
-	
+
+	//METHODE TO REFRESH EMPLOYEE NUMBER COMOBOX
 	public void refreshEmployeeNumberComboBox() {
 		try {
 		List<Employee> employees = db.showEmployees();
@@ -855,7 +856,8 @@ public class EmployeeTab extends JPanel{
 			err.printStackTrace();
 		}
 	}
-	
+
+	//METHODE TO REFRESH JOB TITLE COMBOBOX
 	public void refreshJobTitleComboBox() {
 		try {
 			chooseJobTitleComboBox.removeAllItems();
@@ -872,7 +874,7 @@ public class EmployeeTab extends JPanel{
 		}
 	}
 	
-	
+	//METHODE TO REFRESH THE EMPLOYEE TABLE VIEW
 	public void refreshDatabaseTextArea() {
 		try {
 		List<Employee> employees = db.showEmployees();
@@ -899,6 +901,7 @@ public class EmployeeTab extends JPanel{
 		}
 	}
 
+	//METHODE TO CLEAR UPDATE EMPLOYEE FIELDS
 	public void clearUpdateFields() {
 		updateFirstNameTextField.setText("");
 		updateLastNameTextField.setText("");
@@ -909,7 +912,8 @@ public class EmployeeTab extends JPanel{
 		updateJobTitleTextField.setText("");
 		consoleTextArea.append("*cleared text fields for update employee. \n");
 	}
-	
+
+	//METHODE TO CLEAR ADD EMPLOYEE FIELDS
 	public void clearAddFields() {
 		addEmployeeNumberTextField.setText("");
 		addFirstNameTextField.setText("");

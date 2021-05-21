@@ -719,7 +719,6 @@ public class OrderTab extends JPanel {
 				fileChooser.setDialogTitle("Specify a file to save");
 				fileChooser.setCurrentDirectory(new File("c:\\temp"));
 
-				//Just allow .txt file
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
 				fileChooser.setFileFilter(filter);
 
@@ -730,8 +729,8 @@ public class OrderTab extends JPanel {
 
 					try {
 						EmployeeTab.writeToFile(databaseTextArea.getText(), fileToSave);
-						orderConsoleTextArea.setText("Succesfull when saving the Database");
-					}catch (IOException e1) {
+						orderConsoleTextArea.setText("Successfully when saving the Database");
+					}catch (IOException ioException) {
 						orderConsoleTextArea.setText("Error writing into file");
 					}
 				}

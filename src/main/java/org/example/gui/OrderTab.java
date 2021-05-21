@@ -540,10 +540,6 @@ public class OrderTab extends JPanel {
 		OrderConsolePanel.add(consoleScroll, gbc_consoleScroll);
 
 		clearOrderConsoleBtn = new JButton("Clear console");
-		clearOrderConsoleBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		GridBagConstraints gbc_clearEmployeeConsoleBtn = new GridBagConstraints();
 		gbc_clearEmployeeConsoleBtn.gridx = 0;
 		gbc_clearEmployeeConsoleBtn.gridy = 1;
@@ -585,7 +581,7 @@ public class OrderTab extends JPanel {
 
 					}
 				} catch (SQLException | ParseException error) {
-					orderConsoleTextArea.append("Problem fetching from database. Error: " + " " + "Date input should be yyyy-mm-dd");
+					orderConsoleTextArea.append("Problem fetching from database. Error: " + " " + "Date input should be yyyy-mm-dd" + "\n") ;
 				} catch (MissingTextFieldException exception) {
 					orderConsoleTextArea.append(exception.getMessage() + "\n");
 				}
@@ -660,6 +656,7 @@ public class OrderTab extends JPanel {
 
 						//functions that refreshes the combobox values and the database view
 						refreshOrderNumberComboBox();
+						refreshDatabaseTextArea();
 					} catch (SQLException exception) {
 						exception.printStackTrace();
 					}
@@ -798,6 +795,7 @@ public class OrderTab extends JPanel {
 		return deleteOrderNumber;
 	}
 
+	//METHOD TO REFRESH THE ORDER DATABASE VIEW
 	public void refreshDatabaseTextArea() {
 		try {
 		List<OrdersList> orders = db.showOrders();
@@ -810,7 +808,8 @@ public class OrderTab extends JPanel {
 			err.printStackTrace();
 		}
 	}
-	
+
+	//METHODE TO REFRESH THE ORDER NUMBER COMBOBOX
 	public void refreshOrderNumberComboBox() {
 		try {
 			List<OrdersList> orders = db.showOrders();
@@ -825,7 +824,8 @@ public class OrderTab extends JPanel {
 			err.printStackTrace();
 		}
 	}
-	
+
+	//METHODE TO REFRESH THE CUSTOMER NUMBER COMBOBOX
 	public void refreshCustomerNumberComboBox() {
 		try {
 			List<Customer> customers = db.showCustomers();

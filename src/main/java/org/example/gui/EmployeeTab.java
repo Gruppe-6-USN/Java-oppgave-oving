@@ -625,17 +625,22 @@ public class EmployeeTab extends JPanel{
 					if (getUpdateFirstName().isEmpty() && getUpdateLastName().isEmpty() && getUpdateExtension().isEmpty() && getUpdateEmail().isEmpty() && getUpdateOfficeCode().isEmpty() && getUpdateJobTitle().isEmpty()) {
 						throw new MissingTextFieldException("you must fill out all the fields");
 					} else if (getUpdateFirstName().isEmpty())
-						throw new MissingTextFieldException("firstName is not present");
+						throw new MissingTextFieldException("Firstname is not present");
 					else if (getUpdateLastName().isEmpty())
-						throw new MissingTextFieldException("lastName is not present");
+						throw new MissingTextFieldException("Lastname is not present");
+					else if (getUpdateExtension().isEmpty())
+						throw new MissingTextFieldException("Extension is not present");
 					else if (getUpdateEmail().isEmpty())
-						throw new MissingTextFieldException("email is not present");
+						throw new MissingTextFieldException("Email is not present");
 					else if (!getUpdateEmail().contains("@"))
 						throw new Exception("Email must include @");
-					else if (getUpdateJobTitle().isEmpty())
-						throw new MissingTextFieldException("Job title is not present");
+					else if(getUpdateOfficeCode().isEmpty())
+						throw new MissingTextFieldException("Officecode is not present");
 					else if (!getUpdateOfficeCode().matches("[1-7]"))
 						throw new MissingTextFieldException("Office code does not exist");
+					else if (getUpdateJobTitle().isEmpty())
+						throw new MissingTextFieldException("Job title is not present");
+
 
 					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(), getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
 
@@ -670,6 +675,26 @@ public class EmployeeTab extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if (getFirstName().equals("") && getLastName().equals("") && getExtension().equals("") && getEmail().equals("") && getOfficeCode().equals("") && getJobTitle().equals(""))
+					{
+						throw new MissingTextFieldException("you must fill out all the fields");
+					} else if (getFirstName().isEmpty())
+						throw new MissingTextFieldException("Firstname is not present");
+					else if (getLastName().isEmpty())
+						throw new MissingTextFieldException("Lastname is not present");
+					else if(getExtension().isEmpty())
+							throw new MissingTextFieldException("Extension is not present");
+					else if (getEmail().isEmpty())
+						throw new MissingTextFieldException("Email is not present");
+					else if (!getEmail().contains("@"))
+						throw new MissingTextFieldException("Email must include @");
+					else if(getOfficeCode().isEmpty())
+						throw new MissingTextFieldException("Officecode is not present");
+					else if(!getOfficeCode().matches("[1-7]"))
+						throw new MissingTextFieldException("Office code does not exist");
+					else if (getJobTitle().isEmpty())
+						throw new MissingTextFieldException("Job title is not present");
+
 
 					int employeeNumber = getEmployeeNumber();
 					String firstName = getFirstName();
@@ -680,21 +705,6 @@ public class EmployeeTab extends JPanel{
 					int reportsTo = getReportsTo();
 					String jobTitle = getJobTitle();
 
-					if (firstName.isEmpty() && lastName.isEmpty() && extension.isEmpty() && email.isEmpty() && officeCode.isEmpty() && jobTitle.isEmpty())
-					{
-						throw new MissingTextFieldException("you must fill out all the fields");
-					} else if (firstName.isEmpty())
-						throw new MissingTextFieldException("firstName is not present");
-					else if (lastName.isEmpty())
-						throw new MissingTextFieldException("lastName is not present");
-					else if (email.isEmpty())
-						throw new MissingTextFieldException("email is not present");
-					else if (!email.contains("@"))
-						throw new MissingTextFieldException("Email must include @");
-					else if (jobTitle.isEmpty())
-						throw new MissingTextFieldException("Job title is not present");
-					else if(!officeCode.matches("[1-7]"))
-						throw new MissingTextFieldException("Office code does not exist");
 
 					db.addEmployee(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
 					
@@ -725,11 +735,8 @@ public class EmployeeTab extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fileChooser.setDialogTitle("Specify a file to save");
-
-				//Set default folder
 				fileChooser.setCurrentDirectory(new File("c:\\temp"));
 
-				//Just allow .txt file
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
 				fileChooser.setFileFilter(filter);
 
@@ -740,8 +747,8 @@ public class EmployeeTab extends JPanel{
 
 					try {
 						writeToFile(databaseTextArea.getText(), fileToSave);
-						consoleTextArea.setText("Succesfull when saving the Database");
-					}catch (IOException e1) {
+						consoleTextArea.setText("Successfully when saving the Database");
+					}catch (IOException ioException) {
 						consoleTextArea.setText("Error writing into file");
 					}
 				}
@@ -830,7 +837,8 @@ public class EmployeeTab extends JPanel{
 		writer.write(text);
 		writer.close();
 	}
-	
+
+	//METHODE TO REFRESH EMPLOYEE NUMBER COMOBOX
 	public void refreshEmployeeNumberComboBox() {
 		try {
 		List<Employee> employees = db.showEmployees();
@@ -845,7 +853,8 @@ public class EmployeeTab extends JPanel{
 			err.printStackTrace();
 		}
 	}
-	
+
+	//METHODE TO REFRESH JOB TITLE COMBOBOX
 	public void refreshJobTitleComboBox() {
 		try {
 			chooseJobTitleComboBox.removeAllItems();
@@ -862,7 +871,7 @@ public class EmployeeTab extends JPanel{
 		}
 	}
 	
-	
+	//METHODE TO REFRESH THE EMPLOYEE TABLE VIEW
 	public void refreshDatabaseTextArea() {
 		try {
 		List<Employee> employees = db.showEmployees();
@@ -889,6 +898,7 @@ public class EmployeeTab extends JPanel{
 		}
 	}
 
+	//METHODE TO CLEAR UPDATE EMPLOYEE FIELDS
 	public void clearUpdateFields() {
 		updateFirstNameTextField.setText("");
 		updateLastNameTextField.setText("");
@@ -899,7 +909,8 @@ public class EmployeeTab extends JPanel{
 		updateJobTitleTextField.setText("");
 		consoleTextArea.append("*cleared text fields for update employee. \n");
 	}
-	
+
+	//METHODE TO CLEAR ADD EMPLOYEE FIELDS
 	public void clearAddFields() {
 		addEmployeeNumberTextField.setText("");
 		addFirstNameTextField.setText("");

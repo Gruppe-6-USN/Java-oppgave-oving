@@ -581,7 +581,7 @@ public class OrderTab extends JPanel {
 
 					}
 				} catch (SQLException | ParseException error) {
-					orderConsoleTextArea.append("Problem fetching from database. Error: " + " " + "Date input should be yyyy-mm-dd");
+					orderConsoleTextArea.append("Problem fetching from database. Error: " + " " + "Date input should be yyyy-mm-dd" + "\n") ;
 				} catch (MissingTextFieldException exception) {
 					orderConsoleTextArea.append(exception.getMessage() + "\n");
 				}
@@ -656,6 +656,7 @@ public class OrderTab extends JPanel {
 
 						//functions that refreshes the combobox values and the database view
 						refreshOrderNumberComboBox();
+						refreshDatabaseTextArea();
 					} catch (SQLException exception) {
 						exception.printStackTrace();
 					}

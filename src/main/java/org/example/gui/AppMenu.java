@@ -175,8 +175,6 @@ public class AppMenu extends JMenuBar {
 		});
 	}
 
- 
-
 	private void displayMessage(String message) {
 		JOptionPane.showMessageDialog(this, message);
 	}

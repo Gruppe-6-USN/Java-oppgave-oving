@@ -735,11 +735,8 @@ public class EmployeeTab extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fileChooser.setDialogTitle("Specify a file to save");
-
-				//Set default folder
 				fileChooser.setCurrentDirectory(new File("c:\\temp"));
-
-				//Just allow .txt file
+				
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
 				fileChooser.setFileFilter(filter);
 

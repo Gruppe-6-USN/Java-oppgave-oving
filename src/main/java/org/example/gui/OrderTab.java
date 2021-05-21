@@ -723,9 +723,9 @@ public class OrderTab extends JPanel {
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
 				fileChooser.setFileFilter(filter);
 
-				int returnVal = fileChooser.showSaveDialog(null);
+				int response = fileChooser.showSaveDialog(null);
 
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
+				if (response == JFileChooser.APPROVE_OPTION) {
 					File fileToSave = fileChooser.getSelectedFile();
 
 					try {

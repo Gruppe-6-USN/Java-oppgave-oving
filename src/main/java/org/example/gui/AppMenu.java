@@ -53,6 +53,7 @@ public class AppMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jfc = new JFileChooser(".");
+				jfc.setDialogTitle("Specify a file to import");
 				jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 				int response = jfc.showSaveDialog(null);

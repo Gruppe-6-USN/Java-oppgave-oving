@@ -540,10 +540,6 @@ public class OrderTab extends JPanel {
 		OrderConsolePanel.add(consoleScroll, gbc_consoleScroll);
 
 		clearOrderConsoleBtn = new JButton("Clear console");
-		clearOrderConsoleBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		GridBagConstraints gbc_clearEmployeeConsoleBtn = new GridBagConstraints();
 		gbc_clearEmployeeConsoleBtn.gridx = 0;
 		gbc_clearEmployeeConsoleBtn.gridy = 1;

@@ -748,7 +748,7 @@ public class EmployeeTab extends JPanel{
 					try {
 						writeToFile(databaseTextArea.getText(), fileToSave);
 						consoleTextArea.setText("Successfully when saving the Database");
-					}catch (IOException e1) {
+					}catch (IOException ioException) {
 						consoleTextArea.setText("Error writing into file");
 					}
 				}

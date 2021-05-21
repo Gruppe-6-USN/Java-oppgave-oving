@@ -798,6 +798,7 @@ public class OrderTab extends JPanel {
 		return deleteOrderNumber;
 	}
 
+	//METHOD TO REFRESH THE ORDER DATABASE VIEW
 	public void refreshDatabaseTextArea() {
 		try {
 		List<OrdersList> orders = db.showOrders();
@@ -810,7 +811,8 @@ public class OrderTab extends JPanel {
 			err.printStackTrace();
 		}
 	}
-	
+
+	//METHODE TO REFRESH THE ORDER NUMBER COMBOBOX
 	public void refreshOrderNumberComboBox() {
 		try {
 			List<OrdersList> orders = db.showOrders();
@@ -825,7 +827,8 @@ public class OrderTab extends JPanel {
 			err.printStackTrace();
 		}
 	}
-	
+
+	//METHODE TO REFRESH THE CUSTOMER NUMBER COMBOBOX
 	public void refreshCustomerNumberComboBox() {
 		try {
 			List<Customer> customers = db.showCustomers();

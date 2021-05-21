@@ -625,17 +625,22 @@ public class EmployeeTab extends JPanel{
 					if (getUpdateFirstName().isEmpty() && getUpdateLastName().isEmpty() && getUpdateExtension().isEmpty() && getUpdateEmail().isEmpty() && getUpdateOfficeCode().isEmpty() && getUpdateJobTitle().isEmpty()) {
 						throw new MissingTextFieldException("you must fill out all the fields");
 					} else if (getUpdateFirstName().isEmpty())
-						throw new MissingTextFieldException("firstName is not present");
+						throw new MissingTextFieldException("Firstname is not present");
 					else if (getUpdateLastName().isEmpty())
-						throw new MissingTextFieldException("lastName is not present");
+						throw new MissingTextFieldException("Lastname is not present");
+					else if (getUpdateExtension().isEmpty())
+						throw new MissingTextFieldException("Extension is not present");
 					else if (getUpdateEmail().isEmpty())
-						throw new MissingTextFieldException("email is not present");
+						throw new MissingTextFieldException("Email is not present");
 					else if (!getUpdateEmail().contains("@"))
 						throw new Exception("Email must include @");
-					else if (getUpdateJobTitle().isEmpty())
-						throw new MissingTextFieldException("Job title is not present");
+					else if(getUpdateOfficeCode().isEmpty())
+						throw new MissingTextFieldException("Officecode is not present");
 					else if (!getUpdateOfficeCode().matches("[1-7]"))
 						throw new MissingTextFieldException("Office code does not exist");
+					else if (getUpdateJobTitle().isEmpty())
+						throw new MissingTextFieldException("Job title is not present");
+
 
 					db.updateUser(getUpdateLastName(), getUpdateFirstName(), getUpdateExtension(), getUpdateEmail(), getUpdateOfficeCode(), getUpdateReportsTo(), getUpdateJobTitle(), getUpdateEmployeeNumber());
 

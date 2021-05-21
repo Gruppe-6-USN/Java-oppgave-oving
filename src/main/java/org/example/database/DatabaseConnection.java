@@ -150,6 +150,8 @@ public class DatabaseConnection extends Component {
 			close();
 		} catch (SQLIntegrityConstraintViolationException addErr) {
 			errorMessage("Reports to does not exist");
+		} catch (SQLException addErr){
+			addErr.printStackTrace();
 		}
 	}
 

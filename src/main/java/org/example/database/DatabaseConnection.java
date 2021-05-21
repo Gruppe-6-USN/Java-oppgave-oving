@@ -146,10 +146,33 @@ public class DatabaseConnection extends Component {
 			pStmt.setInt(7, reportsTo);
 			pStmt.setString(8, jobTitle);
 			pStmt.execute();
-			successMessage("Successfully added");
+			successMessage("Employee successfully added.");
 			close();
 		} catch (SQLIntegrityConstraintViolationException addErr) {
 			errorMessage("Reports to does not exist");
+		}
+	}
+	
+	public void addEmployeeBulk(int employeeNumber, String lastName, String firstName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException {
+		try {
+			open();
+			
+			pStmt = conn.prepareStatement("INSERT INTO employees(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle)" +
+					"values (?, ?, ?, ?, ?, ?, ?, ?)");
+			pStmt.setInt(1, employeeNumber);
+			pStmt.setString(2, lastName);
+			pStmt.setString(3, firstName);
+			pStmt.setString(4, extension);
+			pStmt.setString(5, email);
+			pStmt.setString(6, officeCode);
+			pStmt.setInt(7, reportsTo);
+			pStmt.setString(8, jobTitle);
+			pStmt.execute();
+			
+			close();
+			
+		} catch (SQLIntegrityConstraintViolationException addErr) {
+			
 		}
 	}
 

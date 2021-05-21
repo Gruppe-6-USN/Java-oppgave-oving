@@ -38,11 +38,6 @@ public class AppMenu extends JMenuBar {
 		JMenu fileMenu = new JMenu("File");
 		appMenu.add(fileMenu);
 
-		//SAVE TO FILE FILE MENU ITEM
-		JMenuItem saveToFileItem = new JMenuItem("Save to file");
-		saveToFileItem.setHorizontalAlignment(SwingConstants.LEFT);
-		fileMenu.add(saveToFileItem);
-
 
 		//BULK IMPORT FILE MENU ITEM
 		JMenuItem bulkImportItem = new JMenuItem("Bulk import from file...");
@@ -52,70 +47,7 @@ public class AppMenu extends JMenuBar {
 		bulkImportItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser jfc = new JFileChooser(".");
-				jfc.setDialogTitle("Specify a file to import");
-				jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-				int response = jfc.showSaveDialog(null);
-
-				if (response == JFileChooser.APPROVE_OPTION) {
-					File file = jfc.getSelectedFile();
-
-					try {
-						Scanner fileIn = new Scanner(file);
-						if (file.isFile()) {
-
-							while (fileIn.hasNextLine()) {
-								String line = fileIn.nextLine();
-								//System.out.println(line);
-								try (Scanner data = new Scanner(line)) {
-											/*while(!data.hasNextInt()) {
-												employeeNumber += data.nextInt() + " ";
-											}
-											employeeNumber = employeeNumber.trim();*/
-
-									if (data.hasNextInt()) {
-										employeeNumber = data.nextInt();
-									}
-
-
-									if (data.hasNextLine()) {
-										lastName = data.next();
-									}
-									if (data.hasNextLine()) {
-										firstName = data.next();
-									}
-									if (data.hasNextLine()) {
-										extension = data.next();
-									}
-									if (data.hasNextLine()) {
-										email = data.next();
-									}
-									if (data.hasNextLine()) {
-										officeCode = data.next();
-									}
-									if (data.hasNextInt()) {
-										reportsTo = data.nextInt();
-									}
-									if (data.hasNextLine()) {
-										jobTitle = data.next();
-									}
-								}
-								db.addEmployee(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
-
-							}
-						} else {
-							System.out.println("Not a file");
-						}
-						fileIn.close();
-					} catch (FileNotFoundException err1) {
-						System.out.println("Filen eksisterer ikke");
-					} catch (NumberFormatException numberFormatException) {
-						numberFormatException.printStackTrace();
-					} catch (SQLException throwables) {
-						throwables.printStackTrace();
-					}
-				}
+				bulkImport();
 			}
 		});
 
@@ -179,6 +111,54 @@ public class AppMenu extends JMenuBar {
 
 	private void displayMessage(String message) {
 		JOptionPane.showMessageDialog(this, message);
+	}
+	
+	private void bulkImport() {
+		JFileChooser jfc = new JFileChooser(".");
+		jfc.setDialogTitle("Specify a file to import");
+		jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
+		int response = jfc.showSaveDialog(null);
+
+		if (response == JFileChooser.APPROVE_OPTION) {
+			File file = jfc.getSelectedFile();
+			
+			try {
+				BufferedReader lineReader = new BufferedReader(new FileReader(file));
+				/*Scanner fileIn = new Scanner(file);*/
+		        Scanner scan = new Scanner(file);
+		        
+		        if(file.isFile()) {
+		        while(scan.hasNext()) {
+		        	String line = scan.nextLine(); // "Read" your file (one line at a time).
+		          
+		            String[] words = line.split(", "); // Parse what you read.
+		        
+		            
+		            int employeeNumber = Integer.parseInt(words[0]);		        
+		            String lastName = words[1];
+		            String firstName = words[2];
+		            String extension = words[3];
+		            String email = words[4];
+		            String officeCode = words[5];
+		            int reportsTo = Integer.parseInt(words[6]);
+		            String jobTitle = words[7];
+		            db.addEmployeeBulk(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle);
+
+		        }
+
+		        }else {
+					System.out.println("Not a file");
+				}
+				/*fileIn.close();*/
+			} catch (FileNotFoundException err1) {
+				System.out.println("Filen eksisterer ikke");
+			} catch (NumberFormatException numberFormatException) {
+				numberFormatException.printStackTrace();
+			} catch (SQLException throwables) {
+				throwables.printStackTrace();
+			}
+		}
 	}
 
 }
